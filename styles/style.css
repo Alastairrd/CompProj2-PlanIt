@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    margin: 20px;
+    color: #5456FA;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    background-color: white;
+    padding: 80px;
+
+}
+
+.grid-item {
+    background-color: white;
+    border-right: 1px solid #BBBABA;
+    border-bottom: 1px solid #BBBABA;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    
+}
+/* possibly not needed todo */
+.dateTime :active {
+    background-color: BBBABA;
+    border: 1px solid #BBBABA;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    
+}
+
+.active{
+    background-color: black;
+    border: 1px solid #BBBABA;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.hidden {
+
+}
+
+/* dates at top of coloumns */
+.datebox {
+    border-top: 1px solid #BBBABA;
+    padding: 0px;
+    width: auto;
+}
+
+h1.date {
+    font-size: 1.5em;
+    text-align: left;
+    margin: 0px 5px;
+}
+
+h2.date {
+    font-size: 1em;
+    text-align: left;
+    margin: 0px 5px;
+}
+
+/* times at start of rows */
+.timebox {
+    border-left: 1px solid #BBBABA;
+}
+
+h2.time {
+    font-size: 0.5em;
+}
+
+h2.hack {
+    color: white;
+}
