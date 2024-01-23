@@ -43,9 +43,12 @@ body {
     text-align: center;
 }
 
+/*
+Do we need this?
 .hidden {
 
 }
+*/
 
 /* dates at top of coloumns */
 .datebox {
