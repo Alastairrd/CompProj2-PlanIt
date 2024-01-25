@@ -1,0 +1,15 @@
+comp proj 2 session
+
+csv file, how to represent and read
+0 and 1 binary, initial row header can be skipped, for readability
+same with first column for times
+
+had to fix click functionality not being a thing on csv test calendar
+
+implementing data-val attribute? do we make active class depend on it? or vice versa
+
+
+AHHHH
+all our grid items for date time are stored in a 'linear' way in one big grid container, including the date time column
+this makes it hard to pull meaningful data out of it
+need some way to differentiate it
