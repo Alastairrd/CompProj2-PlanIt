@@ -8,7 +8,13 @@ document.addEventListener("DOMContentLoaded", function(){
     {
         dateTimes[i].addEventListener('mouseover', setActive, false);
         dateTimes[i].addEventListener('mousedown', setActive, false);
+
+		//add data-val attribute
+		dateTimes[i].setAttribute("data-val", 0)
     }
+
+	
+
 
 
 	//archie stuff
@@ -32,10 +38,12 @@ function setActive(e) {
 
 			//remove it
             this.classList.remove("active")
+			this.setAttribute("data-val", 0)
 
 			//otherwise set active
         } else {
             this.classList.add("active");
+			this.setAttribute("data-val", 1)
         }
     }
 }
