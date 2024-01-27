@@ -6,13 +6,19 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 20px;
     color: #5456FA;
+    /* width: 100%; */
+}
+
+main {
+    width: 100%; 
+    margin: 10px;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto auto;
+    grid-template-columns: repeat(8, 1fr);
     background-color: white;
-    margin: 50px;
+    margin: 20px 20px 50px 0px;
 
 }
 
@@ -21,17 +27,26 @@ body {
     border-right: 1px solid #BBBABA;
     border-bottom: 1px solid #BBBABA;
     padding: 0.5em;
-    font-size: 2vw;
+    font-size: 3vw;
     text-align: center;
     
 }
-/* possibly not needed todo */
-.dateTime :active {
+
+.nested-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(9, 1fr);
+    background-color: white;
+
+
+}
+
+.dateTime, .timebox {
     background-color: BBBABA;
     border: 1px solid #BBBABA;
-    padding: 20px;
-    font-size: 2vw;
+    /* padding: 20px; */
     text-align: center;
+    /* font-size: 1.75em; */
     
 }
 
@@ -39,16 +54,8 @@ body {
     background-color: #5456FA;
     border: 1px solid #BBBABA;
     padding: 20px;
-    font-size: 2vw;
     text-align: center;
 }
-
-/*
-Do we need this?
-.hidden {
-
-}
-*/
 
 /* dates at top of coloumns */
 .datebox {
