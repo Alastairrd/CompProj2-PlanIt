@@ -13,12 +13,14 @@ document.addEventListener("DOMContentLoaded", function(){
 		dateTimes[i].setAttribute("data-val", 0)
     }
 
-	
+
 
 
 
 	//archie stuff
+    
     populateDate = document.getElementsByClassName("dateTime2");
+
 
     for(i = 0; i < populateDate.length; i++)
     {
