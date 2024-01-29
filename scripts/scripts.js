@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function(){
       // POPULATE EACH DATE ITERATIVELY - IF 1 -> SET ACTIVE
     }
 
-
 });
 
 
