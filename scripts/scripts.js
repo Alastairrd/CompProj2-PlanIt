@@ -14,11 +14,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-
-
-
-	//archie stuff
-
+    // SIMPLE DATAFRAME FOR DATES ALREADY BLACKED OUT
     const datesArray = [
         0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
         1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -26,13 +22,14 @@ document.addEventListener("DOMContentLoaded", function(){
         0, 0, 0, 1, 0, 0, 0, 0, 0
       ];
     
+    // GET EVERY ELEMENT UNDER THE NAME 'dateTime2'
     populateDate = document.getElementsByClassName("dateTime2");
 
-
-    for (let i = 0; i < datesArray.length; i++) {
-        if (datesArray[i] == 1 && populateDate[i]) {
+    // FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ACTIVE
+    for (let i = 0; i < datesArray.length; i++) 
+    {
+        if (datesArray[i] == 1 && populateDate[i]) 
             populateDate[i].classList.add("active");
-        }
     }
 
 });
