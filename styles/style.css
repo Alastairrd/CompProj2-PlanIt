@@ -4,24 +4,86 @@ body {
     display: flex;
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
-    margin: 20px;
     color: #5456FA;
     /* width: 100%; */
 }
-
-main {
+/* Heading and progress bar */
+.page-top {
     width: 100%; 
-    margin: 10px;
+    margin: 50px 0px 0px 0px;
+}
+
+.main-heading {
+    font-size: x-large;
+    color: black;
+    font-weight: normal;
+    margin: 20px 20px 10px 20px;
+}
+
+.progress-grey {
+    width: 100vw;
+    height: fit-content;
+    background-color: #D9D9d9;
+}
+
+.progress-blue {
+    border: 1px solid #5456FA;
+    width: 80%;
+    height: 10px;
+    background-color: #5456FA;
+}
+
+.back-button {
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: left;
+    border: none;
+    background-color: white;
+    margin-top: 1em;
+    margin-left: 20px;
+    padding: 0px;
+
+
+}
+
+/* Introduction */
+main {
+    width: 90%; 
+    margin: 20px auto;
+    
+}
+
+.text {
+    color: black;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: left;
+}
+
+/* Calendar */
+/* probably need to make this an icon instead of text */
+.question {
+    float: right;
+    text-align: center;
+    line-height: 1.3em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 0.5px solid #5456FA;
+
+
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     background-color: white;
-    margin: 20px 20px 50px 0px;
+    margin: 40px 0px;
 
 }
 
+/* FIXME: should min-width and min-height be set to 44px as per finger-touch recommednations?*/
 .grid-item {
     background-color: white;
     border-right: 1px solid #BBBABA;
@@ -40,16 +102,51 @@ main {
 
 
 }
-
-.dateTime, .timebox {
-    background-color: BBBABA;
-    border: 1px solid #BBBABA;
-    /* padding: 20px; */
-    text-align: center;
-    /* font-size: 1.75em; */
-    
+/* Top row (hidden and dates) */
+.hidden {
+    border-right: 1px solid #5456FA;
+    border-bottom: 1px solid #5456FA;
 }
 
+.datebox {
+    border: 1px solid #5456FA;
+    border-left: none;
+    padding: 0px;
+    width: auto;
+}
+
+h1.date {
+    font-size: 2.5em;
+    text-align: left;
+    margin: 0px 2px;
+    font-weight: normal;
+}
+
+h2.date {
+    text-align: left;
+    margin: 0px 2px;
+    font-weight: normal;
+
+}
+
+/* times at start of rows */
+h2.time {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+h2.hack {
+    color: white;
+}
+
+/* Overwrites border to be blue, as per design */
+.timebox {
+    border: 1px solid #5456FA;
+    border-top: none;
+    text-align: center;
+
+}
+/* For when items are selected */
 .active{
     background-color: #5456FA;
     border: 1px solid #BBBABA;
@@ -57,34 +154,19 @@ main {
     text-align: center;
 }
 
-/* dates at top of coloumns */
-.datebox {
-    border-top: 1px solid #BBBABA;
-    padding: 0px;
-    width: auto;
-}
 
-h1.date {
-    font-size: 1.5em;
-    text-align: left;
-    margin: 0px 5px;
-}
-
-h2.date {
-    font-size: 1em;
-    text-align: left;
-    margin: 0px 5px;
-}
-
-/* times at start of rows */
-.timebox {
-    border-left: 1px solid #BBBABA;
-}
-
-h2.time {
-    font-size: 0.75em;
-}
-
-h2.hack {
+/* Button at bottom of screen */
+.next {
+    text-align: center;
     color: white;
+    text-transform: capitalize;
+    letter-spacing: 0.25em;
+    background-color: #0003FA;
+    border: 1px solid #5456FA;
+    border-radius: 5px;
+    width: 80%;
+    height: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 50px;
 }
