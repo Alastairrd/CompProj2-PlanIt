@@ -18,13 +18,21 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 	//archie stuff
+
+    const datesArray = [
+        0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+        0, 0, 0, 1, 0, 0, 0, 0, 0
+      ];
     
     populateDate = document.getElementsByClassName("dateTime2");
 
 
-    for(i = 0; i < populateDate.length; i++)
-    {
-      // POPULATE EACH DATE ITERATIVELY - IF 1 -> SET ACTIVE
+    for (let i = 0; i < datesArray.length; i++) {
+        if (datesArray[i] == 1 && populateDate[i]) {
+            populateDate[i].classList.add("active");
+        }
     }
 
 });
