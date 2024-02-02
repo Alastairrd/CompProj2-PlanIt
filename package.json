@@ -14,13 +14,6 @@
     "mysql": "^2.18.1",
     "pug": "^3.0.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lewfer/gs-dwa-lab-3.1.git"
-  },
-  "bugs": {
-    "url": "https://github.com/lewfer/gs-dwa-lab-3.1/issues"
-  },
-  "homepage": "https://github.com/lewfer/gs-dwa-lab-3.1#readme",
+  "homepage": "https://github.com/Alastairrd/CompProj2-PlanIt",
   "description": ""
 }
