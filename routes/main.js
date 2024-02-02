@@ -42,6 +42,8 @@ module.exports = function (app, csvData, filePath, fs) {
 		//TODO Archie/Al can now use this testData to populate!
 		//need to restructure the html/css to use classes
         console.log(testData);
+
+		res.render("index.ejs")
     });
 }
 
