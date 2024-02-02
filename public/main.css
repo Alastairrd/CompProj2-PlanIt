@@ -29,13 +29,13 @@ body {
 .progress-blue {
   border: 1px solid #5456FA;
   width: 80%;
-  height: 10px;
+  height: 20px;
   background-color: #5456FA;
 }
 
 .back-button {
   color: black;
-  font-size: 16px;
+  font-size: 1.5em;
   text-decoration: none;
   text-align: left;
   border: none;
@@ -89,7 +89,7 @@ main {
   border-right: 1px solid #BBBABA;
   border-bottom: 1px solid #BBBABA;
   padding: 0.5em;
-  font-size: 3vw;
+  font-size: 1em;
   text-align: center;
   
 }
@@ -131,7 +131,7 @@ h2.date {
 
 /* times at start of rows */
 h2.time {
-  font-size: 1em;
+  font-size: 0.75em;
   font-weight: normal;
 }
 
