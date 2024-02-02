@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", function(){
         1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
         0, 0, 0, 1, 0, 0, 0, 0, 0
       ];
-    
+
     // GET EVERY ELEMENT UNDER THE NAME 'dateTime2'
     populateDate = document.getElementsByClassName("dateTime2");
 
     // FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ACTIVE
-    for (let i = 0; i < datesArray.length; i++) 
+    for (let i = 0; i < datesArray.length; i++)
     {
-        if (datesArray[i] == 1 && populateDate[i]) 
+        if (datesArray[i] == 1 && populateDate[i])
             populateDate[i].classList.add("active");
     }
 
