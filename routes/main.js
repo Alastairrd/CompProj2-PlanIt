@@ -33,6 +33,8 @@ module.exports = function (app, csvData, filePath, fs) {
 
 					//send the now processed data to the promise
                     resolve(handledData);
+
+					console.log(lol)
                 }
             });
 
