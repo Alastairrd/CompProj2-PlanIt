@@ -34,8 +34,6 @@ module.exports = function (app, csvData, filePath, fs) {
 					//send the now processed data to the promise
                     resolve(handledData);
 					
-					// Good joke except that lol wasn't defined so broke the system THANKS LOL
-					console.log("lol")
                 }
             });
 
