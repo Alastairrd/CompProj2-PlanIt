@@ -5,16 +5,16 @@ body {
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
   color: #5456FA;
-  /* width: 100%; */
+
 }
 /* Heading and progress bar */
 .page-top {
   width: 100%; 
-  margin: 50px 0px 0px 0px;
+  margin: 50px 0px 70px 0px;
 }
 
 .main-heading {
-  font-size: x-large;
+  font-size: xxx-large;
   color: black;
   font-weight: normal;
   margin: 20px 20px 10px 20px;
@@ -56,9 +56,10 @@ main {
 
 .text {
   color: black;
-  font-size: 14px;
+  font-size: small;
   text-decoration: none;
   text-align: left;
+  margin: 50px;
 }
 
 /* Calendar */
