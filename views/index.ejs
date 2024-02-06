@@ -4,6 +4,13 @@
     <title>Welcome to PLANIT</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
     <script src="/scripts.js"></script>
+
+    <!-- DELCARING DATA SO IT IS ACCESSIBLE TO scripts.js -->
+    <script>
+        // THE DATA FROM READING CSV FILE: line 45 of main.js
+        let data = <%- JSON.stringify(data) %> // THIS IS NOT AN ERROR LEAVE ALONE
+    </script>
+
   </head>
   <body>
     <section class="page-top">

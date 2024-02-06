@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-    // SIMPLE DATAFRAME FOR DATES ALREADY BLACKED OUT
-    const datesArray = [
-        0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-        1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 1, 0, 0, 0, 0, 0
-      ];
+    // THIS IS THE DATA FROM THE CSV FILE -> DECLARED IN INDEX.EJS AS: <%- JSON.stringify(data) %>
+    data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
 
 	//get all date time objects
     dateTimes = document.getElementsByClassName("dateTime");
@@ -14,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	//set event listeners for clicks and mousedown
     for(i=0; i < dateTimes.length; i++)
     {
-        if(datesArray[i] != 1)
+        // IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
+        if(data[i] != "1")
         {
             dateTimes[i].addEventListener('mouseover', setActive, false);
             dateTimes[i].addEventListener('mousedown', setActive, false);
@@ -26,9 +22,9 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     // FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-    for (let i = 0; i < datesArray.length; i++)
+    for (let i = 0; i < data.length; i++)
     {
-        if (datesArray[i] == 1 && dateTimes[i])
+        if (data[i] == "1" && dateTimes[i])
             dateTimes[i].classList.add("already-active");
     }
 

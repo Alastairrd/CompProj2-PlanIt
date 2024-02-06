@@ -6,11 +6,14 @@ module.exports = function (app, csvData, filePath, fs) {
         const testData = await new Promise((resolve, reject) => {
 
             fs.readFile(filePath, 'utf8', (err, data) => {
-                if (err) {
+
+				// IF FILE READ ERROR IS THROWN -> REJECT
+                if (err)
                     reject(err);
-                } else {
 
-
+				// ELSE READ FILE AS NORMAL
+            	else 
+				{
 					//splits the data based on each new line, then iterate through the array of lines, and trim each one
 					const lines = data.split('\n').filter(l => l.trim());
 
@@ -39,12 +42,7 @@ module.exports = function (app, csvData, filePath, fs) {
 
         });
 
-
-		//TODO Archie/Al can now use this testData to populate!
-		//need to restructure the html/css to use classes
-        console.log(testData);
-
-		res.render("index.ejs")
+		res.render("index.ejs", { data: testData })
 
 
     });
