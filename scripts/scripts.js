@@ -1,19 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-	//get all date time objects
-    dateTimes = document.getElementsByClassName("dateTime");
-
-	//set event listeners for clicks and mousedown
-    for(i=0; i < dateTimes.length; i++)
-    {
-        dateTimes[i].addEventListener('mouseover', setActive, false);
-        dateTimes[i].addEventListener('mousedown', setActive, false);
-
-		//add data-val attribute
-		dateTimes[i].setAttribute("data-val", 0)
-    }
-
-
     // SIMPLE DATAFRAME FOR DATES ALREADY BLACKED OUT
     const datesArray = [
         0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
@@ -22,14 +8,28 @@ document.addEventListener("DOMContentLoaded", function(){
         0, 0, 0, 1, 0, 0, 0, 0, 0
       ];
 
-    // GET EVERY ELEMENT UNDER THE NAME 'dateTime2'
-    populateDate = document.getElementsByClassName("dateTime2");
+	//get all date time objects
+    dateTimes = document.getElementsByClassName("dateTime");
 
-    // FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ACTIVE
+	//set event listeners for clicks and mousedown
+    for(i=0; i < dateTimes.length; i++)
+    {
+        if(datesArray[i] != 1)
+        {
+            dateTimes[i].addEventListener('mouseover', setActive, false);
+            dateTimes[i].addEventListener('mousedown', setActive, false);
+
+		    //add data-val attribute
+		    dateTimes[i].setAttribute("data-val", 0)
+        }
+        
+    }
+
+    // FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
     for (let i = 0; i < datesArray.length; i++)
     {
-        if (datesArray[i] == 1 && populateDate[i])
-            populateDate[i].classList.add("active");
+        if (datesArray[i] == 1 && dateTimes[i])
+            dateTimes[i].classList.add("already-active");
     }
 
 });
