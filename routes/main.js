@@ -49,8 +49,29 @@ module.exports = function (app, csvData, filePath, fs) {
 
     });
 
+	// LOGIN PAGE
 	app.get('/login', function (req,res) {
         res.render('login.ejs');                                                                 
+    }); 
+
+	// CALENDAR PAGE
+	app.get('/EventCalendar', function (req,res) {
+        res.render('EventCalendar.ejs');                                                                 
+    }); 
+
+	// CREATE EVENT TO SHARE PAGE
+	app.get('/EventCreate', function (req,res) {
+        res.render('EventCreate.ejs');                                                                 
+    }); 
+
+	// EVENT CODE FOR OTHERS TO JOIN PAGE
+	app.get('/EventURL', function (req,res) {
+        res.render('EventURL.ejs');                                                                 
+    }); 
+
+	// RESULTS OF EVERYONE'S INPUT PAGE
+	app.get('/Results', function (req,res) {
+        res.render('Results.ejs');                                                                 
     }); 
 }
 
