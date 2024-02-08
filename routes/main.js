@@ -42,6 +42,8 @@ module.exports = function (app, csvData, filePath, fs) {
 
         });
 
+		console.log(testData)
+
 		res.render("index.ejs", { data: testData })
 
 
