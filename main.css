@@ -5,16 +5,17 @@ body {
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
   color: #5456FA;
-
+  user-select: none;
+  /* width: 100%; */
 }
 /* Heading and progress bar */
 .page-top {
   width: 100%; 
-  margin: 50px 0px 70px 0px;
+  margin: 50px 0px 0px 0px;
 }
 
 .main-heading {
-  font-size: xxx-large;
+  font-size: x-large;
   color: black;
   font-weight: normal;
   margin: 20px 20px 10px 20px;
@@ -29,13 +30,24 @@ body {
 .progress-blue {
   border: 1px solid #5456FA;
   width: 80%;
-  height: 20px;
+  height: 10px;
+  background-color: #5456FA;
+}
+.progress-blue-start {
+  border: 1px solid #5456FA;
+  width: 20%;
+  height: 10px;
+  background-color: #5456FA;
+}.progress-blue-end {
+  border: 1px solid #5456FA;
+  width: 100%;
+  height: 10px;
   background-color: #5456FA;
 }
 
 .back-button {
   color: black;
-  font-size: 1.5em;
+  font-size: 16px;
   text-decoration: none;
   text-align: left;
   border: none;
@@ -56,10 +68,9 @@ main {
 
 .text {
   color: black;
-  font-size: small;
+  font-size: 14px;
   text-decoration: none;
   text-align: left;
-  margin: 50px;
 }
 
 /* Calendar */
@@ -90,7 +101,7 @@ main {
   border-right: 1px solid #BBBABA;
   border-bottom: 1px solid #BBBABA;
   padding: 0.5em;
-  font-size: 1em;
+  font-size: 3vw;
   text-align: center;
   
 }
@@ -132,7 +143,7 @@ h2.date {
 
 /* times at start of rows */
 h2.time {
-  font-size: 0.75em;
+  font-size: 1em;
   font-weight: normal;
 }
 
@@ -155,14 +166,6 @@ h2.hack {
   text-align: center;
 }
 
-/* For when items are already selected by other users */
-.already-active{
-  background-color: #000080;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
-
 
 /* Button at bottom of screen */
 .next {
@@ -179,7 +182,6 @@ h2.hack {
   margin-right: 10%;
   margin-bottom: 50px;
 }
-
 .button-container {
   text-align: center;
   position: relative;

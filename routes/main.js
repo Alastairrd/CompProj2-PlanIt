@@ -49,6 +49,23 @@ module.exports = function (app, csvData, filePath, fs) {
 
     });
 
+	//OZZES ROUTES WHEY
+	app.get('/landing', function(req, res) {
+        res.render('landing.ejs');
+      });
+    app.get('/link', function(req, res) {
+        res.render('link.ejs');
+      });
+      app.get('/share', function(req, res) {
+        res.render('share.ejs');
+      });
+      app.get('/date', function(req, res) {
+        res.render('date.ejs');
+      });
+      app.get('/summary', function(req, res) {
+        res.render('summary.ejs');
+      });
+
 	// LOGIN PAGE
 	app.get('/login', function (req,res) {
         res.render('login.ejs');                                                                 

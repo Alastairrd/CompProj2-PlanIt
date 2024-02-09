@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function(){
         // IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
         //if(data[i] != "1")
         //{
+            
+            dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
             dateTimes[i].addEventListener('mouseover', setActive, false);
             dateTimes[i].addEventListener('mousedown', setActive, false);
 
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
             //dateTimes[i].classList.add("already-active");
             
             dateTimes[i].classList.add("active");
-            console.log(data[i])
+           // console.log(data[i])
             //dateTimes[i].setAttribute("data-val", 1)
     }
 
@@ -54,23 +56,44 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 //
+// function setActive(e) {
+// 	//if left mouse button is being pressed
+//     if(e.buttons == 1){
+
+// 		//if grid-item is active already
+//         if(this.classList.contains("active")){
+
+// 			//remove it
+//             this.classList.remove("active")
+// 			this.setAttribute("data-val", 0)
+
+// 			//otherwise set active
+//         } else {
+//             this.classList.add("active");
+// 			this.setAttribute("data-val", 1)
+//         }
+//     }
+// }
+
+let isInitialActive = false;
+// checks weather the initial one clicked is active
+function setInitialActiveState(e) {
+    isInitialActive = this.classList.contains("active");
+}
+
 function setActive(e) {
-	//if left mouse button is being pressed
-    if(e.buttons == 1){
-
-		//if grid-item is active already
-        if(this.classList.contains("active")){
-
-			//remove it
-            this.classList.remove("active")
-			this.setAttribute("data-val", 0)
-
-			//otherwise set active
+    if (e.buttons === 1) {
+        if (isInitialActive) {
+            // set to deactivate if first element is active
+            this.classList.remove("active");
+            this.setAttribute("data-val", 0);
         } else {
+            // else set to just activate
             this.classList.add("active");
-			this.setAttribute("data-val", 1)
+            this.setAttribute("data-val", 1);
         }
     }
+
 }
 
 function printData(){
