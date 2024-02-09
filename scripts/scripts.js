@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function(){
             dateTimes[i].addEventListener('mouseover', setActive, false);
             dateTimes[i].addEventListener('mousedown', setActive, false);
 
+            // dateTimes[i].addEventListener('touchstart', touchTest, false);
+            // dateTimes[i].addEventListener('touchend', touchTest2, false);
+            // dateTimes[i].addEventListener('touchmove', touchMoveTest, false);
+
 		    //add data-val attribute
 		    dateTimes[i].setAttribute("data-val", 0)
         //}
@@ -117,3 +121,18 @@ function printData(){
     }
     
 }
+
+// function touchTest(e){
+    
+//     console.log("touch started")
+// }
+
+// function touchTest2(e){
+//     this.classList.add("active");
+//     console.log("touch ended")
+// }
+
+// function touchMoveTest(e){
+//     this.classList.add("active");
+//     console.log("touch moved")
+// }
