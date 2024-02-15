@@ -21,6 +21,7 @@
 
     </section>
     <main>
+      <div class="input-date-container">
         <!-- Welcome message -->
         <section class="text">
             <p><strong>Hi Name! 
@@ -32,19 +33,21 @@
             <p>First, set the time frame for the event by selecting the earliest and latest dates it could be:</p>
         </section>
         <!-- selections for dates-->
-        <form>
-            <fieldset>
-              <legend>Start Date</legend>
-              <input type="date" id="code" name="code">
-            </fieldset>
-          </form>
-          <form>
-            <fieldset>
-              <legend>End Date</legend>
-              <input type="date" id="code" name="code">
-            </fieldset>
-          </form>
-        <button class="nextother">Next</button>
+        <form id="date-range-form" action="/calculate-dates" method="POST">
+          <fieldset>
+            <legend>Start Date</legend>
+            <input type="date" id="start-date" name="start-date">
+          </fieldset>
+        
+          <fieldset>
+            <legend>End Date</legend>
+            <input type="date" id="end-date" name="end-date">
+          </fieldset>
+        
+          <!-- NEXT BUTTON-->
+          <button type="submit" class="nextother">Next</button>
+        </form>
+      </div>
 </main>
 </body>
 </html>
