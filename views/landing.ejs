@@ -1,35 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Welcome to PLANIT</title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
+    <link rel="stylesheet" type="text/css" href="/main.css" />
     <script src="/scripts.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <section class="page-top">
         <!-- Heading-->
         <h1 class="main-heading">PlanIt MVP</h1>
 
+
         <!-- Progress bar -->
         <div class="progress-grey">
-            <div class="progress-blue-start"></div>
+            <div class="progress-blue"></div>
         </div>
-           <!--  button -->
-        <button class="back-button">
-            Back
-        </button>
-
+       
+        <!-- Back button -->
+        <button class="back-button" onclick="showLandingSection()">Back</button>
     </section>
-    <main>
-        <!-- Welcome message -->
+
+
+    <main id="landingSection">
+        <!-- Welcome message for landing section -->
         <section class="text">
             <p><strong>Welcome to PlanIt
                 <br>
-                Choose whether you would like to set up a new event or enter your code for a live event:.</strong></p>
+                Choose whether you would like to set up a new event or enter your code for a live event:</strong></p>
         </section>
-        <!-- buttons to create an event or join an event-->
-        <button class="create" style="left: 60%;">Create Event</button>
-        <button class="join" style="left: 20%;">Join Event With Code</button>
-</main>
+        <!-- Buttons to create an event or join an event -->
+        <button class="create" style="left: 60%;" onclick="showLogin()">Create Event</button>
+        <button class="join" style="left: 20%;" onclick="showJoinSection()">Join Event With Code</button>
+    </main>
+
+
+    <main id="joinSection" style="display:none;">
+        <!-- Welcome message for join section -->
+        <section class="text">
+            <p><strong>Welcome to PlanIt
+                <br>
+                Enter your code in here:</strong></p>
+        </section>
+        <!-- Form for entering event code -->
+        <form>
+            <fieldset>
+                <legend>Event Code</legend>
+                <input type="text" id="code" name="code">
+            </fieldset>
+        </form>
+        <button class="nextother">Next</button>
+    </main>
+    <main  id="login" style="display:none;">
+        <div class="Registration">
+            <h2>User Registration</h2>
+            <form method="post">
+            <!--Input for the name -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+        
+            <!-- This is the input for the email-->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+        
+            <!-- This is the input for the password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+        
+            <!-- This is the the register button -->
+            <input type="submit" value="Register">
+            </form>
+        </div>
+    </main>
 </body>
 </html>
+

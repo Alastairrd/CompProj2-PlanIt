@@ -142,3 +142,23 @@ function printData(){
 //     this.classList.add("active");
 //     console.log("touch moved")
 // }
+
+// each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
+function showJoinSection() {
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("joinSection").style.display = "block";
+}
+
+
+function showLandingSection() {
+    document.getElementById("landingSection").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+}
+
+function showLogin() {
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}

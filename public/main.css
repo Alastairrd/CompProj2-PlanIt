@@ -33,6 +33,18 @@ body {
   background-color: #5456FA;
 }
 
+.progress-blue-start {
+  border: 1px solid #5456FA;
+  width: 20%;
+  height: 10px;
+  background-color: #5456FA;
+}.progress-blue-end {
+  border: 1px solid #5456FA;
+  width: 100%;
+  height: 10px;
+  background-color: #5456FA;
+}
+
 .back-button {
   color: black;
   font-size: 1.5em;
