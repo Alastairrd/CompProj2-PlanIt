@@ -145,6 +145,7 @@ function printData(){
 
 // each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
 function showJoinSection() {
+    document.getElementById("date").style.display = "none";
     document.getElementById("landingSection").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("joinSection").style.display = "block";
@@ -152,13 +153,22 @@ function showJoinSection() {
 
 
 function showLandingSection() {
+    document.getElementById("date").style.display = "none";
     document.getElementById("landingSection").style.display = "block";
     document.getElementById("login").style.display = "none";
     document.getElementById("joinSection").style.display = "none";
 }
 
 function showLogin() {
+    document.getElementById("date").style.display = "none";
     document.getElementById("landingSection").style.display = "none";
     document.getElementById("joinSection").style.display = "none";
     document.getElementById("login").style.display = "block";
+}
+
+function showDate() {
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("date").style.display = "block";
 }
