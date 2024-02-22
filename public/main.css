@@ -10,7 +10,7 @@ body {
 /* Heading and progress bar */
 .page-top {
   width: 100%; 
-  margin: 50px 0px 70px 0px;
+  margin: 50px 0px 20px 0px;
 }
 
 .main-heading {
@@ -62,7 +62,7 @@ body {
 /* Introduction */
 main {
   width: 90%; 
-  margin: 20px auto;
+  margin: 5px auto;
   
 }
 
