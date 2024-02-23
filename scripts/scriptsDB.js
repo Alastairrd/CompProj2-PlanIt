@@ -1,40 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-	// THIS IS THE DATA FROM THE CSV FILE -> DECLARED IN INDEX.EJS AS: <%- JSON.stringify(data) %>
-	if (data != undefined) {
-		data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
-	}
 
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
-	otherDateTimes = document.getElementsByClassName("timeslot");
-
-	//set event listeners for clicks and mousedown
-	for (i = 0; i < otherDateTimes.length; i++) {
-		// IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
-		//if(data[i] != "1")
-		//{
-
-		// dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
-		// dateTimes[i].addEventListener('mouseover', setActive, false);
-		// dateTimes[i].addEventListener('mousedown', setActive, false);
-
-		otherDateTimes[i].addEventListener(
-			"mousedown",
-			setInitialActiveState,
-			false
-		);
-		otherDateTimes[i].addEventListener("mouseover", setActive, false);
-		otherDateTimes[i].addEventListener("mousedown", setActive, false);
-
-		// dateTimes[i].addEventListener('touchstart', touchTest, false);
-		// dateTimes[i].addEventListener('touchend', touchTest2, false);
-		// dateTimes[i].addEventListener('touchmove', touchMoveTest, false);
-
-		//add data-val attribute
-		// dateTimes[i].setAttribute("data-val", 0)
-		otherDateTimes[i].setAttribute("data-val", 0);
-		//}
-	}
+	
 
 	for (i = 0; i < dateTimes.length; i++) {
 		dateTimes[i].addEventListener(
@@ -49,26 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		dateTimes[i].setAttribute("data-val", 0);
 	}
 
-	// FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
 
-			otherDateTimes[i].classList.add("active");
-		// console.log(data[i])
-		//dateTimes[i].setAttribute("data-val", 1)
-	}
-
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
-
-			//dateTimes[i].classList.add("active");
-			//console.log(data[i])
-			otherDateTimes[i].setAttribute("data-val", 1);
-	}
 
 	// grid1elements = document.getElementsByClassName("grid1")
 
@@ -349,19 +298,3 @@ function showDate() {
 	document.getElementById("login").style.display = "none";
 	document.getElementById("date").style.display = "block";
 }
-
-function showShare() {
-    document.getElementById("Calendar").style.display = "none";
-    document.getElementById("Share").style.display = "block";
-}
-
-
-// validation for login unit test for rouge inputs
-function isValidUsername(username) {
-    // checking valid charecters as symbols can be used in SQL injection attacks
-    const regex = /^[a-zA-Z]+$/;
-    return regex.test(username);
-  }
-  
-  module.exports = { isValidUsername };
-  

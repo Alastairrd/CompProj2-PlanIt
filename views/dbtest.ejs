@@ -3,17 +3,9 @@
   <head>
     <title>Welcome to PLANIT</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
-    <script src="/scripts.js"></script>
+    <script src="/scriptsDB.js"></script>
 
-    <!-- DELCARING DATA SO IT IS ACCESSIBLE TO scripts.js -->
-    <script>
-        // THE DATA FROM READING CSV FILE: line 45 of main.js
-        let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
-        let dateInfo = <%- JSON.stringify(dates) %>;
-
-        console.log(dateInfo);
-
-    </script>
+    <!--deleted data stuff cause it cant access-->
 
   </head>
   <body>
@@ -32,7 +24,7 @@
         </button>
 
     </section>
-    <main id="Calendar">
+    <main>
         <!-- Welcome message -->
         <section class="text">
             <p><strong>Hi [Username]!<br>You're on the way to creating your event.</strong></p>
@@ -45,15 +37,12 @@
             <!-- Calendar and explanation button -->
             <div class="question">?</div>
         </section>
-<!--  
-
-    REDUNDANT GRID
 
         <div class="grid-container">
-             hidden square at top left 
+            <!-- hidden square at top left -->
             <div class="grid-item hidden"></div>
 
-            date and day rows 
+            <!-- date and day rows -->
             <div class="grid-item datebox">
                 <h1 class="date">18</h1>
                 <h2 class="date">MON</h2>
@@ -84,10 +73,10 @@
             </div>
 
 
-             nested grids for each column to ease grid item identification
-           initial grid contains time text 
+            <!-- nested grids for each column to ease grid item identification-->
+          <!-- initial grid contains time text -->
             <div class="nested-grid">
-             time row 1
+            <!-- time row 1-->
                 <div class="grid-item timebox">
                     <h2 class="time">9.00</h2>
                 </div>
@@ -115,15 +104,15 @@
                 <div class="grid-item timebox">
                     <h2 class="time">17.00</h2>
                 </div>
-                 dateTime boxes are blank but change colour when selected
+                <!-- dateTime boxes are blank but change colour when selected-->
 
             </div>
 
             <div id="grid1" class="nested-grid">
-                 dateTime boxes are blank but change colour when selected
-                FIXME: is dateTime class necessary
-               Monday column 
-                 dateTime boxes are blank but change colour when selected
+                <!-- dateTime boxes are blank but change colour when selected
+                FIXME: is dateTime class necessary?-->
+              <!-- Monday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -136,8 +125,8 @@
             </div>
 
             <div id="grid2" class="nested-grid">
-            Tuesday column 
-                 dateTime boxes are blank but change colour when selected
+            <!-- Tuesday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -150,8 +139,8 @@
             </div>
 
             <div id="grid3" class="nested-grid">
-               Wednesday column 
-                 dateTime boxes are blank but change colour when selected
+              <!-- Wednesday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -164,8 +153,8 @@
             </div>
 
             <div id="grid4" class="nested-grid">
-               Thursday column 
-                 dateTime boxes are blank but change colour when selected
+              <!-- Thursday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -178,8 +167,8 @@
             </div>
 
             <div id="grid5" class="nested-grid">
-               Friday column 
-                 dateTime boxes are blank but change colour when selected
+              <!-- Friday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -191,8 +180,8 @@
                 <div class="grid-item dateTime"></div>
             </div>
             <div id="grid6" class="nested-grid">
-               Saturday column 
-                 dateTime boxes are blank but change colour when selected
+              <!-- Saturday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -204,8 +193,8 @@
                 <div class="grid-item dateTime"></div>
             </div>
             <div id="grid7" class="nested-grid">
-               Sunday column
-                 dateTime boxes are blank but change colour when selected
+              <!-- Sunday column -->
+                <!-- dateTime boxes are blank but change colour when selected-->
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -218,81 +207,17 @@
             </div>
         </div>
 
-        -->
-
-        <!-- EXPERIMENTATION -->
-    <div class="grid-containment">
-        <div class="main-grid">
-
-            <!-- FOR EVERY COLUMN -->
-          <%  for(var i = 0; i < dates.length ; i++) { %>
-
-
-                <div class="day">
-                    <!-- FOR EVERY SLOT IN THE ROW -->
-                    <%     for(var j = 0; j < 10; j++) { %>
-
-
-                        <!-- IF IT'S THE CORNER PIECE, MAKE INVISIBLE -->
-                        <%       if(j==0 && i==0) { %>
-                        <div class="dayslot" id="hidden-corner">
-                            <h1 class="date"><%=dates[i].date %></h1>
-                            <h2 class="date"><%=dates[i].dayOfWeek %></h2>
-                        </div>
-                        <!-- EVERY TIME PERIOD OF THE DAY -->
-                        <div class="timeOfDay">09:00</div>
-                        <div class="timeOfDay">10:00</div>
-                        <div class="timeOfDay">11:00</div>
-                        <div class="timeOfDay">12:00</div>
-                        <div class="timeOfDay">13:00</div>
-                        <div class="timeOfDay">14:00</div>
-                        <div class="timeOfDay">15:00</div>
-                        <div class="timeOfDay">16:00</div>
-                        <div class="timeOfDay">17:00</div>
-
-
-                        <!-- IF IT IS THE FIRST ITEM IN THE COLUMN, MAKE IT THE DATE -->
-                        <% } else if(j==0) { %>
-                            <div class="dayslot">
-                                <h1 class="date"><%=dates[i].date %></h1>
-                                <h2 class="date"><%=dates[i].dayOfWeek %></h2>
-                            </div>
-
-                        <!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->    
-                        <%    } else if(i>0) { %>
-                       <div class="timeslot">1</div>
-                        <%     } %>
-                        <%   } %>
-            </div>
-            <% } %>
-
-        </div>
-    </div>
         <!-- Next button at bottom of page-->
-        <button class="next" onclick="showShare()">NEXT</button>
+        <button class="next">NEXT</button>
 
         <button onclick="printData()">CONSOLE DATA TEST</button>
+        
+        <button onclick="sendMatrixData()">MATRIX DATA TEST</button>
 
+        <button onclick="getMatrixData()">GET DATA TEST</button>
+
+        <button onclick="calcMatrixData()">CALC DATA TEST</button>
         
     </main>
-    <!-- the section to share the jioing code after using the calender-->
-    <main id = "Share" style="display:none;">
-    <!-- Welcome message -->
-    <section class="text" >
-        <p><strong>All ready to go!
-            <br>
-            You can invite others to contribute their availability by sharing the following code: <br></strong></p>
-    <!-- link to copy -->
-    <button class="link-button">vgvh-gvhg-hgvv-gv</button>
-    <div style="text-align:center">
-    <p><strong> <br>If you’d like to access, save and edit your event at any time, register here!<br></strong></p>
-    </div>
-    <button class="register">register</button>
-    <div style="text-align:center" >
-    <p><strong><br><br><br><br><br>Alternatively, you can access your event through the event creator code here:</strong></p>
-    </div>
-</section>
-  </main>
-
   </body>
 </html>
