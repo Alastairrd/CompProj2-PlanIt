@@ -1,0 +1,8 @@
+{
+    // adding in everything from jest
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

@@ -32,7 +32,7 @@
         </button>
 
     </section>
-    <main>
+    <main id="Calendar">
         <!-- Welcome message -->
         <section class="text">
             <p><strong>Hi [Username]!<br>You're on the way to creating your event.</strong></p>
@@ -269,11 +269,30 @@
         </div>
     </div>
         <!-- Next button at bottom of page-->
-        <button class="next">NEXT</button>
+        <button class="next" onclick="showShare()">NEXT</button>
 
         <button onclick="printData()">CONSOLE DATA TEST</button>
 
         
     </main>
+    <!-- the section to share the jioing code after using the calender-->
+    <main id = "Share" style="display:none;">
+    <!-- Welcome message -->
+    <section class="text" >
+        <p><strong>All ready to go!
+            <br>
+            You can invite others to contribute their availability by sharing the following code: <br></strong></p>
+    <!-- link to copy -->
+    <button class="link-button">vgvh-gvhg-hgvv-gv</button>
+    <div style="text-align:center">
+    <p><strong> <br>If you’d like to access, save and edit your event at any time, register here!<br></strong></p>
+    </div>
+    <button class="register">register</button>
+    <div style="text-align:center" >
+    <p><strong><br><br><br><br><br>Alternatively, you can access your event through the event creator code here:</strong></p>
+    </div>
+</section>
+  </main>
+
   </body>
 </html>
