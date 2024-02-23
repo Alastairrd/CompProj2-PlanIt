@@ -122,6 +122,159 @@ function printData(){
     
 }
 
+//send values from the calendar to the DB
+async function sendMatrixData(){
+
+    let matrix = [];
+
+    dateboxes = document.getElementsByClassName("datebox")
+    for(i=1; i<=dateboxes.length; i++){
+
+        let row = []
+
+        //get right grid - day of the week, get all children from that grid
+        let gridString = "grid" + i
+        let grid = document.getElementById(gridString)
+        gridItems = Array.from(grid.children)
+
+        gridItems.map(function(gridItem) {
+            x = parseInt(gridItem.getAttribute("data-val"))
+            row.push(x)
+        })
+
+        matrix.push(row);
+
+        // for(let j=0; j < gridItems.length; j++){
+        //     console.log(gridString + " , item " + j + ": " + gridItems[j].getAttribute("data-val"))
+        //     row.
+        // }
+
+        // gridItems.forEach(element => {
+        //     element.getAttribute("data-val")
+        //     console.log(element.getAttribute("data-val"))
+        // });
+    }
+
+    // console.log(matrix);
+
+    //turn our bit matrix into JSON
+    jsonMatrix = JSON.stringify(matrix);
+
+    console.log(jsonMatrix);
+
+    //try this fetch promise with our api route for sending data to DB
+    try {
+
+        //reponse is equal to the result of the promise
+        const response = await fetch('/matrixPost', {
+            method: 'POST',
+
+            //tell the api we're using JSON and to parse it as such
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //matrix we just made
+            body: jsonMatrix
+        });
+
+        //if all went well, say so
+        if(response.ok == true){
+            console.log("Data sent to the database successfully, code: " + response.status)
+        } else {
+            //if database request didnt go well
+            console.log("No bueno sending that data chief, CODE: " + response.status + ", text: " + response.statusText);
+        }
+
+        //else oh no, tell us what went wrong
+    } catch (error) {
+        console.error(error)
+    }
+    
+
+    
+
+
+
+    // db.query(
+    //     `INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
+    //     [1, 1, jsonMatrix],
+    //     (error, results) => {
+    //         if (error) {
+    //             reject(error);
+    //         } else {
+    //             resolve(results);
+    //         }
+    //     }
+    // );
+    
+}
+
+async function getMatrixData(){
+
+    let data = null;
+    //try this fetch promise with our api route for sending data to DB
+    try {
+
+        //reponse is equal to the result of the promise
+        const response = await fetch('/matrixGet', {});
+
+        //if all went well, say so
+        if(response.ok == true){
+            console.log("Data recieved from database successfully, code: " + response.status)
+            data = await response.json();
+        } else {
+            //if database request didnt go well
+            console.log("No bueno getting that data chief, CODE: " + response.status + ", text: " + response.statusText);
+        }
+
+        //else oh no, tell us what went wrong
+    } catch (error) {
+        console.error(error)
+    }
+
+    console.log("DB data: ")
+    console.log(data);
+}
+
+async function calcMatrixData(){
+
+    let data = null;
+    //try this fetch promise with our api route for sending data to DB
+    try {
+
+        //reponse is equal to the result of the promise
+        const response = await fetch('/matrixGet', {});
+
+        //if all went well, say so
+        if(response.ok == true){
+            console.log("Data recieved from database successfully, code: " + response.status)
+            data = await response.json();
+        } else {
+            //if database request didnt go well
+            console.log("No bueno getting that data chief, CODE: " + response.status + ", text: " + response.statusText);
+        }
+
+        //else oh no, tell us what went wrong
+    } catch (error) {
+        console.error(error)
+    }
+
+    console.log("DB data: ")
+    console.log(data);
+
+    //TODO SEND FETCH REQUEST TO USE MATH MODULE LOL
+    let matrixHolder = JSON.parse(data[0].bit_matrix);
+    let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+
+    //CURRENTLY NOT WORKING TODO
+    // for(let i = 0; i < data.length; i++){
+    //     sumMatrix = math.add(sumMatrix, JSON.parse(data[i].bit_matrix))
+    // }
+
+    //THIS IS NOT WORKING CURRENTLY
+    console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix)
+}
+
 // function touchTest(e){
     
 //     console.log("touch started")
