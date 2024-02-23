@@ -1,28 +1,36 @@
 document.addEventListener("DOMContentLoaded", function(){
 
     // THIS IS THE DATA FROM THE CSV FILE -> DECLARED IN INDEX.EJS AS: <%- JSON.stringify(data) %>
-    data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
-
+    if(data != undefined){
+        data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
+    }
+    
 	//get all date time objects
     dateTimes = document.getElementsByClassName("dateTime");
+    otherDateTimes = document.getElementsByClassName("timeslot");
 
 	//set event listeners for clicks and mousedown
-    for(i=0; i < dateTimes.length; i++)
+    for(i=0; i < otherDateTimes.length; i++)
     {
         // IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
         //if(data[i] != "1")
         //{
             
-            dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
-            dateTimes[i].addEventListener('mouseover', setActive, false);
-            dateTimes[i].addEventListener('mousedown', setActive, false);
+            //dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
+            //dateTimes[i].addEventListener('mouseover', setActive, false);
+            //dateTimes[i].addEventListener('mousedown', setActive, false);
+
+            otherDateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
+            otherDateTimes[i].addEventListener('mouseover', setActive, false);
+            otherDateTimes[i].addEventListener('mousedown', setActive, false);
 
             // dateTimes[i].addEventListener('touchstart', touchTest, false);
             // dateTimes[i].addEventListener('touchend', touchTest2, false);
             // dateTimes[i].addEventListener('touchmove', touchMoveTest, false);
 
 		    //add data-val attribute
-		    dateTimes[i].setAttribute("data-val", 0)
+		    //dateTimes[i].setAttribute("data-val", 0)
+            otherDateTimes[i].setAttribute("data-val", 0)
         //}
         
     }
@@ -34,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(){
         if (data[i] == "1")
             //dateTimes[i].classList.add("already-active");
             
-            dateTimes[i].classList.add("active");
+            otherDateTimes[i].classList.add("active");
            // console.log(data[i])
             //dateTimes[i].setAttribute("data-val", 1)
     }
@@ -47,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function(){
             
             //dateTimes[i].classList.add("active");
             //console.log(data[i])
-            dateTimes[i].setAttribute("data-val", 1)
+            otherDateTimes[i].setAttribute("data-val", 1)
     }
 
     // grid1elements = document.getElementsByClassName("grid1")
@@ -289,3 +297,33 @@ async function calcMatrixData(){
 //     this.classList.add("active");
 //     console.log("touch moved")
 // }
+
+// each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
+function showJoinSection() {
+    document.getElementById("date").style.display = "none";
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("joinSection").style.display = "block";
+}
+
+
+function showLandingSection() {
+    document.getElementById("date").style.display = "none";
+    document.getElementById("landingSection").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+}
+
+function showLogin() {
+    document.getElementById("date").style.display = "none";
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+function showDate() {
+    document.getElementById("landingSection").style.display = "none";
+    document.getElementById("joinSection").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("date").style.display = "block";
+}
