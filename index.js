@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 //csv testing TODO remove
 const filePath = path.join(__dirname, 'test.csv');
 
+
 // Define the database connection
 const db = mysql.createConnection({
 	host: "localhost",

@@ -11,8 +11,6 @@
         let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
         let dateInfo = <%- JSON.stringify(dates) %>;
 
-        //console.log(dateInfo);
-
     </script>
 
   </head>
@@ -27,7 +25,7 @@
         </div>
            <!--  button -->
         <button class="back-button">
-            <!-- Back arrow from https://www.w3schools.com/charsets/ref_utf_arrows.asp--> 
+            <!-- Back arrow from https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
             &#x21E0; Back
         </button>
 
@@ -45,15 +43,15 @@
             <!-- Calendar and explanation button -->
             <div class="question">?</div>
         </section>
-<!--  
+<!--
 
     REDUNDANT GRID
 
         <div class="grid-container">
-             hidden square at top left 
+             hidden square at top left
             <div class="grid-item hidden"></div>
 
-            date and day rows 
+            date and day rows
             <div class="grid-item datebox">
                 <h1 class="date">18</h1>
                 <h2 class="date">MON</h2>
@@ -85,7 +83,7 @@
 
 
              nested grids for each column to ease grid item identification
-           initial grid contains time text 
+           initial grid contains time text
             <div class="nested-grid">
              time row 1
                 <div class="grid-item timebox">
@@ -122,7 +120,7 @@
             <div id="grid1" class="nested-grid">
                  dateTime boxes are blank but change colour when selected
                 FIXME: is dateTime class necessary
-               Monday column 
+               Monday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -136,7 +134,7 @@
             </div>
 
             <div id="grid2" class="nested-grid">
-            Tuesday column 
+            Tuesday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -150,7 +148,7 @@
             </div>
 
             <div id="grid3" class="nested-grid">
-               Wednesday column 
+               Wednesday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -164,7 +162,7 @@
             </div>
 
             <div id="grid4" class="nested-grid">
-               Thursday column 
+               Thursday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -178,7 +176,7 @@
             </div>
 
             <div id="grid5" class="nested-grid">
-               Friday column 
+               Friday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -191,7 +189,7 @@
                 <div class="grid-item dateTime"></div>
             </div>
             <div id="grid6" class="nested-grid">
-               Saturday column 
+               Saturday column
                  dateTime boxes are blank but change colour when selected
                 <div class="grid-item dateTime"></div>
                 <div class="grid-item dateTime"></div>
@@ -262,7 +260,7 @@
                                 <h2 class="date"><%=dates[i].dayOfWeek %></h2>
                             </div>
 
-                        <!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->    
+                        <!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->
                         <%    } else { %>
                        <div class="timeslot">1</div>
                         <%     } %>
@@ -284,7 +282,7 @@
         <button onclick="calcMatrixData()">CALC DATA TEST</button>
         
 
-        
+
     </main>
     <!-- the section to share the jioing code after using the calender-->
     <main id = "Share" style="display:none;">
