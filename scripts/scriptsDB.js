@@ -66,6 +66,7 @@ function setActive(e) {
 }
 
 function printData() {
+	//getting number of dates
 	dateboxes = document.getElementsByClassName("datebox");
 	for (i = 1; i <= dateboxes.length; i++) {
 		let gridString = "grid" + i;

@@ -11,7 +11,7 @@
         let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
         let dateInfo = <%- JSON.stringify(dates) %>;
 
-        console.log(dateInfo);
+        //console.log(dateInfo);
 
     </script>
 
@@ -225,41 +225,45 @@
         <div class="main-grid">
 
             <!-- FOR EVERY COLUMN -->
+            <!--todo remove -1-->
+            <div class="day">
+
+                <!--need a date and day of week for sizing-->
+                <div class="dayslot" id="hidden-corner">
+                    <h1 class="date"><%=dates[0].date %></h1>
+                    <h2 class="date"><%=dates[0].dayOfWeek %></h2>
+                </div>
+
+                <!-- EVERY TIME PERIOD OF THE DAY -->
+                <div class="timeOfDay">09:00</div>
+                <div class="timeOfDay">10:00</div>
+                <div class="timeOfDay">11:00</div>
+                <div class="timeOfDay">12:00</div>
+                <div class="timeOfDay">13:00</div>
+                <div class="timeOfDay">14:00</div>
+                <div class="timeOfDay">15:00</div>
+                <div class="timeOfDay">16:00</div>
+                <div class="timeOfDay">17:00</div>
+
+            </div>
+
           <%  for(var i = 0; i < dates.length ; i++) { %>
 
 
-                <div class="day">
+                <div class="day" id="day<%=i%>">
                     <!-- FOR EVERY SLOT IN THE ROW -->
+                    <!--todo remove hardcoded 10 with variable for timeslots-->
                     <%     for(var j = 0; j < 10; j++) { %>
 
-
-                        <!-- IF IT'S THE CORNER PIECE, MAKE INVISIBLE -->
-                        <%       if(j==0 && i==0) { %>
-                        <div class="dayslot" id="hidden-corner">
-                            <h1 class="date"><%=dates[i].date %></h1>
-                            <h2 class="date"><%=dates[i].dayOfWeek %></h2>
-                        </div>
-                        <!-- EVERY TIME PERIOD OF THE DAY -->
-                        <div class="timeOfDay">09:00</div>
-                        <div class="timeOfDay">10:00</div>
-                        <div class="timeOfDay">11:00</div>
-                        <div class="timeOfDay">12:00</div>
-                        <div class="timeOfDay">13:00</div>
-                        <div class="timeOfDay">14:00</div>
-                        <div class="timeOfDay">15:00</div>
-                        <div class="timeOfDay">16:00</div>
-                        <div class="timeOfDay">17:00</div>
-
-
                         <!-- IF IT IS THE FIRST ITEM IN THE COLUMN, MAKE IT THE DATE -->
-                        <% } else if(j==0) { %>
+                        <%  if(j==0) { %>
                             <div class="dayslot">
                                 <h1 class="date"><%=dates[i].date %></h1>
                                 <h2 class="date"><%=dates[i].dayOfWeek %></h2>
                             </div>
 
                         <!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->    
-                        <%    } else if(i>0) { %>
+                        <%    } else { %>
                        <div class="timeslot">1</div>
                         <%     } %>
                         <%   } %>

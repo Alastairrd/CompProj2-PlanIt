@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	dateTimes = document.getElementsByClassName("dateTime");
 	otherDateTimes = document.getElementsByClassName("timeslot");
 
+
+
+	console.log("hi")
+	console.log(dateInfo);
+
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < otherDateTimes.length; i++) {
 		// IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
@@ -49,31 +54,34 @@ document.addEventListener("DOMContentLoaded", function () {
 		dateTimes[i].setAttribute("data-val", 0);
 	}
 
+	//deprecated, taking from csv, errors cause data is larger or smaller than event size
 	// FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
+	// for (let i = 0; i < data.length; i++) {
+	// 	//if (data[i] == "1" && dateTimes[i])
+	// 	if (data[i] == "1")
+	// 		//dateTimes[i].classList.add("already-active");
 
-			otherDateTimes[i].classList.add("active");
-		// console.log(data[i])
-		//dateTimes[i].setAttribute("data-val", 1)
-	}
+	// 		otherDateTimes[i].classList.add("active");
+	// 	// console.log(data[i])
+	// 	//dateTimes[i].setAttribute("data-val", 1)
+	// }
 
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
+	//deprecated, taking from csv, errors cause data is larger or smaller than event size
+	// for (let i = 0; i < data.length; i++) {
+	// 	//if (data[i] == "1" && dateTimes[i])
+	// 	if (data[i] == "1")
+	// 		//dateTimes[i].classList.add("already-active");
 
-			//dateTimes[i].classList.add("active");
-			//console.log(data[i])
-			otherDateTimes[i].setAttribute("data-val", 1);
-	}
+	// 		//dateTimes[i].classList.add("active");
+	// 		//console.log(data[i])
+	// 		otherDateTimes[i].setAttribute("data-val", 1);
+	// }
 
 	// grid1elements = document.getElementsByClassName("grid1")
 
 	// nestedDivs = grid1elements[0].children
 	// console.log(nestedDivs)
+	
 });
 
 //
@@ -115,6 +123,7 @@ function setActive(e) {
 		}
 	}
 }
+
 
 function printData() {
 	dateboxes = document.getElementsByClassName("datebox");
