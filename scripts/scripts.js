@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (data != undefined) {
 		data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
 	}
+	
 
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
@@ -362,6 +363,26 @@ function isValidUsername(username) {
     const regex = /^[a-zA-Z]+$/;
     return regex.test(username);
   }
+
+// GENERATES URL FOR EVENT JOINING
+function generateURL()
+{
+	// CHARACTER SET TO DRAW FROM
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    let password = "";
+
+	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
+    for (let i = 0; i < 10; i++) 
+	{
+		// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
+        const randomIndex = Math.floor(Math.random() * charset.length); 
+
+		// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
+        password += charset[randomIndex];
+    }
+    return password;
+
+}
   
   module.exports = { isValidUsername };
   
