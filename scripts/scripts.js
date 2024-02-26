@@ -345,7 +345,7 @@ function isValidUsername(username) {
 function generateURL()
 {
 	// CHARACTER SET TO DRAW FROM
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let urlPassword = "";
 
 	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
