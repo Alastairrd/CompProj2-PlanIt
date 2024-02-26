@@ -358,3 +358,19 @@ function showDate() {
 	document.getElementById("login").style.display = "none";
 	document.getElementById("date").style.display = "block";
 }
+
+function showShare() {
+    document.getElementById("Calendar").style.display = "none";
+    document.getElementById("Share").style.display = "block";
+}
+
+
+// validation for login unit test for rouge inputs
+function isValidUsername(username) {
+    // checking valid charecters as symbols can be used in SQL injection attacks
+    const regex = /^[a-zA-Z]+$/;
+    return regex.test(username);
+  }
+  
+  module.exports = { isValidUsername };
+  
