@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-	// THIS IS THE DATA FROM THE CSV FILE -> DECLARED IN INDEX.EJS AS: <%- JSON.stringify(data) %>
-	if (data != undefined) {
-		data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
-	}
 
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
@@ -126,28 +122,25 @@ function setActive(e) {
 
 
 function printData() {
-	dateboxes = document.getElementsByClassName("datebox");
-	for (i = 1; i <= dateboxes.length; i++) {
-		let gridString = "grid" + i;
 
-		let grid = document.getElementById(gridString);
+	days = document.getElementsByClassName("day");
+	for (i = 0; i < days.length - 1; i++) {
+		let dayString = "day" + i;
 
-		gridItems = Array.from(grid.children);
+		let day = document.getElementById(dayString);
 
-		for (let j = 0; j < gridItems.length; j++) {
+		dayItems = Array.from(day.children);
+
+		//start at one to ignore dayOfWeek element
+		for (let j = 1; j < dayItems.length; j++) {
 			console.log(
-				gridString +
+				dayString +
 					" , item " +
 					j +
 					": " +
-					gridItems[j].getAttribute("data-val")
+					dayItems[j].getAttribute("data-val")
 			);
 		}
-
-		// gridItems.forEach(element => {
-		//     element.getAttribute("data-val")
-		//     console.log(element.getAttribute("data-val"))
-		// });
 	}
 }
 
@@ -155,34 +148,25 @@ function printData() {
 async function sendMatrixData() {
 	let matrix = [];
 
-	dateboxes = document.getElementsByClassName("datebox");
-	for (i = 1; i <= dateboxes.length; i++) {
+	days = document.getElementsByClassName("day");
+	for (i = 0; i < days.length - 1; i++) {
 		let row = [];
 
 		//get right grid - day of the week, get all children from that grid
-		let gridString = "grid" + i;
-		let grid = document.getElementById(gridString);
-		gridItems = Array.from(grid.children);
+		let dayString = "day" + i;
+		let day = document.getElementById(dayString);
 
-		gridItems.map(function (gridItem) {
-			x = parseInt(gridItem.getAttribute("data-val"));
+		//get all timeslots and remove dayOfTheWeek section
+		dayItems = (Array.from(day.children)).slice(1);
+
+		dayItems.map(function (dayItem) {
+			x = parseInt(dayItem.getAttribute("data-val"));
 			row.push(x);
 		});
 
 		matrix.push(row);
-
-		// for(let j=0; j < gridItems.length; j++){
-		//     console.log(gridString + " , item " + j + ": " + gridItems[j].getAttribute("data-val"))
-		//     row.
-		// }
-
-		// gridItems.forEach(element => {
-		//     element.getAttribute("data-val")
-		//     console.log(element.getAttribute("data-val"))
-		// });
 	}
 
-	// console.log(matrix);
 
 	//turn our bit matrix into JSON
 	jsonMatrix = JSON.stringify(matrix);
@@ -223,18 +207,6 @@ async function sendMatrixData() {
 	} catch (error) {
 		console.error(error);
 	}
-
-	// db.query(
-	//     `INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
-	//     [1, 1, jsonMatrix],
-	//     (error, results) => {
-	//         if (error) {
-	//             reject(error);
-	//         } else {
-	//             resolve(results);
-	//         }
-	//     }
-	// );
 }
 
 async function getMatrixData() {
