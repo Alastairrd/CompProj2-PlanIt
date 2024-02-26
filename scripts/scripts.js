@@ -3,16 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (data != undefined) {
 		data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
 	}
-	
+
 
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
 	otherDateTimes = document.getElementsByClassName("timeslot");
 
-
-
-	console.log("hi")
-	console.log(dateInfo);
 
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < otherDateTimes.length; i++) {
@@ -82,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// nestedDivs = grid1elements[0].children
 	// console.log(nestedDivs)
-	
+
 });
 
 //
@@ -378,20 +374,19 @@ function generateURL()
 {
 	// CHARACTER SET TO DRAW FROM
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
-    let password = "";
+    let urlPassword = "";
 
 	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
-    for (let i = 0; i < 10; i++) 
+    for (let i = 0; i < 10; i++)
 	{
 		// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
-        const randomIndex = Math.floor(Math.random() * charset.length); 
+        const randomIndex = Math.floor(Math.random() * charset.length);
 
 		// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
-        password += charset[randomIndex];
+        urlPassword += charset[randomIndex];
     }
-    return password;
+    return urlPassword;
 
 }
-  
+
   module.exports = { isValidUsername };
-  
