@@ -280,11 +280,7 @@ async function calcMatrixData() {
 
 	matrixArr = JSON.stringify(matrixArr)
 
-	//TODO SEND FETCH REQUEST TO USE MATH MODULE LOL
-	//let matrixHolder = JSON.stringify();
-	//let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
-
-	//TODO try a post method?
+	//Send matrix data from DB to route handler to add all matrices together with mathjs
 	let summedMatrix = -1;
 	try {
 		//reponse is equal to the result of the promise
@@ -304,6 +300,7 @@ async function calcMatrixData() {
 				"Data calculated successfully, code: " +
 					response.status
 			);
+			//returned summed matrix
 			summedMatrix = await response.json();
 		} else {
 			//if database request didnt go well
@@ -324,12 +321,19 @@ async function calcMatrixData() {
 
 	//todo comment
 	//todo Rework to use dates etc to output days
+	//array to put available coordinates of times in (ie: day, timeslot)
 	let dateCoords = []
+
+	//if summedMatrix returned with data
 	if(summedMatrix.data){
+		//set equal to this data for ease
 		summedMatrix = summedMatrix.data;
+		//iterate over each matrix and row
 		for(i = 0; i < summedMatrix.length; i++){
 			for(j = 0; j < summedMatrix[i].length; j++){
+				//find times = to 0
 				if(summedMatrix[i][j] == 0){
+					//push those coords as available dates
 					dateCoords.push([i, j]);
 				}
 			}
@@ -337,14 +341,6 @@ async function calcMatrixData() {
 	}
 
 	console.log(dateCoords);
-
-	//CURRENTLY NOT WORKING TODO
-	// for(let i = 0; i < data.length; i++){
-	//     sumMatrix = math.add(sumMatrix, JSON.parse(data[i].bit_matrix))
-	// }
-
-	//THIS IS NOT WORKING CURRENTLY
-	//console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
 }
 
 // function touchTest(e){
