@@ -1,3 +1,5 @@
+const { forEach } = require("mathjs");
+
 document.addEventListener("DOMContentLoaded", function () {
 
 
@@ -271,9 +273,70 @@ async function calcMatrixData() {
 	console.log("DB data: ");
 	console.log(data);
 
+	let matrixArr = data.map((x) => JSON.parse(x.bit_matrix))
+
+	console.log("matrixArr - scripts.js - :")
+	console.log(matrixArr)
+
+	matrixArr = JSON.stringify(matrixArr)
+
 	//TODO SEND FETCH REQUEST TO USE MATH MODULE LOL
-	let matrixHolder = JSON.parse(data[0].bit_matrix);
-	let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+	//let matrixHolder = JSON.stringify();
+	//let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+
+	//TODO try a post method?
+	let summedMatrix = -1;
+	try {
+		//reponse is equal to the result of the promise
+		const response = await fetch("/matrixCalc", {
+			method: "POST",
+
+			headers: {
+				"Content-Type": "application/json",
+			},
+			//matrix we just made
+			body: matrixArr
+		});
+
+		//if all went well, say so
+		if (response.ok == true) {
+			console.log(
+				"Data calculated successfully, code: " +
+					response.status
+			);
+			summedMatrix = await response.json();
+		} else {
+			//if database request didnt go well
+			console.log(
+				"No bueno calcing that data chief, CODE: " +
+					response.status +
+					", text: " +
+					response.statusText
+			);
+		}
+
+		//else oh no, tell us what went wrong
+	} catch (error) {
+		console.error(error);
+	}
+
+	
+
+	//todo comment
+	//todo Rework to use dates etc to output days
+	let dateCoords = []
+	if(summedMatrix.data){
+		summedMatrix = summedMatrix.data;
+		for(i = 0; i < summedMatrix.length; i++){
+			for(j = 0; j < summedMatrix[i].length; j++){
+				if(summedMatrix[i][j] == 0){
+					dateCoords.push([i, j]);
+				}
+			}
+		}
+	}
+
+	console.log(dateCoords);
 
 	//CURRENTLY NOT WORKING TODO
 	// for(let i = 0; i < data.length; i++){
@@ -281,7 +344,7 @@ async function calcMatrixData() {
 	// }
 
 	//THIS IS NOT WORKING CURRENTLY
-	console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
+	//console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
 }
 
 // function touchTest(e){

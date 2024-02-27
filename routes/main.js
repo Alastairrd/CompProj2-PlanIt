@@ -1,4 +1,6 @@
-module.exports = function (app, csvData, filePath, fs) {
+const { forEach } = require("mathjs");
+
+module.exports = function (app, csvData, filePath, fs, math) {
     // Handle our routes
 
     var testDates;
@@ -77,9 +79,13 @@ module.exports = function (app, csvData, filePath, fs) {
 	app.get("/matrixGet", async function (req, res) {
 		console.log("TODO REMOVE: we made it this far");
 
+		//TODO get event from URL, get event_id from this
+
+		//TODO change query to use event_id from DB
+
 		//gets the data from DB
 		db.query(
-			`SELECT * FROM unavail WHERE event_id = 2`,
+			`SELECT * FROM unavail WHERE event_id = 3`,
 			(error, results) => {
 				if (error) {
 					console.error(error);
@@ -93,6 +99,39 @@ module.exports = function (app, csvData, filePath, fs) {
 			}
 		);
 
+	});
+
+	app.post("/matrixCalc", async function (req, res) {
+
+		//matrix we passed into the request, for some reason it unJSON's itself 
+		const matrixArr = req.body;
+
+
+		console.log("matrixArr: ")
+		console.log(matrixArr);
+
+		//placeholder matrix for getting sizes
+		let matrixHolder = matrixArr[0];
+
+		console.log("matrixHolder: ")
+		console.log(matrixHolder);
+
+		//zero'd matrix the correct size
+		let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+
+		console.log("sumMatrix: ")
+		console.log(sumMatrix);
+
+		//add each matrix to sum matrix
+		matrixArr.forEach((matrix) => {
+			sumMatrix = math.add(sumMatrix, matrix)
+		})
+
+		console.log("sumMatrix post adding: ")
+		console.log(sumMatrix); 
+
+		res.send(sumMatrix);
+		
 	});
 
 
