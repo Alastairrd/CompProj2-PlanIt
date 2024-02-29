@@ -8,12 +8,12 @@
 <body>
     <section class="page-top">
         <!-- Heading-->
-        <h1 class="main-heading">PlanIt MVP</h1>
+        <h1 class="title-heading">PlanIt MVP</h1>
 
 
         <!-- Progress bar -->
         <div class="progress-grey">
-            <div class="progress-blue"></div>
+            <div class="progress-blue-20"></div>
         </div>
        
         <!-- Back button -->
@@ -24,10 +24,8 @@
         <div class="input-date-container">
           <!-- Welcome message -->
           <section class="text">
-              <p><strong>Hi Name! 
-                  <br>
-                  You’re on the way to creating your event.
-                  </strong></p>
+            <p class="bold">Hi Name!</p>
+            <p>You’re on the way to creating your event.</p>
           </section>
           <section class="text">
               <p>First, set the time frame for the event by selecting the earliest and latest dates it could be:</p>
@@ -54,9 +52,8 @@
     <main id="landingSection">
         <!-- Welcome message for landing section -->
         <section class="text">
-            <p><strong>Welcome to PlanIt
-                <br>
-                Choose whether you would like to set up a new event or enter your code for a live event:</strong></p>
+            <p class="bold">Welcome to PlanIt</p>
+            <p>Choose whether you would like to set up a new event or enter your code for a live event:</p>
         </section>
         <!-- Buttons to create an event or join an event -->
         <button class="create" style="left: 60%;" onclick="showLogin()">Create Event</button>
@@ -67,9 +64,8 @@
     <main id="joinSection" style="display:none;">
         <!-- Welcome message for join section -->
         <section class="text">
-            <p><strong>Welcome to PlanIt
-                <br>
-                Enter your code and name in here:</strong></p>
+            <p class="bold">Welcome to PlanIt</p>
+            <p>Enter your code and name in here:</p>
         </section>
         <!-- Form for entering event code -->
         <form>
@@ -86,39 +82,43 @@
         </form>
         <button class="nextother">Next</button>
     </main>
+
     <main  id="login" style="display:none;">
         <div class="Registration">
-            <h2>User Registration</h2>
+            <p class="text bold">User Registration</p>
+            <p class="text">Please enter your details below to register</p>
             <form method="post">
-            <!--Input for the name -->
-            <form>
-                <fieldset>
-                    <legend>Name</legend>
-                    <input type="text" id="name" name="name" required>
-                </fieldset>
-            </form>
-            <br>
-        
-            <!-- This is the input for the email-->
-            <form>
-                <fieldset>
-                    <legend>Email:</legend>
-                    <input type="email" id="email" name="email" required>
-                </fieldset>
-            </form>
-            <br>
-        
-            <!-- This is the input for the password -->
-            <form>
-                <fieldset>
-                    <legend>Password:</legend>
-                    <input type="password:" id="password" name="password" required>
-                </fieldset>
-            </form>
-            <br>
-        
-            <!-- This is the the register button -->
-            <input type="submit" value="Register" onclick="showDate()">
+                <!--Input for the name -->
+                <form>
+                    <fieldset>
+                        <legend>Name</legend>
+                        <input type="text" id="name" name="name" required>
+                    </fieldset>
+                </form>
+                <br>
+            
+                <!-- This is the input for the email-->
+                <form>
+                    <fieldset>
+                        <legend>Email:</legend>
+                        <input type="email" id="email" name="email" required>
+                    </fieldset>
+                </form>
+                <br>
+            
+                <!-- This is the input for the password -->
+                <form>
+                    <fieldset>
+                        <legend>Password:</legend>
+                        <input type="password" id="password" name="password" required>
+                    </fieldset>
+                </form>
+                <br>
+            
+                <!-- This is the the register button -->
+                <button class="register">
+                    <input type="submit" value="Register" onclick="showDate()">
+                </button>
             </form>
         </div>
     </main>
