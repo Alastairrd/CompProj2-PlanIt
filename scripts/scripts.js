@@ -82,15 +82,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	startDate = document.getElementById("start-date");
 	endDate = document.getElementById("end-date");
 
-	startDate.addEventListener("change", function() {
-		endDate.setAttribute("min", startDate.value);
-		if(endDate.valueAsDate < startDate.valueAsDate){
-			endDate.valueAsDate = startDate.valueAsDate;
-		}
-	})
+	if(startDate){
+		startDate.addEventListener("change", function() {
+			endDate.setAttribute("min", startDate.value);
+			if(endDate.valueAsDate < startDate.valueAsDate){
+				endDate.valueAsDate = startDate.valueAsDate;
+			}
+		})
+		
+		startDate.valueAsDate = new Date();
+		endDate.valueAsDate = new Date();
+	}
 	
-	startDate.valueAsDate = new Date();
-	endDate.valueAsDate = new Date();
 })
 
 
@@ -373,6 +376,10 @@ async function calcMatrixData() {
 //     this.classList.add("active");
 //     console.log("touch moved")
 // }
+
+function joinEvent() {
+	//check
+}
 
 // each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
 function showJoinSection() {
