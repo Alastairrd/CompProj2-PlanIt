@@ -1,15 +1,16 @@
 const { forEach } = require("mathjs");
 
 module.exports = function (app, csvData, filePath, fs, math) {
-    // Handle our routes
+	// Handle our routes
 
-    var testDates;
+	var testDates;
 
-	app.get('/', function(req, res) {
-        res.render('index.ejs');
-      });
+	app.get("/", function (req, res) {
+		res.render("index.ejs");
+	});
 
-	app.get("/eventCreation", async function (req, res) {
+	app.post("/eventCreation", async function (req, res) {
+		//TODO remove
 		const testData = await new Promise((resolve, reject) => {
 			fs.readFile(filePath, "utf8", (err, data) => {
 				// IF FILE READ ERROR IS THROWN -> REJECT
@@ -42,19 +43,58 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			});
 		});
 
-		console.log(testData);
+		let passDates;
 
-		if(testDates){
-			res.render("eventCreation.ejs", { data: testData, dates: testDates })
+		if (req.body) {
+			const startDate = new Date(req.body["start-date"]);
+			const endDate = new Date(req.body["end-date"]);
+
+			console.log(req.body);
+
+			// EXTRACT START TO FINISH DATE
+			const diffTime = endDate - startDate;
+			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
+
+			// ARRAY OF DATES TO BE RETURNED
+			//let dates = [];
+			passDates = [];
+
+			// FOR EVERY DAY
+			for (let i = 0; i <= diffDays; i++) {
+				// CREATE NEW DATE OBJECT
+				let currentDate = new Date(startDate);
+				currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
+
+				// RETURN DATE AS A NUMBER e.g. 18th April -> 18
+				let day = currentDate.getDate();
+
+				// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
+				let weekday = currentDate
+					.toLocaleString("en-EN", { weekday: "short" })
+					.toUpperCase();
+
+				// PUSH DATE OBJECT TO ARRAY
+				passDates.push({
+					date: `${day}`, // DAY NUMBER
+					dayOfWeek: weekday, // DAY OF WEEK
+				});
+			}
+		}
+
+		//console.log(testData);
+
+		if (passDates) {
+			res.render("eventCreation.ejs", {
+				data: testData,
+				dates: passDates,
+			});
 		} else {
-			res.redirect('/')
+			res.redirect("/");
 		}
 	});
 
 	//todo
-	app.post("/saveEvent", async function (req, res) {
-
-	})
+	app.post("/saveEvent", async function (req, res) {});
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
@@ -111,58 +151,52 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				}
 			}
 		);
-
 	});
 
 	app.post("/matrixCalc", async function (req, res) {
-
-		//matrix we passed into the request, for some reason it unJSON's itself 
+		//matrix we passed into the request, for some reason it unJSON's itself
 		const matrixArr = req.body;
 
-
-		console.log("matrixArr: ")
+		console.log("matrixArr: ");
 		console.log(matrixArr);
 
 		//placeholder matrix for getting sizes
 		let matrixHolder = matrixArr[0];
 
-		console.log("matrixHolder: ")
+		console.log("matrixHolder: ");
 		console.log(matrixHolder);
 
 		//zero'd matrix the correct size
 		let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
 
-		console.log("sumMatrix: ")
+		console.log("sumMatrix: ");
 		console.log(sumMatrix);
 
 		//add each matrix to sum matrix
 		matrixArr.forEach((matrix) => {
-			sumMatrix = math.add(sumMatrix, matrix)
-		})
+			sumMatrix = math.add(sumMatrix, matrix);
+		});
 
-		console.log("sumMatrix post adding: ")
-		console.log(sumMatrix); 
+		console.log("sumMatrix post adding: ");
+		console.log(sumMatrix);
 
 		res.send(sumMatrix);
-		
 	});
 
-
-
 	//OZZES ROUTES WHEY
-	
-    app.get('/link', function(req, res) {
-        res.render('link.ejs');
-      });
-      app.get('/share', function(req, res) {
-        res.render('share.ejs');
-      });
-      app.get('/date', function(req, res) {
-        res.render('date.ejs');
-      });
-      app.get('/summary', function(req, res) {
-        res.render('summary.ejs');
-      });
+
+	app.get("/link", function (req, res) {
+		res.render("link.ejs");
+	});
+	app.get("/share", function (req, res) {
+		res.render("share.ejs");
+	});
+	app.get("/date", function (req, res) {
+		res.render("date.ejs");
+	});
+	app.get("/summary", function (req, res) {
+		res.render("summary.ejs");
+	});
 	  app.get('/404', function(req, res) {
         res.render('404.ejs');
       });
@@ -172,57 +206,59 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.render("login.ejs");
 	});
 
+	// USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
+	app.post("/calculate-dates", (req, res) => {
+		// TAKE THE VALUES FROM /date FORMS
+		// const startDate = new Date(req.body['start-date']);
+		// const endDate = new Date(req.body['end-date']);
 
-    // USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
-    app.post('/calculate-dates', (req, res) => {
-        // TAKE THE VALUES FROM /date FORMS
-        // const startDate = new Date(req.body['start-date']);
-        // const endDate = new Date(req.body['end-date']);
+		const startDate = new Date(req.body["start-date"]);
+		const endDate = new Date(req.body["end-date"]);
 
-		const startDate = new Date(req.body['start-date']);
-        const endDate = new Date(req.body['end-date']);
+		console.log(req.body);
 
-		console.log(req.body)
+		// EXTRACT START TO FINISH DATE
+		const diffTime = endDate - startDate;
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
 
-        // EXTRACT START TO FINISH DATE
-        const diffTime = endDate - startDate;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
-    
-        // ARRAY OF DATES TO BE RETURNED
-        let dates = [];
+		// ARRAY OF DATES TO BE RETURNED
+		let dates = [];
 
-        // FOR EVERY DAY 
-        for (let i = 0; i <= diffDays; i++) 
-        {
-            // CREATE NEW DATE OBJECT
-            let currentDate = new Date(startDate);
-            currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
+		// FOR EVERY DAY
+		for (let i = 0; i <= diffDays; i++) {
+			// CREATE NEW DATE OBJECT
+			let currentDate = new Date(startDate);
+			currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
 
-            // RETURN DATE AS A NUMBER e.g. 18th April -> 18
-            let day = currentDate.getDate(); 
-            
-            // FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
-            let weekday = currentDate.toLocaleString('en-EN', { weekday: 'short' }).toUpperCase(); 
+			// RETURN DATE AS A NUMBER e.g. 18th April -> 18
+			let day = currentDate.getDate();
 
-            // PUSH DATE OBJECT TO ARRAY
-            dates.push({
-                date: `${day}`, // DAY NUMBER
-                dayOfWeek: weekday // DAY OF WEEK
-            });
-        }
-        
-        // STORE DATES FOR LATER RENDERING
-        testDates = dates;
+			// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
+			let weekday = currentDate
+				.toLocaleString("en-EN", { weekday: "short" })
+				.toUpperCase();
 
+			// PUSH DATE OBJECT TO ARRAY
+			dates.push({
+				date: `${day}`, // DAY NUMBER
+				dayOfWeek: weekday, // DAY OF WEEK
+			});
+		}
 
+		// STORE DATES FOR LATER RENDERING
+		testDates = dates;
 
-        // NOW REDIRECT TO CALENDER PAGE
-        res.redirect('/eventCreation');
-    });
+		// NOW REDIRECT TO CALENDER PAGE
+		res.redirect("/eventCreation");
+	});
 
-	app.get('/dbtest', (req, res) => {
-		res.render("dbtest.ejs")
+	// 404 ERRORS
+	app.get('*', (req, res) => {
+		res.render("404.ejs")
 	})
 
-}
+	app.get("/dbtest", (req, res) => {
+		res.render("dbtest.ejs");
+	});
 
+};
