@@ -163,6 +163,9 @@ module.exports = function (app, csvData, filePath, fs, math) {
       app.get('/summary', function(req, res) {
         res.render('summary.ejs');
       });
+	  app.get('/404', function(req, res) {
+        res.render('404.ejs');
+      });
 
 	// LOGIN PAGE
 	app.get("/login", function (req, res) {
