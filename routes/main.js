@@ -305,6 +305,9 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	app.get("/summary", function (req, res) {
 		res.render("summary.ejs");
 	});
+	  app.get('/404', function(req, res) {
+        res.render('404.ejs');
+      });
 
 	// LOGIN PAGE
 	app.get("/login", function (req, res) {
@@ -357,7 +360,13 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.redirect("/eventCreation");
 	});
 
+	// 404 ERRORS
+	app.get('*', (req, res) => {
+		res.render("404.ejs")
+	})
+
 	app.get("/dbtest", (req, res) => {
 		res.render("dbtest.ejs");
 	});
+
 };
