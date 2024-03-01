@@ -449,3 +449,8 @@ function generateURL()
 }
 
   module.exports = { isValidUsername };
+
+  // for exiting 404 
+  function homePage() {
+    window.location.href = '/'; 
+  }

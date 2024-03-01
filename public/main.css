@@ -159,8 +159,15 @@ main.error {
   text-align: center;
 }
 h1.error{
-  font-size: 6em;
+  font-size: 4em;
   text-align: center;
+}
+button.error{
+  font-size: 4em;
+  text-align: center;
+  border: 1px solid #5456FA;
+  color: #5456FA;;
+  background-color: white;
 }
 
 span.error {
