@@ -1,5 +1,3 @@
-const { forEach } = require("mathjs");
-
 document.addEventListener("DOMContentLoaded", function () {
 
 
@@ -78,6 +76,24 @@ document.addEventListener("DOMContentLoaded", function () {
 	// console.log(nestedDivs)
 
 });
+
+//function to set default value of calendar
+document.addEventListener("DOMContentLoaded", function () {
+	startDate = document.getElementById("start-date");
+	endDate = document.getElementById("end-date");
+
+	startDate.addEventListener("change", function() {
+		endDate.setAttribute("min", startDate.value);
+		if(endDate.valueAsDate < startDate.valueAsDate){
+			endDate.valueAsDate = startDate.valueAsDate;
+		}
+	})
+	
+	startDate.valueAsDate = new Date();
+	endDate.valueAsDate = new Date();
+})
+
+
 
 //
 // function setActive(e) {
@@ -392,6 +408,12 @@ function showShare() {
     document.getElementById("Share").style.display = "block";
 }
 
+function createEvent() {
+	//fetch request -> generate URL / check DB / save DB
+	//return code?
+	//set share element with code
+}
+
 
 // validation for login unit test for rouge inputs
 function isValidUsername(username) {
@@ -417,7 +439,6 @@ function generateURL()
         urlPassword += charset[randomIndex];
     }
     return urlPassword;
-
 }
 
   module.exports = { isValidUsername };

@@ -5,7 +5,11 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
     var testDates;
 
-	app.get("/", async function (req, res) {
+	app.get('/', function(req, res) {
+        res.render('index.ejs');
+      });
+
+	app.get("/eventCreation", async function (req, res) {
 		const testData = await new Promise((resolve, reject) => {
 			fs.readFile(filePath, "utf8", (err, data) => {
 				// IF FILE READ ERROR IS THROWN -> REJECT
@@ -40,8 +44,17 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 		console.log(testData);
 
-		res.render("index.ejs", { data: testData, dates: testDates })
+		if(testDates){
+			res.render("eventCreation.ejs", { data: testData, dates: testDates })
+		} else {
+			res.redirect('/')
+		}
 	});
+
+	//todo
+	app.post("/saveEvent", async function (req, res) {
+
+	})
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
@@ -137,9 +150,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 
 	//OZZES ROUTES WHEY
-	app.get('/landing', function(req, res) {
-        res.render('landing.ejs');
-      });
+	
     app.get('/link', function(req, res) {
         res.render('link.ejs');
       });
@@ -162,8 +173,13 @@ module.exports = function (app, csvData, filePath, fs, math) {
     // USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
     app.post('/calculate-dates', (req, res) => {
         // TAKE THE VALUES FROM /date FORMS
-        const startDate = new Date(req.body['start-date']);
+        // const startDate = new Date(req.body['start-date']);
+        // const endDate = new Date(req.body['end-date']);
+
+		const startDate = new Date(req.body['start-date']);
         const endDate = new Date(req.body['end-date']);
+
+		console.log(req.body)
 
         // EXTRACT START TO FINISH DATE
         const diffTime = endDate - startDate;
@@ -195,8 +211,10 @@ module.exports = function (app, csvData, filePath, fs, math) {
         // STORE DATES FOR LATER RENDERING
         testDates = dates;
 
+
+
         // NOW REDIRECT TO CALENDER PAGE
-        res.redirect('/');
+        res.redirect('/eventCreation');
     });
 
 	app.get('/dbtest', (req, res) => {

@@ -29,14 +29,14 @@ const db = mysql.createConnection({
 	database: "planit",
 });
 
-// // Connect to the database
-// db.connect((err) => {
-// 	if (err) {
-// 		throw err;
-// 	}
-// 	console.log("Connected to database");
-// });
-// global.db = db;
+// Connect to the database
+db.connect((err) => {
+	if (err) {
+		throw err;
+	}
+	console.log("Connected to database");
+});
+global.db = db;
 
 
 // Set up css and scripts path
