@@ -221,5 +221,10 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.render("dbtest.ejs")
 	})
 
+	// 404 ERRORS
+	app.get('*', (req, res) => {
+		res.render("404.ejs")
+	})
+
 }
 
