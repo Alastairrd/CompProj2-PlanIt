@@ -1,9 +1,15 @@
-module.exports = function (app, csvData, filePath, fs) {
+const { forEach } = require("mathjs");
+
+module.exports = function (app, csvData, filePath, fs, math) {
     // Handle our routes
 
     var testDates;
 
-	app.get("/", async function (req, res) {
+	app.get('/', function(req, res) {
+        res.render('index.ejs');
+      });
+
+	app.get("/eventCreation", async function (req, res) {
 		const testData = await new Promise((resolve, reject) => {
 			fs.readFile(filePath, "utf8", (err, data) => {
 				// IF FILE READ ERROR IS THROWN -> REJECT
@@ -38,8 +44,17 @@ module.exports = function (app, csvData, filePath, fs) {
 
 		console.log(testData);
 
-		res.render("index.ejs", { data: testData, dates: testDates })
+		if(testDates){
+			res.render("eventCreation.ejs", { data: testData, dates: testDates })
+		} else {
+			res.redirect('/')
+		}
 	});
+
+	//todo
+	app.post("/saveEvent", async function (req, res) {
+
+	})
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
@@ -77,9 +92,13 @@ module.exports = function (app, csvData, filePath, fs) {
 	app.get("/matrixGet", async function (req, res) {
 		console.log("TODO REMOVE: we made it this far");
 
+		//TODO get event from URL, get event_id from this
+
+		//TODO change query to use event_id from DB
+
 		//gets the data from DB
 		db.query(
-			`SELECT * FROM unavail WHERE event_id = 2`,
+			`SELECT * FROM unavail WHERE event_id = 3`,
 			(error, results) => {
 				if (error) {
 					console.error(error);
@@ -95,12 +114,43 @@ module.exports = function (app, csvData, filePath, fs) {
 
 	});
 
+	app.post("/matrixCalc", async function (req, res) {
+
+		//matrix we passed into the request, for some reason it unJSON's itself 
+		const matrixArr = req.body;
+
+
+		console.log("matrixArr: ")
+		console.log(matrixArr);
+
+		//placeholder matrix for getting sizes
+		let matrixHolder = matrixArr[0];
+
+		console.log("matrixHolder: ")
+		console.log(matrixHolder);
+
+		//zero'd matrix the correct size
+		let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+
+		console.log("sumMatrix: ")
+		console.log(sumMatrix);
+
+		//add each matrix to sum matrix
+		matrixArr.forEach((matrix) => {
+			sumMatrix = math.add(sumMatrix, matrix)
+		})
+
+		console.log("sumMatrix post adding: ")
+		console.log(sumMatrix); 
+
+		res.send(sumMatrix);
+		
+	});
+
 
 
 	//OZZES ROUTES WHEY
-	app.get('/landing', function(req, res) {
-        res.render('landing.ejs');
-      });
+	
     app.get('/link', function(req, res) {
         res.render('link.ejs');
       });
@@ -123,8 +173,13 @@ module.exports = function (app, csvData, filePath, fs) {
     // USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
     app.post('/calculate-dates', (req, res) => {
         // TAKE THE VALUES FROM /date FORMS
-        const startDate = new Date(req.body['start-date']);
+        // const startDate = new Date(req.body['start-date']);
+        // const endDate = new Date(req.body['end-date']);
+
+		const startDate = new Date(req.body['start-date']);
         const endDate = new Date(req.body['end-date']);
+
+		console.log(req.body)
 
         // EXTRACT START TO FINISH DATE
         const diffTime = endDate - startDate;
@@ -156,8 +211,10 @@ module.exports = function (app, csvData, filePath, fs) {
         // STORE DATES FOR LATER RENDERING
         testDates = dates;
 
+
+
         // NOW REDIRECT TO CALENDER PAGE
-        res.redirect('/');
+        res.redirect('/eventCreation');
     });
 
 	app.get('/dbtest', (req, res) => {

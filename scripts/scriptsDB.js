@@ -66,6 +66,7 @@ function setActive(e) {
 }
 
 function printData() {
+	//getting number of dates
 	dateboxes = document.getElementsByClassName("datebox");
 	for (i = 1; i <= dateboxes.length; i++) {
 		let gridString = "grid" + i;
@@ -242,9 +243,46 @@ async function calcMatrixData() {
 	console.log("DB data: ");
 	console.log(data);
 
+	let matrixArr = data.map((x) => x.bit_matrix)
+
 	//TODO SEND FETCH REQUEST TO USE MATH MODULE LOL
-	let matrixHolder = JSON.parse(data[0].bit_matrix);
-	let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+	//let matrixHolder = JSON.stringify();
+	//let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+
+	//TODO try a post method?
+	try {
+		//reponse is equal to the result of the promise
+		const response = await fetch("/matrixCalc", {
+			method: "POST",
+
+			headers: {
+				"Content-Type": "application/json",
+			},
+			//matrix we just made
+			body: JSON.stringify(matrixArr)
+		});
+
+		//if all went well, say so
+		if (response.ok == true) {
+			console.log(
+				"Data calculated successfully, code: " +
+					response.status
+			);
+			data = await response.json();
+		} else {
+			//if database request didnt go well
+			console.log(
+				"No bueno calcing that data chief, CODE: " +
+					response.status +
+					", text: " +
+					response.statusText
+			);
+		}
+
+		//else oh no, tell us what went wrong
+	} catch (error) {
+		console.error(error);
+	}
 
 	//CURRENTLY NOT WORKING TODO
 	// for(let i = 0; i < data.length; i++){
@@ -252,7 +290,7 @@ async function calcMatrixData() {
 	// }
 
 	//THIS IS NOT WORKING CURRENTLY
-	console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
+	//console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
 }
 
 // function touchTest(e){

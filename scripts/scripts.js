@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-	// THIS IS THE DATA FROM THE CSV FILE -> DECLARED IN INDEX.EJS AS: <%- JSON.stringify(data) %>
-	if (data != undefined) {
-		data = data.flat(); // TURNED FROM 2D ARRAY TO 1D ARRAY
-	}
+
 
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
 	otherDateTimes = document.getElementsByClassName("timeslot");
+
 
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < otherDateTimes.length; i++) {
@@ -49,32 +47,53 @@ document.addEventListener("DOMContentLoaded", function () {
 		dateTimes[i].setAttribute("data-val", 0);
 	}
 
+	//deprecated, taking from csv, errors cause data is larger or smaller than event size
 	// FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
+	// for (let i = 0; i < data.length; i++) {
+	// 	//if (data[i] == "1" && dateTimes[i])
+	// 	if (data[i] == "1")
+	// 		//dateTimes[i].classList.add("already-active");
 
-			otherDateTimes[i].classList.add("active");
-		// console.log(data[i])
-		//dateTimes[i].setAttribute("data-val", 1)
-	}
+	// 		otherDateTimes[i].classList.add("active");
+	// 	// console.log(data[i])
+	// 	//dateTimes[i].setAttribute("data-val", 1)
+	// }
 
-	for (let i = 0; i < data.length; i++) {
-		//if (data[i] == "1" && dateTimes[i])
-		if (data[i] == "1")
-			//dateTimes[i].classList.add("already-active");
+	//deprecated, taking from csv, errors cause data is larger or smaller than event size
+	// for (let i = 0; i < data.length; i++) {
+	// 	//if (data[i] == "1" && dateTimes[i])
+	// 	if (data[i] == "1")
+	// 		//dateTimes[i].classList.add("already-active");
 
-			//dateTimes[i].classList.add("active");
-			//console.log(data[i])
-			otherDateTimes[i].setAttribute("data-val", 1);
-	}
+	// 		//dateTimes[i].classList.add("active");
+	// 		//console.log(data[i])
+	// 		otherDateTimes[i].setAttribute("data-val", 1);
+	// }
 
 	// grid1elements = document.getElementsByClassName("grid1")
 
 	// nestedDivs = grid1elements[0].children
 	// console.log(nestedDivs)
+
 });
+
+//function to set default value of calendar
+document.addEventListener("DOMContentLoaded", function () {
+	startDate = document.getElementById("start-date");
+	endDate = document.getElementById("end-date");
+
+	startDate.addEventListener("change", function() {
+		endDate.setAttribute("min", startDate.value);
+		if(endDate.valueAsDate < startDate.valueAsDate){
+			endDate.valueAsDate = startDate.valueAsDate;
+		}
+	})
+	
+	startDate.valueAsDate = new Date();
+	endDate.valueAsDate = new Date();
+})
+
+
 
 //
 // function setActive(e) {
@@ -116,29 +135,27 @@ function setActive(e) {
 	}
 }
 
+
 function printData() {
-	dateboxes = document.getElementsByClassName("datebox");
-	for (i = 1; i <= dateboxes.length; i++) {
-		let gridString = "grid" + i;
 
-		let grid = document.getElementById(gridString);
+	days = document.getElementsByClassName("day");
+	for (i = 0; i < days.length - 1; i++) {
+		let dayString = "day" + i;
 
-		gridItems = Array.from(grid.children);
+		let day = document.getElementById(dayString);
 
-		for (let j = 0; j < gridItems.length; j++) {
+		dayItems = Array.from(day.children);
+
+		//start at one to ignore dayOfWeek element
+		for (let j = 1; j < dayItems.length; j++) {
 			console.log(
-				gridString +
+				dayString +
 					" , item " +
 					j +
 					": " +
-					gridItems[j].getAttribute("data-val")
+					dayItems[j].getAttribute("data-val")
 			);
 		}
-
-		// gridItems.forEach(element => {
-		//     element.getAttribute("data-val")
-		//     console.log(element.getAttribute("data-val"))
-		// });
 	}
 }
 
@@ -146,34 +163,25 @@ function printData() {
 async function sendMatrixData() {
 	let matrix = [];
 
-	dateboxes = document.getElementsByClassName("datebox");
-	for (i = 1; i <= dateboxes.length; i++) {
+	days = document.getElementsByClassName("day");
+	for (i = 0; i < days.length - 1; i++) {
 		let row = [];
 
 		//get right grid - day of the week, get all children from that grid
-		let gridString = "grid" + i;
-		let grid = document.getElementById(gridString);
-		gridItems = Array.from(grid.children);
+		let dayString = "day" + i;
+		let day = document.getElementById(dayString);
 
-		gridItems.map(function (gridItem) {
-			x = parseInt(gridItem.getAttribute("data-val"));
+		//get all timeslots and remove dayOfTheWeek section
+		dayItems = (Array.from(day.children)).slice(1);
+
+		dayItems.map(function (dayItem) {
+			x = parseInt(dayItem.getAttribute("data-val"));
 			row.push(x);
 		});
 
 		matrix.push(row);
-
-		// for(let j=0; j < gridItems.length; j++){
-		//     console.log(gridString + " , item " + j + ": " + gridItems[j].getAttribute("data-val"))
-		//     row.
-		// }
-
-		// gridItems.forEach(element => {
-		//     element.getAttribute("data-val")
-		//     console.log(element.getAttribute("data-val"))
-		// });
 	}
 
-	// console.log(matrix);
 
 	//turn our bit matrix into JSON
 	jsonMatrix = JSON.stringify(matrix);
@@ -214,18 +222,6 @@ async function sendMatrixData() {
 	} catch (error) {
 		console.error(error);
 	}
-
-	// db.query(
-	//     `INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
-	//     [1, 1, jsonMatrix],
-	//     (error, results) => {
-	//         if (error) {
-	//             reject(error);
-	//         } else {
-	//             resolve(results);
-	//         }
-	//     }
-	// );
 }
 
 async function getMatrixData() {
@@ -293,17 +289,74 @@ async function calcMatrixData() {
 	console.log("DB data: ");
 	console.log(data);
 
-	//TODO SEND FETCH REQUEST TO USE MATH MODULE LOL
-	let matrixHolder = JSON.parse(data[0].bit_matrix);
-	let sumMatrix = math.zeros(matrixHolder.length, matrixHolder[0].length);
+	let matrixArr = data.map((x) => JSON.parse(x.bit_matrix))
 
-	//CURRENTLY NOT WORKING TODO
-	// for(let i = 0; i < data.length; i++){
-	//     sumMatrix = math.add(sumMatrix, JSON.parse(data[i].bit_matrix))
-	// }
+	console.log("matrixArr - scripts.js - :")
+	console.log(matrixArr)
 
-	//THIS IS NOT WORKING CURRENTLY
-	console.log("Ignore this, not working yet (sumMatrix): " + sumMatrix);
+	matrixArr = JSON.stringify(matrixArr)
+
+	//Send matrix data from DB to route handler to add all matrices together with mathjs
+	let summedMatrix = -1;
+	try {
+		//reponse is equal to the result of the promise
+		const response = await fetch("/matrixCalc", {
+			method: "POST",
+
+			headers: {
+				"Content-Type": "application/json",
+			},
+			//matrix we just made
+			body: matrixArr
+		});
+
+		//if all went well, say so
+		if (response.ok == true) {
+			console.log(
+				"Data calculated successfully, code: " +
+					response.status
+			);
+			//returned summed matrix
+			summedMatrix = await response.json();
+		} else {
+			//if database request didnt go well
+			console.log(
+				"No bueno calcing that data chief, CODE: " +
+					response.status +
+					", text: " +
+					response.statusText
+			);
+		}
+
+		//else oh no, tell us what went wrong
+	} catch (error) {
+		console.error(error);
+	}
+
+	
+
+	//todo comment
+	//todo Rework to use dates etc to output days
+	//array to put available coordinates of times in (ie: day, timeslot)
+	let dateCoords = []
+
+	//if summedMatrix returned with data
+	if(summedMatrix.data){
+		//set equal to this data for ease
+		summedMatrix = summedMatrix.data;
+		//iterate over each matrix and row
+		for(i = 0; i < summedMatrix.length; i++){
+			for(j = 0; j < summedMatrix[i].length; j++){
+				//find times = to 0
+				if(summedMatrix[i][j] == 0){
+					//push those coords as available dates
+					dateCoords.push([i, j]);
+				}
+			}
+		}
+	}
+
+	console.log(dateCoords);
 }
 
 // function touchTest(e){
@@ -355,6 +408,12 @@ function showShare() {
     document.getElementById("Share").style.display = "block";
 }
 
+function createEvent() {
+	//fetch request -> generate URL / check DB / save DB
+	//return code?
+	//set share element with code
+}
+
 
 // validation for login unit test for rouge inputs
 function isValidUsername(username) {
@@ -362,6 +421,24 @@ function isValidUsername(username) {
     const regex = /^[a-zA-Z]+$/;
     return regex.test(username);
   }
-  
+
+// GENERATES URL FOR EVENT JOINING
+function generateURL()
+{
+	// CHARACTER SET TO DRAW FROM
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let urlPassword = "";
+
+	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
+    for (let i = 0; i < 10; i++)
+	{
+		// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
+        const randomIndex = Math.floor(Math.random() * charset.length);
+
+		// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
+        urlPassword += charset[randomIndex];
+    }
+    return urlPassword;
+}
+
   module.exports = { isValidUsername };
-  

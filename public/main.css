@@ -10,14 +10,14 @@ body {
 /* Heading and progress bar */
 .page-top {
   width: 100%; 
-  margin: 50px 0px 20px 0px;
+  margin: 100px 0px 20px 0px;
 }
 
-.main-heading {
-  font-size: xxx-large;
+.title-heading {
+  font-size: 60px; /*Changed because too small */
   color: black;
   font-weight: normal;
-  margin: 20px 20px 10px 20px;
+  margin: 20px 20px 50px 20px; /* Changed because spacing was too small CM 29/02 */
 }
 
 .progress-grey {
@@ -26,28 +26,46 @@ body {
   background-color: #D9D9d9;
 }
 
-.progress-blue {
+
+/* FIXME: There must be a simpler way of doing this progress */
+.progress-blue-20 {
   border: 1px solid #5456FA;
-  width: 80%;
-  height: 20px;
+  width: 20%;
+  height: 35px; /* 10px was too narrow CM 29/02*/
   background-color: #5456FA;
 }
 
-.progress-blue-start {
+.progress-blue-40 {
   border: 1px solid #5456FA;
-  width: 20%;
-  height: 10px;
+  width: 40%;
+  height: 35px;
   background-color: #5456FA;
-}.progress-blue-end {
+}
+
+.progress-blue-60 {
+  border: 1px solid #5456FA;
+  width: 60%;
+  height: 35px;
+  background-color: #5456FA;
+}
+
+.progress-blue-80 {
+  border: 1px solid #5456FA;
+  width: 80%;
+  height: 35px;
+  background-color: #5456FA;
+}
+
+.progress-blue-end {
   border: 1px solid #5456FA;
   width: 100%;
-  height: 10px;
+  height: 35px;
   background-color: #5456FA;
 }
 
 .back-button {
   color: black;
-  font-size: 1.5em;
+  font-size: 50px; /* 1.5em wasn't big enough CM 29/02 */
   text-decoration: none;
   text-align: left;
   border: none;
@@ -55,7 +73,6 @@ body {
   margin-top: 1em;
   margin-left: 20px;
   padding: 0px;
-
 
 }
 
@@ -66,12 +83,15 @@ main {
   
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .text {
   color: black;
-  font-size: small;
+  font-size: 32px; /* I changed this because it was too small CM 29/02 */
   text-decoration: none;
   text-align: left;
-  margin: 10px;
 }
 
 /* Calendar */
@@ -200,8 +220,9 @@ h2.hack {
 
 /* create and join buttons for landing page*/
 .create, .join {
-  border: 2px solid #0a0b0b;
-  border-radius: 5px;
+
+  border: 2px solid #BBBABA; /* changed colour in line with Figma design CM 29/02 */
+  border-radius: 20px; /* 5px wasn't showing up */
   color: rgb(10, 10, 10);
   background-color: #ffffff; 
   padding: 30px 32px;
@@ -210,13 +231,15 @@ h2.hack {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 42px; /* 16px was hardly legible */
   cursor: pointer;
-  margin: 0 10px; 
-  width: 250px; 
-  height: 90px;
+  margin: 30px 0px 10px 0px; /* to put spaces between the two */
+  width: 100%; /* Full width of main CM 29/02 */
+  height: 170px; /* 90px wasn't big enough */
 }
-.create {
+
+/* These positions were not working in mobile view */
+/* .create {
   position: absolute;
   top: 65%;
   left: 20%;
@@ -225,41 +248,94 @@ h2.hack {
   position: absolute;
   top: 65%;
   left: 60%;
-}
+} */
+
 .join:hover , .create:hover {
   color:#0003FA;
   border: 5px solid #0003FA;
 }
 /* fieldset for the name of an input to be writen whithin the border*/
 fieldset {
-  border: 3px solid #0003FA;
+  border: 2px solid #0003FA;
   padding: 10px; 
+  border-radius: 20px;
+  height: 100px;
+  width: 100%;
+  margin-bottom: 30px;
+
 }
 /* https://stackoverflow.com/questions/7731310/text-in-border-css-html*/
 fieldset input[type=text] {
   width: calc(100% - 22px); 
   padding: 10px;
+  font-size: 26px;
   box-sizing: border-box;
   border: none;
   outline: none; 
 }
+
+legend {
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  font-size: 30px;
+}
+
+input[type="email" i] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  font-size: 26px;
+  box-sizing: border-box;
+  border: none;
+  outline: none; 
+}
+
+input[type="submit"] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  font-size: 32px;
+  box-sizing: border-box;
+  border: none;
+  outline: none; 
+  background-color: #0003FA;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+input[type="password"] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  font-size: 26px;
+  box-sizing: border-box;
+  border: none;
+  outline: none; 
+}
+
+input[type="date" i] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  font-size: xx-large;
+  color: #BBBABA;
+  box-sizing: border-box;
+  border: none;
+  outline: none; 
+}
+
+
 /* another next button with varible screen position*/
 .nextother {
   text-align: center;
+  font-size: xx-large;
   color: white;
-  text-transform: capitalize;
+  text-transform: uppercase; /* Changed in line with Figma design CM 29/02 */
   letter-spacing: 0.25em;
   background-color: #0003FA;
   border: 1px solid #5456FA;
-  border-radius: 5px;
+  border-radius: 20px; /* 5px too subtle */
   /*position: absolute; - CHANGED FOR TIME BEING */
-  bottom: 10px;
-  width: 80%;
-  height: 50px;
-  margin-left: 10%;
-  margin-right: 5%;
-  margin-top: 20px ;
-  margin-bottom: 20px;
+  width: 70%;
+  height: 130px;
+  margin: 20px 15%;
   cursor: pointer;
 }
 /* alternitive next button hover*/
@@ -285,21 +361,21 @@ fieldset input[type=text] {
 }
 /* register button*/
 .register {
-  text-align: center;
+  /* text-align: center;
   color: white;
   text-transform: capitalize;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.25em; */
+  font-size: xx-large;
   background-color: #0003FA;
   border: 1px solid #5456FA;
-  border-radius: 5px;
-  position: absolute;
-  width: 50%;
-  height: 50px;
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-bottom: 50px;
+  border-radius: 20px; /* Doesn't show iup at 5px CM 29/02 */
+  /* position: absolute; */
+  width: 70%;
+  height: 130px;
+  margin: 20px 15%;
   cursor: pointer;
 }
+
 /* avalible times*/
 .times{
   text-align: center;
