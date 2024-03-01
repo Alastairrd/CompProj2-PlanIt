@@ -249,7 +249,13 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.redirect("/eventCreation");
 	});
 
+	// 404 ERRORS
+	app.get('*', (req, res) => {
+		res.render("404.ejs")
+	})
+
 	app.get("/dbtest", (req, res) => {
 		res.render("dbtest.ejs");
 	});
+
 };
