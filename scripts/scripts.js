@@ -92,6 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 		startDate.valueAsDate = new Date();
 		endDate.valueAsDate = new Date();
+
+		startDate.setAttribute("min", startDate.value);
 	}
 	
 })
@@ -415,8 +417,100 @@ function showShare() {
     document.getElementById("Share").style.display = "block";
 }
 
-function createEvent() {
+async function gatherCalData() {
+	let matrix = [];
+
+	days = document.getElementsByClassName("day");
+	for (i = 0; i < days.length - 1; i++) {
+		let row = [];
+
+		//get right grid - day of the week, get all children from that grid
+		let dayString = "day" + i;
+		let day = document.getElementById(dayString);
+
+		//get all timeslots and remove dayOfTheWeek section
+		dayItems = (Array.from(day.children)).slice(1);
+
+		dayItems.map(function (dayItem) {
+			x = parseInt(dayItem.getAttribute("data-val"));
+			row.push(x);
+		});
+
+		matrix.push(row);
+	}
+
+
+	//turn our bit matrix into JSON
+	jsonMatrix = JSON.stringify(matrix);
+
+	console.log(jsonMatrix);
+	
+
+	return jsonMatrix;
+}
+
+async function calToDB() {
 	//fetch request -> generate URL / check DB / save DB
+	let cData = await gatherCalData();
+
+	console.log(JSON.parse(cData));
+
+	postData = {
+		calData: JSON.parse(cData),
+	sD: startDt,
+	eD: endDt
+	}
+
+	console.log(postData);
+	
+
+	let eventUrl;
+		//try this fetch promise with our api route for sending data to DB
+		try {
+			//reponse is equal to the result of the promise
+			let response = await fetch("/saveEvent", {
+				method: "POST",
+	
+				//tell the api we're using JSON and to parse it as such
+				headers: {
+					"Content-Type": "application/json",
+				},
+				//matrix we just made
+				body: JSON.stringify(postData), 
+			});
+	
+			//if all went well, say so
+			if (response.ok == true) {
+				console.log(
+					"response ok TODO write response" +
+						response.status
+				);
+					eventUrl = await response.json();
+			} else {
+				//if database request didnt go well
+				console.log(
+					"response womp womp TODO write response" +
+						response.status +
+						", text: " +
+						response.statusText
+				);
+			}
+	
+			//else oh no, tell us what went wrong
+		} catch (error) {
+			console.error(error);
+		}
+
+		//if we have an event URL, show share section and set button text to this URL
+		if(eventUrl){
+			showShare();
+			//TODO make this a link to planit with url link
+			document.getElementById("link-button").innerText = eventUrl;
+		}
+
+
+		
+		
 	//return code?
 	//set share element with code
 }

@@ -10,6 +10,8 @@
         // THE DATA FROM READING CSV FILE: line 45 of main.js
         let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
         let dateInfo = <%- JSON.stringify(dates) %>;
+        let startDt = <%- JSON.stringify(startDate) %>;
+        let endDt = <%- JSON.stringify(endDate) %>;
 
     </script>
 
@@ -271,7 +273,7 @@
         </div>
     </div>
         <!-- Next button at bottom of page-->
-        <button class="next" onclick="showShare()">NEXT</button>
+        <button class="next" onclick="calToDB()">NEXT</button>
 
         <button onclick="printData()">CONSOLE DATA TEST</button>
                 
@@ -292,7 +294,7 @@
             <br>
             You can invite others to contribute their availability by sharing the following code: <br></strong></p>
     <!-- link to copy -->
-    <button class="link-button">vgvh-gvhg-hgvv-gv</button>
+    <button id="link-button" class="link-button"></button>
     <div style="text-align:center">
     <p><strong> <br>If you’d like to access, save and edit your event at any time, register here!<br></strong></p>
     </div>

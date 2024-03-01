@@ -1,5 +1,3 @@
-const { forEach } = require("mathjs");
-
 module.exports = function (app, csvData, filePath, fs, math) {
 	// Handle our routes
 
@@ -44,12 +42,15 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		});
 
 		let passDates;
+		let sD;
+		let eD;
 
 		if (req.body) {
 			const startDate = new Date(req.body["start-date"]);
 			const endDate = new Date(req.body["end-date"]);
 
-			console.log(req.body);
+			sD = startDate;
+			eD = endDate;
 
 			// EXTRACT START TO FINISH DATE
 			const diffTime = endDate - startDate;
@@ -87,6 +88,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			res.render("eventCreation.ejs", {
 				data: testData,
 				dates: passDates,
+				startDate: sD,
+				endDate: eD,
 			});
 		} else {
 			res.redirect("/");
@@ -94,7 +97,112 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	});
 
 	//todo
-	app.post("/saveEvent", async function (req, res) {});
+	app.post("/saveEvent", async function (req, res) {
+		console.log(req.body);
+
+		startDate = new Date(req.body.sD);
+		endDate = new Date(req.body.eD);
+
+
+		//this formats JS Dates into MySQL DATE format
+		const sDChanged = startDate.toJSON().slice(0, 19).replace("T", " ");
+		const eDChanged = endDate.toJSON().slice(0, 19).replace("T", " ");
+
+		console.log(req.body.calData);
+		console.log(sDChanged);
+		console.log(eDChanged);
+
+		//todo remove hardCoded user_id
+		let user_id = 1;
+
+		//db query, check event table for URL value
+		let urlCheck = 1;
+		let url;
+		while (urlCheck == 1) {
+			url = (function () {
+				// CHARACTER SET TO DRAW FROM
+				const charset =
+					"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+				let urlPassword = "";
+
+				// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
+				for (let i = 0; i < 10; i++) {
+					// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
+					const randomIndex = Math.floor(
+						Math.random() * charset.length
+					);
+
+					// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
+					urlPassword += charset[randomIndex];
+				}
+				return urlPassword;
+			})();
+
+			console.log(url);
+
+			//gets the data from DB
+			urlCheck = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+					url,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0].urlExists);
+						}
+					}
+				);
+			});
+		}
+
+		//if not found, save event
+		let eventInserted = false;
+		let eventInsertRes = await new Promise((resolve, reject) => {
+			db.query(
+				"INSERT INTO user_events (creator_id, event_url, start_date, end_date) VALUES (?, ?, ?, ?)",
+				[user_id, url, sDChanged, eDChanged],
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results.insertId);
+						eventInserted = true;
+					}
+				}
+			);
+		});
+
+		console.log(eventInsertRes);
+
+		//TODO FIRST NEED EVENT_ID
+		let availInserted = false;
+		if (eventInserted) {
+			let availInsertRes = await new Promise((resolve, reject) => {
+				db.query(
+					`INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
+
+					//for some reason we need to stringify it again or else it seperates the array
+					[eventInsertRes, user_id, JSON.stringify(req.body.calData)],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+							availInserted = true;
+						}
+					}
+				);
+			});
+		}
+
+		//TODO update to send back URL
+		if (availInserted == true) {
+			res.json(url);
+		} else {
+			res.send("500")
+		}
+	});
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
