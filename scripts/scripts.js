@@ -507,12 +507,6 @@ async function calToDB() {
 			//TODO make this a link to planit with url link
 			document.getElementById("link-button").innerText = eventUrl;
 		}
-
-
-		
-		
-	//return code?
-	//set share element with code
 }
 
 
