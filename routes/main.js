@@ -7,6 +7,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.render("index.ejs");
 	});
 
+	
+
 	app.post("/eventCreation", async function (req, res) {
 		//TODO remove
 		const testData = await new Promise((resolve, reject) => {
@@ -360,13 +362,42 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.redirect("/eventCreation");
 	});
 
+	//route for a url
+	app.get("/event/:eventUrl", async function (req, res) {
+		//check url exists
+
+		let url = req.params.eventUrl;
+		//gets the data from DB
+		let urlCheck = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				url,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results[0].urlExists);
+					}
+				}
+			);
+		});
+
+		//if it does, show join options, if not, redirect
+		if(urlCheck){
+			//show join options todo make page
+			res.render('')
+		} else {
+			res.redirect('/');
+		}
+
+		//if join, show calendar view, allow adding
+
+		//if view, go straight to summary
+
+	})
+
 	// 404 ERRORS
 	app.get('*', (req, res) => {
 		res.render("404.ejs")
 	})
-
-	app.get("/dbtest", (req, res) => {
-		res.render("dbtest.ejs");
-	});
-
 };
