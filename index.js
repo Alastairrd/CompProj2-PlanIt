@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 //csv testing TODO remove
 const filePath = path.join(__dirname, 'test.csv');
 
-
+/*
 // Define the database connection
 const db = mysql.createConnection({
 	host: "localhost",
@@ -37,7 +37,7 @@ db.connect((err) => {
 	console.log("Connected to database");
 });
 global.db = db;
-
+*/
 
 // Set up css and scripts path
 app.use(express.static(__dirname + "/public"));
