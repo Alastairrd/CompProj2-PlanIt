@@ -1,3 +1,7 @@
+// THIS IS USED TO GET THE LOGIC FROM calculateDates.js (UNIT TESTING PURPOSES)
+const { calculateDates } = require('../scripts/calculateDates.js');
+
+
 module.exports = function (app, csvData, filePath, fs, math) {
 	// Handle our routes
 
@@ -48,40 +52,17 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		let eD;
 
 		if (req.body) {
+
+			// USER INPUTS FROM CALENDAR
 			const startDate = new Date(req.body["start-date"]);
 			const endDate = new Date(req.body["end-date"]);
+	  
+			// REFER TO 'calulcateDates.js' FOR LOGIC
+			passDates = calculateDates(startDate, endDate);
 
 			sD = startDate;
 			eD = endDate;
 
-			// EXTRACT START TO FINISH DATE
-			const diffTime = endDate - startDate;
-			const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
-
-			// ARRAY OF DATES TO BE RETURNED
-			//let dates = [];
-			passDates = [];
-
-			// FOR EVERY DAY
-			for (let i = 0; i <= diffDays; i++) {
-				// CREATE NEW DATE OBJECT
-				let currentDate = new Date(startDate);
-				currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
-
-				// RETURN DATE AS A NUMBER e.g. 18th April -> 18
-				let day = currentDate.getDate();
-
-				// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
-				let weekday = currentDate
-					.toLocaleString("en-EN", { weekday: "short" })
-					.toUpperCase();
-
-				// PUSH DATE OBJECT TO ARRAY
-				passDates.push({
-					date: `${day}`, // DAY NUMBER
-					dayOfWeek: weekday, // DAY OF WEEK
-				});
-			}
 		}
 
 		//console.log(testData);
@@ -318,49 +299,17 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 	// USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
 	app.post("/calculate-dates", (req, res) => {
-		// TAKE THE VALUES FROM /date FORMS
-		// const startDate = new Date(req.body['start-date']);
-		// const endDate = new Date(req.body['end-date']);
 
+		// USER INPUTS FROM CALENDAR
 		const startDate = new Date(req.body["start-date"]);
 		const endDate = new Date(req.body["end-date"]);
-
-		console.log(req.body);
-
-		// EXTRACT START TO FINISH DATE
-		const diffTime = endDate - startDate;
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
-
-		// ARRAY OF DATES TO BE RETURNED
-		let dates = [];
-
-		// FOR EVERY DAY
-		for (let i = 0; i <= diffDays; i++) {
-			// CREATE NEW DATE OBJECT
-			let currentDate = new Date(startDate);
-			currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
-
-			// RETURN DATE AS A NUMBER e.g. 18th April -> 18
-			let day = currentDate.getDate();
-
-			// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
-			let weekday = currentDate
-				.toLocaleString("en-EN", { weekday: "short" })
-				.toUpperCase();
-
-			// PUSH DATE OBJECT TO ARRAY
-			dates.push({
-				date: `${day}`, // DAY NUMBER
-				dayOfWeek: weekday, // DAY OF WEEK
-			});
-		}
-
-		// STORE DATES FOR LATER RENDERING
-		testDates = dates;
-
-		// NOW REDIRECT TO CALENDER PAGE
+	  
+		// REFER TO 'calulcateDates.js' FOR LOGIC
+		testDates = calculateDates(startDate, endDate);
+	  
+		// ONTO NEXT PAGE
 		res.redirect("/eventCreation");
-	});
+	  });
 
 	//route for a url
 	app.get("/event/:eventUrl", async function (req, res) {

@@ -536,7 +536,7 @@ function generateURL()
     return urlPassword;
 }
 
-  module.exports = { isValidUsername };
+  module.exports = { isValidUsername, generateURL};
 
   // for exiting 404 
   function homePage() {
