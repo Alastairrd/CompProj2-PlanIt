@@ -34,9 +34,12 @@
 			<button class="create" style="left: 60%" onclick="showName()">
 				Join Event
 			</button>
-			<button class="join" style="left: 20%" onclick="showResults()">
-				Show Results
-			</button>
+			<a href="/results/<%- eventUrl %>">
+				<button class="join" style="left: 20%">
+					Show Results
+				</button>
+			</a>
+			
 		</main>
 
 		<main id="nameSection" style="display: none">
