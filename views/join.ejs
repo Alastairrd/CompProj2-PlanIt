@@ -4,42 +4,64 @@
 		<title>Welcome to PLANIT</title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 		<script src="/scripts.js"></script>
-
-		<!-- DELCARING DATA SO IT IS ACCESSIBLE TO scripts.js -->
 		<script>
-			// THE DATA FROM READING CSV FILE: line 45 of main.js
-			let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
-			let dateInfo = <%- JSON.stringify(dates) %>;
-			let startDt = <%- JSON.stringify(startDate) %>;
-			let endDt = <%- JSON.stringify(endDate) %>;
+			let eventUrl = <%- JSON.stringify(eventUrl) %>;
 		</script>
 	</head>
 	<body>
 		<section class="page-top">
 			<!-- Heading-->
-			<h1 class="main-heading">PlanIt MVP</h1>
+			<h1 class="title-heading">PlanIt MVP</h1>
 
 			<!-- Progress bar -->
 			<div class="progress-grey">
-				<div class="progress-blue"></div>
+				<div class="progress-blue-20"></div>
 			</div>
-			<!--  button -->
-			<button class="back-button">
-				<!-- Back arrow from https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
-				&#x21E0; Back
-			</button>
+
+			<!-- Back button -->
+			<button class="back-button" onclick="homeRedirect()">Back</button>
 		</section>
-		<main id="Calendar">
-			<!-- Welcome message -->
+		<main id="landingSection">
+			<!-- Welcome message for landing section -->
 			<section class="text">
+				<p class="bold">Welcome to PlanIt</p>
 				<p>
-					<strong
-						>Hi [Username]!<br />You're on the way to creating your
-						event.</strong
-					>
+					Choose whether you would like to add your availability or
+					see the summary of results:
 				</p>
 			</section>
+			<!-- Buttons to create an event or join an event -->
+			<button class="create" style="left: 60%" onclick="showName()">
+				Join Event
+			</button>
+			<button class="join" style="left: 20%" onclick="showResults()">
+				Show Results
+			</button>
+		</main>
 
+		<main id="nameSection" style="display: none">
+			<!-- Welcome message for join section -->
+			<section class="text">
+				<p class="bold">Welcome to PlanIt</p>
+				<p>Enter your name in here:</p>
+			</section>
+			<form action="javascript:;" onsubmit="showCalendar()">
+				<fieldset>
+					<legend>Name</legend>
+					<input
+						type="text"
+						id="name"
+						name="name"
+						minlength="2"
+						maxlength="50"
+						required
+					/>
+				</fieldset>
+				<button type="submit" class="nextother">Next</button>
+			</form>
+		</main>
+
+		<main id="Calendar" style="display: none">
 			<!-- Instruction message -->
 			<section class="text">
 				<p>
@@ -97,7 +119,7 @@
 				</div>
 			</div>
 			<!-- Next button at bottom of page-->
-			<button class="next" onclick="calToDB()">NEXT</button>
+			<button class="next" onclick="addAvailToEvent()">NEXT</button>
 
 			<button onclick="printData()">CONSOLE DATA TEST</button>
 
@@ -106,31 +128,6 @@
 			<button onclick="getMatrixData()">GET DATA TEST</button>
 
 			<button onclick="calcMatrixData()">CALC DATA TEST</button>
-		</main>
-		<!-- the section to share the jioing code after using the calender-->
-		<main id="Share" style="display: none">
-			<!-- Welcome message -->
-			<section class="text">
-				<p>
-					<strong
-						>All ready to go!
-						<br />
-						You can invite others to contribute their availability
-						by sharing the following code: <br
-					/></strong>
-				</p>
-				<!-- link to copy -->
-				<button id="link-button" class="link-button"></button>
-				<div style="text-align: center">
-					<p>
-						<strong
-							><br /><br /><br /><br /><br />Alternatively, you
-							can access your event through the event creator code
-							here:</strong
-						>
-					</p>
-				</div>
-			</section>
 		</main>
 	</body>
 </html>

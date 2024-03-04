@@ -7,8 +7,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.render("index.ejs");
 	});
 
-	
-
 	app.post("/eventCreation", async function (req, res) {
 		//TODO remove
 		const testData = await new Promise((resolve, reject) => {
@@ -104,7 +102,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 		startDate = new Date(req.body.sD);
 		endDate = new Date(req.body.eD);
-
 
 		//this formats JS Dates into MySQL DATE format
 		const sDChanged = startDate.toJSON().slice(0, 19).replace("T", " ");
@@ -202,7 +199,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		if (availInserted == true) {
 			res.json(url);
 		} else {
-			res.send("500")
+			res.send("500");
 		}
 	});
 
@@ -307,9 +304,9 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	app.get("/summary", function (req, res) {
 		res.render("summary.ejs");
 	});
-	  app.get('/404', function(req, res) {
-        res.render('404.ejs');
-      });
+	app.get("/404", function (req, res) {
+		res.render("404.ejs");
+	});
 
 	// LOGIN PAGE
 	app.get("/login", function (req, res) {
@@ -362,8 +359,43 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.redirect("/eventCreation");
 	});
 
+	app.get("/share/:eventUrl", async function (req, res) {
+		//check url exists
+		console.log("in share url");
+
+		let url = req.params.eventUrl;
+
+		console.log(url);
+		//gets the data from DB
+		let urlCheck = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				url,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results[0].urlExists);
+					}
+				}
+			);
+		});
+
+		let urlData = {
+			eventUrl: url,
+		};
+
+		console.log(urlCheck);
+		if (urlCheck) {
+			console.log("in url Check");
+			res.render("share.ejs", urlData);
+		} else {
+			res.redirect("*");
+		}
+	});
+
 	//route for a url
-	app.get("/event/:eventUrl", async function (req, res) {
+	app.get("/join/:eventUrl", async function (req, res) {
 		//check url exists
 
 		let url = req.params.eventUrl;
@@ -383,21 +415,181 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		});
 
 		//if it does, show join options, if not, redirect
-		if(urlCheck){
-			//show join options todo make page
-			res.render('')
+		if (urlCheck) {
+			let dates = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT start_date, end_date FROM user_events WHERE event_url = ?`,
+					url,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0]);
+						}
+					}
+				);
+			});
+			console.log(dates);
+
+			let passDates;
+			if (dates) {
+				const startDate = new Date(dates.start_date);
+				const endDate = new Date(dates.end_date);
+
+				sD = startDate;
+				eD = endDate;
+
+				// EXTRACT START TO FINISH DATE
+				const diffTime = endDate - startDate;
+				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
+
+				// ARRAY OF DATES TO BE RETURNED
+				//let dates = [];
+				passDates = [];
+
+				// FOR EVERY DAY
+				for (let i = 0; i <= diffDays; i++) {
+					// CREATE NEW DATE OBJECT
+					let currentDate = new Date(startDate);
+					currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
+
+					// RETURN DATE AS A NUMBER e.g. 18th April -> 18
+					let day = currentDate.getDate();
+
+					// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
+					let weekday = currentDate
+						.toLocaleString("en-EN", { weekday: "short" })
+						.toUpperCase();
+
+					// PUSH DATE OBJECT TO ARRAY
+					passDates.push({
+						date: `${day}`, // DAY NUMBER
+						dayOfWeek: weekday, // DAY OF WEEK
+					});
+				}
+			}
+
+			if (passDates) {
+				console.log(passDates);
+				//show join options todo make page
+				res.render("join.ejs", { dates: passDates, eventUrl: url });
+			}
 		} else {
-			res.redirect('/');
+			console.log("false");
+			res.redirect("*");
 		}
 
 		//if join, show calendar view, allow adding
 
 		//if view, go straight to summary
+	});
 
-	})
+	app.post("/addToEvent", async function (req, res) {
+		//check url exists
+
+		let url = req.body.url;
+		let userName = req.body.userName;
+		let jsonMatrix = req.body.calData;
+
+		//gets the data from DB
+		let urlCheck = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				url,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results[0].urlExists);
+					}
+				}
+			);
+		});
+
+		if (urlCheck) {
+			//create user in DB using name value, get user id
+			let userId = await new Promise((resolve, reject) => {
+				db.query(
+					`INSERT INTO users (user_name) VALUES (?)`,
+					userName,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results.insertId);
+						}
+					}
+				);
+			});
+
+			console.log(userId);
+
+			//select event and get event_id
+			let eventId = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT event_id FROM user_events WHERE event_url = ?`,
+					url,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0].event_id);
+						}
+					}
+				);
+			});
+
+			console.log("event id return from db:");
+			console.log(eventId);
+
+			//check availability for this user doesn't exist yet
+			//not necessary for current code but if logins are implemented it would be helpful
+			let availExists = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT EXISTS(SELECT * FROM unavail WHERE user_id = ? AND event_id = ?) as unavailExists`,
+					[userId, eventId],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0].unavailExists);
+						}
+					}
+				);
+			});
+			console.log("availExists: ");
+			console.log(availExists);
+
+			if (availExists == false) {
+				//add calData to unavail using user_id and event_id
+				db.query(
+					`INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
+		
+					//for some reason we need to stringify it again or else it seperates the array
+					[eventId, userId, JSON.stringify(jsonMatrix)],
+					(error, results) => {
+						if (error) {
+							console.error(error);
+							res.status(500).send(
+								"Error adding availability to event: " + error
+							);
+						} else {
+							console.log("availability added to event: " + eventId + ", for user: " + userId);
+							res.status(200).send("OK");
+						}
+					}
+				);
+			} else {
+				res.status(409).send("error: user availability already exists")
+			}
+		} else {
+			console.log("requested url not found");
+			res.status(404).send("url not found");
+		}
+	});
 
 	// 404 ERRORS
-	app.get('*', (req, res) => {
-		res.render("404.ejs")
-	})
+	app.get("*", (req, res) => {
+		res.render("404.ejs");
+	});
 };

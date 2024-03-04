@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-
 	//get all date time objects
 	dateTimes = document.getElementsByClassName("dateTime");
 	otherDateTimes = document.getElementsByClassName("timeslot");
-
 
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < otherDateTimes.length; i++) {
@@ -74,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// nestedDivs = grid1elements[0].children
 	// console.log(nestedDivs)
-
 });
 
 //function to set default value of calendar
@@ -82,23 +78,20 @@ document.addEventListener("DOMContentLoaded", function () {
 	startDate = document.getElementById("start-date");
 	endDate = document.getElementById("end-date");
 
-	if(startDate){
-		startDate.addEventListener("change", function() {
+	if (startDate) {
+		startDate.addEventListener("change", function () {
 			endDate.setAttribute("min", startDate.value);
-			if(endDate.valueAsDate < startDate.valueAsDate){
+			if (endDate.valueAsDate < startDate.valueAsDate) {
 				endDate.valueAsDate = startDate.valueAsDate;
 			}
-		})
-		
+		});
+
 		startDate.valueAsDate = new Date();
 		endDate.valueAsDate = new Date();
 
 		startDate.setAttribute("min", startDate.value);
 	}
-	
-})
-
-
+});
 
 //
 // function setActive(e) {
@@ -140,9 +133,7 @@ function setActive(e) {
 	}
 }
 
-
 function printData() {
-
 	days = document.getElementsByClassName("day");
 	for (i = 0; i < days.length - 1; i++) {
 		let dayString = "day" + i;
@@ -177,7 +168,7 @@ async function sendMatrixData() {
 		let day = document.getElementById(dayString);
 
 		//get all timeslots and remove dayOfTheWeek section
-		dayItems = (Array.from(day.children)).slice(1);
+		dayItems = Array.from(day.children).slice(1);
 
 		dayItems.map(function (dayItem) {
 			x = parseInt(dayItem.getAttribute("data-val"));
@@ -186,7 +177,6 @@ async function sendMatrixData() {
 
 		matrix.push(row);
 	}
-
 
 	//turn our bit matrix into JSON
 	jsonMatrix = JSON.stringify(matrix);
@@ -294,12 +284,12 @@ async function calcMatrixData() {
 	console.log("DB data: ");
 	console.log(data);
 
-	let matrixArr = data.map((x) => JSON.parse(x.bit_matrix))
+	let matrixArr = data.map((x) => JSON.parse(x.bit_matrix));
 
-	console.log("matrixArr - scripts.js - :")
-	console.log(matrixArr)
+	console.log("matrixArr - scripts.js - :");
+	console.log(matrixArr);
 
-	matrixArr = JSON.stringify(matrixArr)
+	matrixArr = JSON.stringify(matrixArr);
 
 	//Send matrix data from DB to route handler to add all matrices together with mathjs
 	let summedMatrix = -1;
@@ -312,14 +302,13 @@ async function calcMatrixData() {
 				"Content-Type": "application/json",
 			},
 			//matrix we just made
-			body: matrixArr
+			body: matrixArr,
 		});
 
 		//if all went well, say so
 		if (response.ok == true) {
 			console.log(
-				"Data calculated successfully, code: " +
-					response.status
+				"Data calculated successfully, code: " + response.status
 			);
 			//returned summed matrix
 			summedMatrix = await response.json();
@@ -338,22 +327,20 @@ async function calcMatrixData() {
 		console.error(error);
 	}
 
-	
-
 	//todo comment
 	//todo Rework to use dates etc to output days
 	//array to put available coordinates of times in (ie: day, timeslot)
-	let dateCoords = []
+	let dateCoords = [];
 
 	//if summedMatrix returned with data
-	if(summedMatrix.data){
+	if (summedMatrix.data) {
 		//set equal to this data for ease
 		summedMatrix = summedMatrix.data;
 		//iterate over each matrix and row
-		for(i = 0; i < summedMatrix.length; i++){
-			for(j = 0; j < summedMatrix[i].length; j++){
+		for (i = 0; i < summedMatrix.length; i++) {
+			for (j = 0; j < summedMatrix[i].length; j++) {
 				//find times = to 0
-				if(summedMatrix[i][j] == 0){
+				if (summedMatrix[i][j] == 0) {
 					//push those coords as available dates
 					dateCoords.push([i, j]);
 				}
@@ -413,8 +400,20 @@ function showDate() {
 }
 
 function showShare() {
-    document.getElementById("Calendar").style.display = "none";
-    document.getElementById("Share").style.display = "block";
+	document.getElementById("Calendar").style.display = "none";
+	document.getElementById("Share").style.display = "block";
+}
+
+function showCalendar() {
+	document.getElementById("landingSection").style.display = "none";
+	document.getElementById("nameSection").style.display = "none";
+	document.getElementById("Calendar").style.display = "block";
+}
+
+function showName() {
+	document.getElementById("landingSection").style.display = "none";
+	document.getElementById("nameSection").style.display = "block";
+	document.getElementById("Calendar").style.display = "none";
 }
 
 async function gatherCalData() {
@@ -429,7 +428,7 @@ async function gatherCalData() {
 		let day = document.getElementById(dayString);
 
 		//get all timeslots and remove dayOfTheWeek section
-		dayItems = (Array.from(day.children)).slice(1);
+		dayItems = Array.from(day.children).slice(1);
 
 		dayItems.map(function (dayItem) {
 			x = parseInt(dayItem.getAttribute("data-val"));
@@ -439,12 +438,10 @@ async function gatherCalData() {
 		matrix.push(row);
 	}
 
-
 	//turn our bit matrix into JSON
 	jsonMatrix = JSON.stringify(matrix);
 
 	console.log(jsonMatrix);
-	
 
 	return jsonMatrix;
 }
@@ -453,92 +450,153 @@ async function calToDB() {
 	//fetch request -> generate URL / check DB / save DB
 	let cData = await gatherCalData();
 
-	console.log(JSON.parse(cData));
+	postData = {
+		calData: JSON.parse(cData),
+		sD: startDt,
+		eD: endDt,
+	};
+
+	console.log(postData);
+
+	let eventUrl;
+	//try this fetch promise with our api route for sending data to DB
+	try {
+		//reponse is equal to the result of the promise
+		let response = await fetch("/saveEvent", {
+			method: "POST",
+
+			//tell the api we're using JSON and to parse it as such
+			headers: {
+				"Content-Type": "application/json",
+			},
+			//matrix we just made
+			body: JSON.stringify(postData),
+		});
+
+		//if all went well, say so
+		if (response.ok == true) {
+			console.log("response ok TODO write response" + response.status);
+			eventUrl = await response.json();
+		} else {
+			//if database request didnt go well
+			console.log(
+				"response womp womp TODO write response" +
+					response.status +
+					", text: " +
+					response.statusText
+			);
+		}
+
+		//else oh no, tell us what went wrong
+	} catch (error) {
+		console.error(error);
+	}
+
+	//if we have an event URL, show share section and set button text to this URL
+	// if(eventUrl){
+	// 	showShare();
+	// 	//TODO make this a link to planit with url link
+	// 	document.getElementById("link-button").innerText = eventUrl;
+	// }
+	console.log(eventUrl);
+
+	if (eventUrl) {
+		// showShare();
+		// //TODO make this a link to planit with url link
+		// document.getElementById("link-button").innerText = eventUrl;
+
+		//await fetch(`/share/${eventUrl}`, {});
+
+		window.location.replace(`/share/${eventUrl}`);
+	}
+}
+
+function joinEvent() {
+	let eventCode = document.getElementById("code").value;
+
+	window.location.replace(`/join/${eventCode}`);
+}
+
+function homeRedirect() {
+	window.location.replace("/");
+}
+
+function showResults() {
+	console.log("TODO impement shwoResults function");
+}
+
+async function addAvailToEvent() {
+	//fetch request -> generate URL / check DB / save DB
+	let cData = await gatherCalData();
+	let name = document.getElementById("name").value;
 
 	postData = {
 		calData: JSON.parse(cData),
-	sD: startDt,
-	eD: endDt
+		url: eventUrl,
+		userName: name,
+	};
+
+	let response;
+	//try this fetch promise with our api route for sending data to DB
+	try {
+		//reponse is equal to the result of the promise
+		response = await fetch("/addToEvent", {
+			method: "POST",
+
+			//tell the api we're using JSON and to parse it as such
+			headers: {
+				"Content-Type": "application/json",
+			},
+			//matrix we just made
+			body: JSON.stringify(postData),
+		});
+
+		//if all went well, say so
+		if (response.ok == true) {
+			console.log("response: " + response.status);
+		} else {
+			//if database request didnt go well
+			console.log(response);
+		}
+
+		//else oh no, tell us what went wrong
+	} catch (error) {
+		console.error(error);
 	}
 
-	console.log(postData);
-	
-
-	let eventUrl;
-		//try this fetch promise with our api route for sending data to DB
-		try {
-			//reponse is equal to the result of the promise
-			let response = await fetch("/saveEvent", {
-				method: "POST",
-	
-				//tell the api we're using JSON and to parse it as such
-				headers: {
-					"Content-Type": "application/json",
-				},
-				//matrix we just made
-				body: JSON.stringify(postData), 
-			});
-	
-			//if all went well, say so
-			if (response.ok == true) {
-				console.log(
-					"response ok TODO write response" +
-						response.status
-				);
-					eventUrl = await response.json();
-			} else {
-				//if database request didnt go well
-				console.log(
-					"response womp womp TODO write response" +
-						response.status +
-						", text: " +
-						response.statusText
-				);
-			}
-	
-			//else oh no, tell us what went wrong
-		} catch (error) {
-			console.error(error);
-		}
-
-		//if we have an event URL, show share section and set button text to this URL
-		if(eventUrl){
-			showShare();
-			//TODO make this a link to planit with url link
-			document.getElementById("link-button").innerText = eventUrl;
-		}
+	if (response.ok) {
+		window.location.replace(`/share/${eventUrl}`);
+	}
 }
-
 
 // validation for login unit test for rouge inputs
 function isValidUsername(username) {
-    // checking valid charecters as symbols can be used in SQL injection attacks
-    const regex = /^[a-zA-Z]+$/;
-    return regex.test(username);
-  }
-
-// GENERATES URL FOR EVENT JOINING
-function generateURL()
-{
-	// CHARACTER SET TO DRAW FROM
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let urlPassword = "";
-
-	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
-    for (let i = 0; i < 10; i++)
-	{
-		// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
-        const randomIndex = Math.floor(Math.random() * charset.length);
-
-		// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
-        urlPassword += charset[randomIndex];
-    }
-    return urlPassword;
+	// checking valid charecters as symbols can be used in SQL injection attacks
+	const regex = /^[a-zA-Z]+$/;
+	return regex.test(username);
 }
 
-  module.exports = { isValidUsername };
+// GENERATES URL FOR EVENT JOINING
+function generateURL() {
+	// CHARACTER SET TO DRAW FROM
+	const charset =
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	let urlPassword = "";
 
-  // for exiting 404 
-  function homePage() {
-    window.location.href = '/'; 
-  }
+	// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
+	for (let i = 0; i < 10; i++) {
+		// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
+		const randomIndex = Math.floor(Math.random() * charset.length);
+
+		// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
+		urlPassword += charset[randomIndex];
+	}
+	return urlPassword;
+}
+
+module.exports = { isValidUsername };
+
+// for exiting 404
+function homePage() {
+	window.location.href = "/";
+}

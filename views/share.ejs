@@ -22,20 +22,24 @@
     </section>
     <main>
         <!-- Welcome message -->
-        <section class="text" >
-            <p><strong>All ready to go!
-                <br>
-                You can invite others to contribute their availability by sharing the following code: <br></strong></p>
-        <!-- link to copy -->
-        <button class="link-button">vgvh-gvhg-hgvv-gv</button>
-        <div style="text-align:center">
-        <p><strong> <br>If you’d like to access, save and edit your event at any time, register here!<br></strong></p>
-        </div>
-        <button class="register">register</button>
-        <div style="text-align:center" >
-        <p><strong><br><br><br><br><br>Alternatively, you can access your event through the event creator code here:</strong></p>
-        </div>
-    </section>
+    <section class="text" >
+        <p><strong>All ready to go!
+            <br>
+            You can invite others to contribute their availability by sharing the following code: <br></strong></p>
+    <!-- link to copy -->
+    <button id="link-button" class="link-button"><%- eventUrl %></button>
+    <!--<div style="text-align:center">
+    <p><strong> <br>If you’d like to access, save and edit your event at any time, register here!<br></strong></p>
+    </div>
+    <button class="register">register</button>-->
+    <div style="text-align:center" >
+    <p><strong><br><br><br><br><br>Check summary of results here: </strong></p>
+    <a href="/results/<%- eventUrl %>">
+        <button class="nextother">Summary</button>
+    </a>
+    
+    </div>
+</section>
 </main>
 </body>
 </html>
