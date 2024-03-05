@@ -327,6 +327,8 @@ async function calcMatrixData() {
 		console.error(error);
 	}
 
+	console.log(summedMatrix);
+
 	//todo comment
 	//todo Rework to use dates etc to output days
 	//array to put available coordinates of times in (ie: day, timeslot)

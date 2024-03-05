@@ -1,6 +1,5 @@
 // THIS IS USED TO GET THE LOGIC FROM calculateDates.js (UNIT TESTING PURPOSES)
-const { calculateDates } = require('../scripts/calculateDates.js');
-
+const { calculateDates } = require("../scripts/calculateDates.js");
 
 module.exports = function (app, csvData, filePath, fs, math) {
 	// Handle our routes
@@ -50,17 +49,15 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		let eD;
 
 		if (req.body) {
-
 			// USER INPUTS FROM CALENDAR
 			const startDate = new Date(req.body["start-date"]);
 			const endDate = new Date(req.body["end-date"]);
-	  
+
 			// REFER TO 'calulcateDates.js' FOR LOGIC
 			passDates = calculateDates(startDate, endDate);
 
 			sD = startDate;
 			eD = endDate;
-
 		}
 
 		//console.log(testData);
@@ -282,9 +279,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	app.get("/date", function (req, res) {
 		res.render("date.ejs");
 	});
-	app.get("/summary", function (req, res) {
-		res.render("summary.ejs");
-	});
+
 	app.get("/404", function (req, res) {
 		res.render("404.ejs");
 	});
@@ -296,17 +291,183 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 	// USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
 	app.post("/calculate-dates", (req, res) => {
-
 		// USER INPUTS FROM CALENDAR
 		const startDate = new Date(req.body["start-date"]);
 		const endDate = new Date(req.body["end-date"]);
-	  
+
 		// REFER TO 'calulcateDates.js' FOR LOGIC
 		testDates = calculateDates(startDate, endDate);
-	  
+
 		// ONTO NEXT PAGE
 		res.redirect("/eventCreation");
-	  });
+	});
+
+	app.get("/summary/:eventUrl", async function (req, res) {
+		let url = req.params.eventUrl;
+		//check url exists
+		let urlCheck = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				url,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results[0].urlExists);
+					}
+				}
+			);
+		});
+
+		//if url exists, get unavailability data
+		if (urlCheck) {
+			//if url exists, get event_id
+			//select event and get event_id
+			let eventData = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT event_id, creator_id, start_date, end_date FROM user_events WHERE event_url = ?`,
+					url,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0]);
+						}
+					}
+				);
+			});
+
+			let eventId = eventData.event_id;
+			let creatorId = eventData.creator_id;
+
+			//get all participant data
+			let unavailData = await new Promise((resolve, reject) => {
+				//gets the data from DB
+				db.query(
+					`SELECT * FROM unavail WHERE event_id = ?`,
+					eventId,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+
+			//get all participants
+			console.log(unavailData);
+			//user id probs not needed
+			let userIdList = [];
+			let userNameList = [];
+			let matrixArr = [];
+
+			for (i = 0; i < unavailData.length; i++) {
+				//get user_name from the DB based on user_id
+				let name = await new Promise((resolve, reject) => {
+					db.query(
+						`SELECT user_name FROM users WHERE user_id = ?`,
+						unavailData[i].user_id,
+						(error, results) => {
+							if (error) {
+								reject(error);
+							} else {
+								resolve(results[0].user_name);
+							}
+						}
+					);
+				});
+
+				//create list of names and matrices
+				userNameList.push(name);
+				matrixArr.push(JSON.parse(unavailData[i].bit_matrix));
+			}
+
+			//get creator name
+			let creatorName = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT user_name FROM users WHERE user_id = ?`,
+					creatorId,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results[0].user_name);
+						}
+					}
+				);
+			});
+
+			console.log(matrixArr);
+
+			//placeholder matrix for getting sizes
+			let matrixHolder = matrixArr[0];
+
+			console.log("matrixHolder: ");
+			console.log(matrixHolder);
+
+			//zero'd matrix the correct size
+			let sumMatrix = math.zeros(
+				matrixHolder.length,
+				matrixHolder[0].length
+			);
+
+			console.log("sumMatrix: ");
+			console.log(sumMatrix);
+
+			//add each matrix to sum matrix
+			matrixArr.forEach((matrix) => {
+				sumMatrix = math.add(sumMatrix, matrix);
+			});
+
+			sumMatrix = sumMatrix._data;
+
+			//array to put available coordinates of times in (ie: day, timeslot)
+			let zeroCoords = [];
+			let oneCoords = [];
+
+			//iterate over each matrix and row
+			for (i = 0; i < sumMatrix.length; i++) {
+				for (j = 0; j < sumMatrix[i].length; j++) {
+					//find times = to 0
+					if (sumMatrix[i][j] == 0) {
+						//push those coords as available dates
+						zeroCoords.push([i, j]);
+					}
+
+					if (sumMatrix[i][j] == 1) {
+						oneCoords.push([i, j]);
+					}
+				}
+			}
+
+			console.log(zeroCoords);
+			console.log(oneCoords);
+
+			//get dates for calendar creation
+			const startDate = eventData.start_date;
+			const endDate = eventData.end_date;
+
+			passDates = calculateDates(startDate, endDate);
+
+			const summaryData = {
+				zeroCoordinates: zeroCoords,
+				oneCoordinates: oneCoords,
+				userList: userNameList,
+				creator: creatorName,
+				dates: passDates
+			}
+
+			console.log(summaryData);
+
+			res.render("summary.ejs", summaryData);
+
+		} else {
+			res.status(404).send("url not found");
+			res.redirect('*');
+		}
+	});
 
 	app.get("/share/:eventUrl", async function (req, res) {
 		//check url exists
@@ -513,7 +674,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				//add calData to unavail using user_id and event_id
 				db.query(
 					`INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
-		
+
 					//for some reason we need to stringify it again or else it seperates the array
 					[eventId, userId, JSON.stringify(jsonMatrix)],
 					(error, results) => {
@@ -523,13 +684,18 @@ module.exports = function (app, csvData, filePath, fs, math) {
 								"Error adding availability to event: " + error
 							);
 						} else {
-							console.log("availability added to event: " + eventId + ", for user: " + userId);
+							console.log(
+								"availability added to event: " +
+									eventId +
+									", for user: " +
+									userId
+							);
 							res.status(200).send("OK");
 						}
 					}
 				);
 			} else {
-				res.status(409).send("error: user availability already exists")
+				res.status(409).send("error: user availability already exists");
 			}
 		} else {
 			console.log("requested url not found");

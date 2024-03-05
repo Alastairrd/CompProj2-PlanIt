@@ -425,7 +425,7 @@ input[type="date" i] {
   min-width: min-content; /* The grid should be at least as wide as the smallest content */
 }
 
-.dayslot, .timeslot, .timeOfDay {
+.dayslot, .timeslot, .timeOfDay, .summary-timeslot {
   user-select: none;
   text-align: center;
   padding: 20px 0;
@@ -440,7 +440,7 @@ input[type="date" i] {
   border: 1px solid #5456FA;
 }
 
-.timeslot 
+.timeslot, .summary-timeslot 
 {
   color: transparent; 
 }
