@@ -18,6 +18,7 @@ function calculateDates(startDate, endDate)
 
         // GET DATE FROM INPUT OBJECT
         let day = currentDate.getDate();
+        let month = currentDate.toLocaleString('default', {month: 'short'});
 
         // CONVERT DATE OBJECT FROM LONG NOTATION E.G. 'WEDNESDAY' TO SHORT NOTATION E.G. 'WED'
         let weekday = currentDate.toLocaleString("en-EN", { weekday: "short" }).toUpperCase();
@@ -26,6 +27,7 @@ function calculateDates(startDate, endDate)
         dates.push({
             date: `${day}`,
             dayOfWeek: weekday,
+            month: month
         });
     }
 

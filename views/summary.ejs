@@ -1,9 +1,17 @@
 <!doctype html>
 <html>
   <head>
-    <title>Welcome to PLANIT</title>
+    <title><%- creator %>'s PLANIT Summary</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
     <script src="/scripts.js"></script>
+    <script src = "/sumScript.js"></script>
+
+    <script>
+        let zeroCoords = <%- JSON.stringify(zeroCoordinates) %>; 
+        let oneCoords = <%- JSON.stringify(oneCoordinates) %>; 
+        let dateInfo = <%- JSON.stringify(dates) %>;
+    </script>
+
   </head>
   <body>
     <section class="page-top">
@@ -29,14 +37,13 @@
                 <!--todo, list participant names-->
                 <br>
                 Event created by: <%- creator %>
+            </strong>
                 <ul>
                     <% for(i = 0; i < userList.length; i++) { %>
-                        <br>
                         <li> Participant: <%- userList[i] %> </li>
-                        <br>
                     <% } %>
                 </ul>
-                </strong></p>
+                </p>
         </section>
         <!--todo make calendar view-->
         <main id="Calendar">
@@ -90,7 +97,9 @@
 
 						<!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->
 						<% } else { %>
-						<div class="summary-timeslot">1</div>
+                        <!--set id equal to coordinates-->
+
+						<div class="summary-timeslot" id="col<%=i%>-row<%=(j - 1)%>">1</div>
 						<% } %> <% } %>
 					</div>
 					<% } %>
@@ -99,22 +108,38 @@
 
 
 
-        <section class="text">
-            <p>The first three times everyone can make so far are:
-                <br>
-                For calendar view press icon -> 
-            </p>
-        </section>
-        <!--todo finish-->
-        <!--times avalible-->
-        <button class="times">14:00 - 17:00 Thursday 21st December</button>
-        <button class="times">10:00 - 15:00 Saturday 23rd December</button>
-        <button class="times">14:00 - 17:00 Sunday 24th December</button>
-        <section class="text">
-            <p>
-                <u>Click here</u> to see more times
-            </p>
-        </section>
+            <div id="ideal-time-section-main">
+                <section  class="text">
+                    <p id="ideal-times-display-text">Here are some times everyone can make so far are:
+                        
+                    </p>
+                </section>
+                <div id="ideal-time-section-parent">
+                    <ul id="ideal-time-section-list">
+
+                    </ul>
+                </div>
+
+                 <!--todo finish-->
+                <button id="showMoreButton" class="times" onclick="showMoreTimes()">Show more times</button>
+                <button id="showLessButton" class="times" onclick="showLessTimes()" style="display: none">Show less times</button>
+
+            </div>
+
+            <div id="lessIdeal-time-section-main" style="display: none">
+                <section  class="text">
+                    <p id="lessIdeal-times-display-text">Here are some times that all but 1 of you are free:
+                        
+                    </p>
+                </section>
+                <div id="lessIdeal-time-section-parent">
+                    <ul id="lessIdeal-time-section-list">
+
+                    </ul>
+                </div>
+            </div>
+        
+       
 </main>
 </body>
 </html>

@@ -464,8 +464,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			res.render("summary.ejs", summaryData);
 
 		} else {
-			res.status(404).send("url not found");
-			res.redirect('*');
+			res.status(404);
+			res.redirect('/404');
 		}
 	});
 
@@ -500,7 +500,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			console.log("in url Check");
 			res.render("share.ejs", urlData);
 		} else {
-			res.redirect("*");
+			res.status(404)
+			res.redirect("/404");
 		}
 	});
 
@@ -586,7 +587,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			}
 		} else {
 			console.log("false");
-			res.redirect("*");
+			res.redirect("/404");
 		}
 
 		//if join, show calendar view, allow adding
