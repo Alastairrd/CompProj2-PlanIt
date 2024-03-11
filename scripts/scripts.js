@@ -596,6 +596,48 @@ function generateURL() {
 	return urlPassword;
 }
 
+// COPY CODE TO CLIPBOARD FUNCTIOANLITY
+function copyToClipBoard() 
+{
+	// GET ID OF LINK BUTTON TO COPY VALUE
+	const eventUrl = document.getElementById("link-button").innerText;
+  
+	// TUTORIAL CREDIT - https://www.youtube.com/watch?v=6vcCTymhIXY
+	navigator.clipboard.writeText(eventUrl).then(() => {
+			showCopyBanner();
+		}).catch(err => { console.error("Failed to copy:", err); });
+}
+
+// TUTORIAL CREDIT - https://www.youtube.com/watch?v=1EN8_OxvPuY
+function showCopyBanner() {
+
+    // CREATE BANNER FROM DIV - POSITIONS, ANIMATIONS ETC
+    const banner = document.createElement('div');
+    banner.innerText = 'Code copied!';
+    banner.style.position = 'fixed';
+    banner.style.left = '0';
+    banner.style.right = '0';
+    banner.style.bottom = '-50px'; 
+    banner.style.backgroundColor = '#4CAF50';
+    banner.style.color = 'white';
+    banner.style.textAlign = 'center';
+    banner.style.padding = '10px 0';
+    banner.style.transition = 'bottom 0.5s ease';
+
+	// ADD BANNER TO BODY OF 'share.ejs'
+    document.body.appendChild(banner);
+
+    // SLIDE UP ANIMATION
+    setTimeout(() => { banner.style.bottom = '0'; }, 100);
+
+    // SLIDE OFF THE PAGE - 3 seconds
+    setTimeout(() => {
+        banner.style.bottom = '-50px'; 
+        setTimeout(() => banner.remove(), 500); 
+	}, 3000);
+}
+  
+
   module.exports = { isValidUsername, generateURL};
 
 // for exiting 404
