@@ -7,8 +7,7 @@
 
 		<!-- DELCARING DATA SO IT IS ACCESSIBLE TO scripts.js -->
 		<script>
-			// THE DATA FROM READING CSV FILE: line 45 of main.js
-			let data = <%- JSON.stringify(data) %>; // THIS IS NOT AN ERROR LEAVE ALONE
+			// THE DATA FROM CALCULATING DATES
 			let dateInfo = <%- JSON.stringify(dates) %>;
 			let startDt = <%- JSON.stringify(startDate) %>;
 			let endDt = <%- JSON.stringify(endDate) %>;
@@ -85,7 +84,9 @@
 						<% if(j==0) { %>
 						<div class="dayslot">
 							<h1 class="date"><%=dates[i].date %></h1>
+							<h3 class="date"><%=dates[i].month %></h3>
 							<h2 class="date"><%=dates[i].dayOfWeek %></h2>
+							
 						</div>
 
 						<!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->
@@ -106,31 +107,6 @@
 			<button onclick="getMatrixData()">GET DATA TEST</button>
 
 			<button onclick="calcMatrixData()">CALC DATA TEST</button>
-		</main>
-		<!-- the section to share the jioing code after using the calender-->
-		<main id="Share" style="display: none">
-			<!-- Welcome message -->
-			<section class="text">
-				<p>
-					<strong
-						>All ready to go!
-						<br />
-						You can invite others to contribute their availability
-						by sharing the following code: <br
-					/></strong>
-				</p>
-				<!-- link to copy -->
-				<button id="link-button" class="link-button"></button>
-				<div style="text-align: center">
-					<p>
-						<strong
-							><br /><br /><br /><br /><br />Alternatively, you
-							can access your event through the event creator code
-							here:</strong
-						>
-					</p>
-				</div>
-			</section>
 		</main>
 	</body>
 </html>

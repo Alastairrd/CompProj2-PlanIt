@@ -11,39 +11,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	});
 
 	app.post("/eventCreation", async function (req, res) {
-		//TODO remove
-		const testData = await new Promise((resolve, reject) => {
-			fs.readFile(filePath, "utf8", (err, data) => {
-				// IF FILE READ ERROR IS THROWN -> REJECT
-				if (err) reject(err);
-				// ELSE READ FILE AS NORMAL
-				else {
-					//splits the data based on each new line, then iterate through the array of lines, and trim each one
-					const lines = data.split("\n").filter((l) => l.trim());
-
-					//slice off the first line
-					linesSliced = lines.slice(1);
-
-					//uses map to take each line, split into entries using comma delimiter
-					handledData = linesSliced.map((l) => {
-						const entries = l.split(",");
-
-						//then we trim every entry incase
-						const trimmedEntries = entries.map((e) => e.trim());
-
-						//then we slice off the initial column of time rows
-						finalEntries = trimmedEntries.slice(1);
-
-						//return the trimmed entries without initial column
-						return finalEntries;
-					});
-
-					//send the now processed data to the promise
-					resolve(handledData);
-				}
-			});
-		});
-
+		//variables for event creation
 		let passDates;
 		let sD;
 		let eD;
@@ -60,11 +28,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			eD = endDate;
 		}
 
-		//console.log(testData);
-
 		if (passDates) {
 			res.render("eventCreation.ejs", {
-				data: testData,
 				dates: passDates,
 				startDate: sD,
 				endDate: eD,
@@ -76,8 +41,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 	//todo
 	app.post("/saveEvent", async function (req, res) {
-		console.log(req.body);
-
+		//parse the body for date info
 		startDate = new Date(req.body.sD);
 		endDate = new Date(req.body.eD);
 
@@ -85,14 +49,11 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		const sDChanged = startDate.toJSON().slice(0, 19).replace("T", " ");
 		const eDChanged = endDate.toJSON().slice(0, 19).replace("T", " ");
 
-		console.log(req.body.calData);
-		console.log(sDChanged);
-		console.log(eDChanged);
-
 		//todo remove hardCoded user_id
 		let user_id = 1;
 
 		//db query, check event table for URL value
+		//variables for checks
 		let urlCheck = 1;
 		let url;
 		while (urlCheck == 1) {
@@ -115,9 +76,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				return urlPassword;
 			})();
 
-			console.log(url);
-
-			//gets the data from DB
+			//checks if url exists in the DB, sets urlCheck to boolean 1 or 0 (0 means unique and go ahead)
 			urlCheck = await new Promise((resolve, reject) => {
 				db.query(
 					`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
@@ -133,7 +92,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			});
 		}
 
-		//if not found, save event
+		//once unique url is found, save event
 		let eventInserted = false;
 		let eventInsertRes = await new Promise((resolve, reject) => {
 			db.query(
@@ -150,9 +109,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			);
 		});
 
-		console.log(eventInsertRes);
-
-		//TODO FIRST NEED EVENT_ID
+		//use event id gathered here to insert availiability of event creator into newly created event
 		let availInserted = false;
 		if (eventInserted) {
 			let availInsertRes = await new Promise((resolve, reject) => {
@@ -173,7 +130,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			});
 		}
 
-		//TODO update to send back URL
+		//send back unique code for event to display
 		if (availInserted == true) {
 			res.json(url);
 		} else {
@@ -268,27 +225,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		res.send(sumMatrix);
 	});
 
-	//OZZES ROUTES WHEY
-
-	app.get("/link", function (req, res) {
-		res.render("link.ejs");
-	});
-	app.get("/share", function (req, res) {
-		res.render("share.ejs");
-	});
-	app.get("/date", function (req, res) {
-		res.render("date.ejs");
-	});
-
-	app.get("/404", function (req, res) {
-		res.render("404.ejs");
-	});
-
-	// LOGIN PAGE
-	app.get("/login", function (req, res) {
-		res.render("login.ejs");
-	});
-
 	// USER INPUTS DATES FOR RETURNED ARRAY OF DATES INFO
 	app.post("/calculate-dates", (req, res) => {
 		// USER INPUTS FROM CALENDAR
@@ -303,6 +239,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	});
 
 	app.get("/summary/:eventUrl", async function (req, res) {
+		//get url from query
 		let url = req.params.eventUrl;
 		//check url exists
 		let urlCheck = await new Promise((resolve, reject) => {
@@ -337,6 +274,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
+			//save these for creating summary page
 			let eventId = eventData.event_id;
 			let creatorId = eventData.creator_id;
 
@@ -356,13 +294,11 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
-			//get all participants
-			console.log(unavailData);
-			//user id probs not needed
-			let userIdList = [];
+			//storing names of participants and matrices of availability
 			let userNameList = [];
 			let matrixArr = [];
 
+			//gets all names of participants, and adds name to name array and matrix to matrix array
 			for (i = 0; i < unavailData.length; i++) {
 				//get user_name from the DB based on user_id
 				let name = await new Promise((resolve, reject) => {
@@ -399,30 +335,26 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
-			console.log(matrixArr);
 
+			//MATRIX CALCULATION SECTION
 			//placeholder matrix for getting sizes
 			let matrixHolder = matrixArr[0];
 
-			console.log("matrixHolder: ");
-			console.log(matrixHolder);
-
-			//zero'd matrix the correct size
+			//zero'd matrix the correct size, initialise matrix full of zeros
 			let sumMatrix = math.zeros(
 				matrixHolder.length,
 				matrixHolder[0].length
 			);
-
-			console.log("sumMatrix: ");
-			console.log(sumMatrix);
 
 			//add each matrix to sum matrix
 			matrixArr.forEach((matrix) => {
 				sumMatrix = math.add(sumMatrix, matrix);
 			});
 
+			//get matrix from mathjs library object
 			sumMatrix = sumMatrix._data;
 
+			//MATRIX IS SUMMED, NOW GET RELEVANT DATA COORDINATES
 			//array to put available coordinates of times in (ie: day, timeslot)
 			let zeroCoords = [];
 			let oneCoords = [];
@@ -436,47 +368,42 @@ module.exports = function (app, csvData, filePath, fs, math) {
 						zeroCoords.push([i, j]);
 					}
 
+					//if only one person busy push to this array
 					if (sumMatrix[i][j] == 1) {
 						oneCoords.push([i, j]);
 					}
 				}
 			}
 
-			console.log(zeroCoords);
-			console.log(oneCoords);
-
+			//CREATING CALENDAR INFO FOR SUMMARY PAGE
 			//get dates for calendar creation
 			const startDate = eventData.start_date;
 			const endDate = eventData.end_date;
 
+			//calc dates for creating calendar
 			passDates = calculateDates(startDate, endDate);
 
+			//object to pass to page
 			const summaryData = {
 				zeroCoordinates: zeroCoords,
 				oneCoordinates: oneCoords,
 				userList: userNameList,
 				creator: creatorName,
-				dates: passDates
-			}
-
-			console.log(summaryData);
+				dates: passDates,
+			};
 
 			res.render("summary.ejs", summaryData);
-
 		} else {
 			res.status(404);
-			res.redirect('/404');
+			res.redirect("/404");
 		}
 	});
 
 	app.get("/share/:eventUrl", async function (req, res) {
-		//check url exists
-		console.log("in share url");
-
+		//get url from query
 		let url = req.params.eventUrl;
 
-		console.log(url);
-		//gets the data from DB
+		//checks event exists with that url
 		let urlCheck = await new Promise((resolve, reject) => {
 			db.query(
 				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
@@ -491,16 +418,17 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			);
 		});
 
+		//object for passing into route
 		let urlData = {
 			eventUrl: url,
 		};
 
-		console.log(urlCheck);
+
+		//if url/event exists
 		if (urlCheck) {
-			console.log("in url Check");
 			res.render("share.ejs", urlData);
 		} else {
-			res.status(404)
+			res.status(404);
 			res.redirect("/404");
 		}
 	});
@@ -508,7 +436,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	//route for a url
 	app.get("/join/:eventUrl", async function (req, res) {
 		//check url exists
-
 		let url = req.params.eventUrl;
 		//gets the data from DB
 		let urlCheck = await new Promise((resolve, reject) => {
@@ -525,7 +452,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			);
 		});
 
-		//if it does, show join options, if not, redirect
+		//if it does, get date info to create calendar
 		if (urlCheck) {
 			let dates = await new Promise((resolve, reject) => {
 				db.query(
@@ -540,8 +467,8 @@ module.exports = function (app, csvData, filePath, fs, math) {
 					}
 				);
 			});
-			console.log(dates);
 
+			//TODO change to use calculate dates
 			let passDates;
 			if (dates) {
 				const startDate = new Date(dates.start_date);
@@ -581,7 +508,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			}
 
 			if (passDates) {
-				console.log(passDates);
 				//show join options todo make page
 				res.render("join.ejs", { dates: passDates, eventUrl: url });
 			}
@@ -589,10 +515,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			console.log("false");
 			res.redirect("/404");
 		}
-
-		//if join, show calendar view, allow adding
-
-		//if view, go straight to summary
 	});
 
 	app.post("/addToEvent", async function (req, res) {
@@ -633,8 +555,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
-			console.log(userId);
-
 			//select event and get event_id
 			let eventId = await new Promise((resolve, reject) => {
 				db.query(
@@ -649,9 +569,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 					}
 				);
 			});
-
-			console.log("event id return from db:");
-			console.log(eventId);
 
 			//check availability for this user doesn't exist yet
 			//not necessary for current code but if logins are implemented it would be helpful
@@ -668,8 +585,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 					}
 				);
 			});
-			console.log("availExists: ");
-			console.log(availExists);
 
 			if (availExists == false) {
 				//add calData to unavail using user_id and event_id
@@ -702,6 +617,11 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			console.log("requested url not found");
 			res.status(404).send("url not found");
 		}
+	});
+
+	//404
+	app.get("/404", function (req, res) {
+		res.render("404.ejs");
 	});
 
 	// 404 ERRORS

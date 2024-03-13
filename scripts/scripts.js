@@ -419,31 +419,35 @@ function showName() {
 }
 
 async function gatherCalData() {
+	//create empty matrix
 	let matrix = [];
 
+	//get all columns of days from calendar
 	days = document.getElementsByClassName("day");
+
+	//iterate through the days
 	for (i = 0; i < days.length - 1; i++) {
 		let row = [];
 
-		//get right grid - day of the week, get all children from that grid
+		//get right column based of id concatenated with i
 		let dayString = "day" + i;
 		let day = document.getElementById(dayString);
 
 		//get all timeslots and remove dayOfTheWeek section
 		dayItems = Array.from(day.children).slice(1);
 
+		//get all the data-val properties from timelots in day (availability)
 		dayItems.map(function (dayItem) {
 			x = parseInt(dayItem.getAttribute("data-val"));
 			row.push(x);
 		});
 
+		//push array of days unavailability into matrix
 		matrix.push(row);
 	}
 
 	//turn our bit matrix into JSON
 	jsonMatrix = JSON.stringify(matrix);
-
-	console.log(jsonMatrix);
 
 	return jsonMatrix;
 }
@@ -452,14 +456,14 @@ async function calToDB() {
 	//fetch request -> generate URL / check DB / save DB
 	let cData = await gatherCalData();
 
+	//data to send to DB, including matrix of availability and start and end date selected for calendar
 	postData = {
 		calData: JSON.parse(cData),
 		sD: startDt,
 		eD: endDt,
 	};
 
-	console.log(postData);
-
+	//initialise but dont define for future check
 	let eventUrl;
 	//try this fetch promise with our api route for sending data to DB
 	try {
@@ -494,21 +498,11 @@ async function calToDB() {
 		console.error(error);
 	}
 
-	//if we have an event URL, show share section and set button text to this URL
-	// if(eventUrl){
-	// 	showShare();
-	// 	//TODO make this a link to planit with url link
-	// 	document.getElementById("link-button").innerText = eventUrl;
-	// }
-	console.log(eventUrl);
 
+	//if all went well and we have a url
 	if (eventUrl) {
-		// showShare();
-		// //TODO make this a link to planit with url link
-		// document.getElementById("link-button").innerText = eventUrl;
 
-		//await fetch(`/share/${eventUrl}`, {});
-
+		//redirect to share page of new event
 		window.location.replace(`/share/${eventUrl}`);
 	}
 }
@@ -532,6 +526,7 @@ async function addAvailToEvent() {
 	let cData = await gatherCalData();
 	let name = document.getElementById("name").value;
 
+	//object to pass into fetch
 	postData = {
 		calData: JSON.parse(cData),
 		url: eventUrl,
