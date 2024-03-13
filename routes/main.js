@@ -39,7 +39,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		}
 	});
 
-	//todo
+	//creating an event and saving it into DB
 	app.post("/saveEvent", async function (req, res) {
 		//parse the body for date info
 		startDate = new Date(req.body.sD);
@@ -140,7 +140,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
-		console.log("TODO REMOVE: we made it this far");
 
 		//matrix we passed into the request, its already a json string i think
 		const jsonMatrix = req.body;
@@ -172,12 +171,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 	});
 
 	app.get("/matrixGet", async function (req, res) {
-		console.log("TODO REMOVE: we made it this far");
-
-		//TODO get event from URL, get event_id from this
-
-		//TODO change query to use event_id from DB
-
 		//gets the data from DB
 		db.query(
 			`SELECT * FROM unavail WHERE event_id = 3`,
@@ -335,7 +328,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
-
 			//MATRIX CALCULATION SECTION
 			//placeholder matrix for getting sizes
 			let matrixHolder = matrixArr[0];
@@ -423,7 +415,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			eventUrl: url,
 		};
 
-
 		//if url/event exists
 		if (urlCheck) {
 			res.render("share.ejs", urlData);
@@ -468,47 +459,18 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 
-			//TODO change to use calculate dates
+			//get dates for building calendar view
 			let passDates;
 			if (dates) {
 				const startDate = new Date(dates.start_date);
 				const endDate = new Date(dates.end_date);
 
-				sD = startDate;
-				eD = endDate;
-
-				// EXTRACT START TO FINISH DATE
-				const diffTime = endDate - startDate;
-				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // FIND NUMBER OF DAYS (DIFFTIME IS FOUND IN MILLISECONDS)
-
-				// ARRAY OF DATES TO BE RETURNED
-				//let dates = [];
-				passDates = [];
-
-				// FOR EVERY DAY
-				for (let i = 0; i <= diffDays; i++) {
-					// CREATE NEW DATE OBJECT
-					let currentDate = new Date(startDate);
-					currentDate.setDate(currentDate.getDate() + i); // SET NEW DATE OBJECT FOR EVERY ITERATION e.g. 18TH - 20TH = 1, 2, 3 DAYS
-
-					// RETURN DATE AS A NUMBER e.g. 18th April -> 18
-					let day = currentDate.getDate();
-
-					// FOR UI PURPOSES, TAKE STRING, CUT OFF FIRST THREE LETTERS -> SET TO UPPER CASE
-					let weekday = currentDate
-						.toLocaleString("en-EN", { weekday: "short" })
-						.toUpperCase();
-
-					// PUSH DATE OBJECT TO ARRAY
-					passDates.push({
-						date: `${day}`, // DAY NUMBER
-						dayOfWeek: weekday, // DAY OF WEEK
-					});
-				}
+				// REFER TO 'calulcateDates.js' FOR LOGIC
+				passDates = calculateDates(startDate, endDate);
 			}
 
 			if (passDates) {
-				//show join options todo make page
+				//show join page with options
 				res.render("join.ejs", { dates: passDates, eventUrl: url });
 			}
 		} else {

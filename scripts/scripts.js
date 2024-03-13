@@ -327,10 +327,6 @@ async function calcMatrixData() {
 		console.error(error);
 	}
 
-	console.log(summedMatrix);
-
-	//todo comment
-	//todo Rework to use dates etc to output days
 	//array to put available coordinates of times in (ie: day, timeslot)
 	let dateCoords = [];
 
@@ -481,12 +477,12 @@ async function calToDB() {
 
 		//if all went well, say so
 		if (response.ok == true) {
-			console.log("response ok TODO write response" + response.status);
+			console.log("response OK" + response.status);
 			eventUrl = await response.json();
 		} else {
 			//if database request didnt go well
 			console.log(
-				"response womp womp TODO write response" +
+				"database request rejected" +
 					response.status +
 					", text: " +
 					response.statusText
@@ -515,10 +511,6 @@ function joinEvent() {
 
 function homeRedirect() {
 	window.location.replace("/");
-}
-
-function showResults() {
-	console.log("TODO impement shwoResults function");
 }
 
 async function addAvailToEvent() {

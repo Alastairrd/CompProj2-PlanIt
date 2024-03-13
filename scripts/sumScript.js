@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-	//todo write code to set css for diff coords
+
+	//get all timeslots on calendar
 	let timeslots = Array.from(
 		document.getElementsByClassName("summary-timeslot")
 	);
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	);
 	const timeList = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
+	//conditional logic for different situations of time stretches available, sets different sections to visible or not
 	if (zeroStretches.length > 3) {
 		displayTimes(zeroStretches, idealList, timeList);
 	} else if (zeroStretches.length == 3) {
@@ -97,6 +99,7 @@ function displayTimes(array, outputList, timeList) {
 		const stretchStart = array[i].yStart;
 		const stretchEnd = array[i].yEnd;
 
+		//create list elements with text based on time stretch and date info
 		const ele = document.createElement("li");
 		if (i > 2) {
 			ele.setAttribute("style", "display: none");
@@ -108,6 +111,7 @@ function displayTimes(array, outputList, timeList) {
 		);
 		ele.appendChild(text);
 
+		//add to time stretch list section
 		outputList.appendChild(ele);
 	}
 }
@@ -181,6 +185,7 @@ function getStretches(array, outputArray) {
 	}
 }
 
+//button function that sets the display to all available time stretches
 function showMoreTimes() {
 	const list = document.getElementById("ideal-time-section-list");
 
@@ -201,6 +206,7 @@ function showMoreTimes() {
 		"All the times everyone can make so far are:";
 }
 
+//button function that sets the display to a small selection of time stretches
 function showLessTimes() {
 	const list = document.getElementById("ideal-time-section-list");
 
