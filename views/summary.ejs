@@ -92,8 +92,13 @@
 						<!-- IF IT IS THE FIRST ITEM IN THE COLUMN, MAKE IT THE DATE -->
 						<% if(j==0) { %>
 						<div class="dayslot">
-							<h1 class="date"><%=dates[i].date %></h1>
-                            <h3 class="date"><%=dates[i].month %></h3>
+							<h1 class="date">
+								<%=dates[i].date %>
+								<span class="monthSpan"
+									><%=dates[i].month %></span
+								>
+							</h1>
+                            
 							<h2 class="date"><%=dates[i].dayOfWeek %></h2>
 						</div>
 

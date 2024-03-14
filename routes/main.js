@@ -4,8 +4,6 @@ const { calculateDates } = require("../scripts/calculateDates.js");
 module.exports = function (app, csvData, filePath, fs, math) {
 	// Handle our routes
 
-	var testDates;
-
 	app.get("/", function (req, res) {
 		res.render("index.ejs");
 	});
@@ -44,13 +42,14 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		//parse the body for date info
 		startDate = new Date(req.body.sD);
 		endDate = new Date(req.body.eD);
+		let userName = req.body.userName;
 
 		//this formats JS Dates into MySQL DATE format
 		const sDChanged = startDate.toJSON().slice(0, 19).replace("T", " ");
 		const eDChanged = endDate.toJSON().slice(0, 19).replace("T", " ");
 
 		//todo remove hardCoded user_id
-		let user_id = 1;
+		//let user_id = 1;
 
 		//db query, check event table for URL value
 		//variables for checks
@@ -91,6 +90,20 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				);
 			});
 		}
+
+		let user_id = await new Promise((resolve, reject) => {
+			db.query(
+				`INSERT INTO users (user_name) VALUES (?)`,
+				userName,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results.insertId);
+					}
+				}
+			);
+		});
 
 		//once unique url is found, save event
 		let eventInserted = false;

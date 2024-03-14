@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Create a PLANIT</title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 		<script src="/scripts.js"></script>
@@ -29,7 +29,34 @@
 				&#x21E0; Back
 			</button>
 		</section>
-		<main id="Calendar">
+
+		<main id="nameSection" style="display: block">
+			<!-- Welcome message for join section -->
+			<section class="text">
+				<p class="bold">Welcome to PlanIt</p>
+				<p>Enter your name in here:</p>
+				<p></p>
+			</section>
+			<form action="javascript:;" onsubmit="showCalendar()">
+				<fieldset>
+					<legend>Name</legend>
+					<input
+						type="text"
+						id="name"
+						name="name"
+						minlength="2"
+						maxlength="50"
+						pattern="^[A-Za-z]+$"
+						oninvalid="setCustomValidity('Min 2 characters, max 50 characters, no special characters, numbers or spaces - only letters.');"
+						oninput="setCustomValidity('')"
+						required
+					/>
+				</fieldset>
+				<button type="submit" class="nextother">Next</button>
+			</form>
+		</main>
+
+		<main id="Calendar" style="display: none">
 			<!-- Welcome message -->
 			<section class="text">
 				<p>
@@ -84,10 +111,13 @@
 						<!-- IF IT IS THE FIRST ITEM IN THE COLUMN, MAKE IT THE DATE -->
 						<% if(j==0) { %>
 						<div class="dayslot">
-							<h1 class="date"><%=dates[i].date %></h1>
-							<h3 class="date"><%=dates[i].month %></h3>
+							<h1 class="date">
+								<%=dates[i].date %>
+								<span class="monthSpan"
+									><%=dates[i].month %></span
+								>
+							</h1>
 							<h2 class="date"><%=dates[i].dayOfWeek %></h2>
-							
 						</div>
 
 						<!-- IF NOT THE FIRST COLUMN, FILL AS TIMESLOT -->

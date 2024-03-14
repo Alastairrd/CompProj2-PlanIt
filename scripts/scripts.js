@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		timeSlots[i].addEventListener("mouseover", setActive, false);
 		timeSlots[i].addEventListener("mousedown", setActive, false);
 		timeSlots[i].setAttribute("data-val", 0);
-
 	}
 
 	//get all timeslots and add touch event listeners, also disables scrolling of page when dealing with timeslots
@@ -40,24 +39,45 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 });
 
-
 //function to set default value of calendar
 document.addEventListener("DOMContentLoaded", function () {
+	//get date elements
 	startDate = document.getElementById("start-date");
 	endDate = document.getElementById("end-date");
 
+	//if startDate exists
 	if (startDate) {
+		//listen to startdate value, if it changes, change min and max of end date
 		startDate.addEventListener("change", function () {
 			endDate.setAttribute("min", startDate.value);
 			if (endDate.valueAsDate < startDate.valueAsDate) {
 				endDate.valueAsDate = startDate.valueAsDate;
 			}
+
+			//set max to 1 month ahead of start date
+			let max = new Date(startDate.value);
+			console.log(max);
+			max.setMonth(max.getMonth() + 1);
+			max = max.toISOString().split("T")[0];
+
+			endDate.setAttribute("max", max);
 		});
 
+		//set initial values to today
 		startDate.valueAsDate = new Date();
 		endDate.valueAsDate = new Date();
 
+		//set minimum values to today
 		startDate.setAttribute("min", startDate.value);
+		endDate.setAttribute("min", startDate.value);
+
+		//set max to 1 month from now
+		let max = new Date(startDate.value);
+		console.log(max);
+		max.setMonth(max.getMonth() + 1);
+		max = max.toISOString().split("T")[0];
+
+		endDate.setAttribute("max", max);
 	}
 });
 
@@ -89,11 +109,10 @@ function highlightHoveredObject(x, y) {
 				// else set to just activate
 				timeslot.classList.add("active");
 				timeslot.setAttribute("data-val", 1);
-			}	
+			}
 		}
 	});
 }
-
 
 function setActive(e) {
 	if (e.buttons === 1) {
@@ -358,7 +377,8 @@ function showShare() {
 }
 
 function showCalendar() {
-	document.getElementById("landingSection").style.display = "none";
+	//todo do we need landing section
+	//document.getElementById("landingSection").style.display = "none";
 	document.getElementById("nameSection").style.display = "none";
 	document.getElementById("Calendar").style.display = "block";
 }
@@ -407,11 +427,14 @@ async function calToDB() {
 	//fetch request -> generate URL / check DB / save DB
 	let cData = await gatherCalData();
 
+	let name = document.getElementById("name").value;
+
 	//data to send to DB, including matrix of availability and start and end date selected for calendar
 	postData = {
 		calData: JSON.parse(cData),
 		sD: startDt,
 		eD: endDt,
+		userName: name,
 	};
 
 	//initialise but dont define for future check
@@ -593,8 +616,6 @@ function showCopyBanner() {
 		setTimeout(() => banner.remove(), 500);
 	}, 3000);
 }
-
-module.exports = { isValidUsername, generateURL };
 
 // for exiting 404
 function homePage() {

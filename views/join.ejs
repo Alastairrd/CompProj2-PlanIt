@@ -28,6 +28,7 @@
 			<section class="text">
 				<p class="bold">Welcome to PlanIt</p>
 				<p>Enter your name in here:</p>
+				<p></p>
 			</section>
 			<form action="javascript:;" onsubmit="showCalendar()">
 				<fieldset>
@@ -38,6 +39,9 @@
 						name="name"
 						minlength="2"
 						maxlength="50"
+						pattern="^[A-Za-z]+$"
+						oninvalid="setCustomValidity('Min 2 characters, max 50 characters, no special characters, numbers or spaces - only letters.');"
+						oninput="setCustomValidity('')"
 						required
 					/>
 				</fieldset>
@@ -45,13 +49,7 @@
 			</form>
 		</main>
 
-		<main id="landingSection">
-			<a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
-				<button class="join" style="left: 20%">
-					Skip to results
-				</button>
-			</a>
-		</main>
+		
 
 
 		<main id="Calendar" style="display: none">
@@ -99,8 +97,13 @@
 						<!-- IF IT IS THE FIRST ITEM IN THE COLUMN, MAKE IT THE DATE -->
 						<% if(j==0) { %>
 						<div class="dayslot">
-							<h1 class="date"><%=dates[i].date %></h1>
-							<h3 class="date"><%=dates[i].month %></h3>
+							<h1 class="date">
+								<%=dates[i].date %>
+								<span class="monthSpan"
+									><%=dates[i].month %></span
+								>
+							</h1>
+							
 							<h2 class="date"><%=dates[i].dayOfWeek %></h2>
 						</div>
 
@@ -114,6 +117,15 @@
 			</div>
 			<!-- Next button at bottom of page-->
 			<button class="next" onclick="addAvailToEvent()">NEXT</button>
+		</main>
+
+		<!--skip button-->
+		<main id="landingSection">
+			<a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
+				<button class="join" style="left: 20%">
+					Skip to results
+				</button>
+			</a>
 		</main>
 	</body>
 </html>

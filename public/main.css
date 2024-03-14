@@ -175,6 +175,13 @@ span.error {
   font-size: 8em;
 }
 
+.monthSpan {
+  font-size: 0.5em;
+  text-align: right;
+  margin: 0px;
+  font-weight: normal;
+}
+
 h2.date {
   text-align: left;
   margin: 0px 2px;
@@ -281,18 +288,6 @@ h2.hack {
   width: 100%; /* Full width of main CM 29/02 */
   height: 72px; 
 }
-
-/* These positions were not working in mobile view */
-/* .create {
-  position: absolute;
-  top: 65%;
-  left: 20%;
-}
-.join {
-  position: absolute;
-  top: 65%;
-  left: 60%;
-} */
 
 .join:hover , .create:hover {
   color:#0003FA;
