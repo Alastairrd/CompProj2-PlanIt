@@ -34,4 +34,4 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
-  INSERT INTO users ('user_name') VALUES ('DemoUser');
+  INSERT INTO users (`user_name`) VALUES ('DemoUser');
