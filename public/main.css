@@ -256,12 +256,34 @@ h2.hack {
   margin: 20px 10%;
   cursor: pointer;
 }
-
-/* next button hover*/
-.next:hover {
-  color: white;
-  border: 10px solid #0003FA;
+/* To include an animation on hover 
+as per https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate1*/
+.next span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
 }
+
+.next span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.next:hover span {
+  padding-right: 25px;
+}
+
+.next:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
 
 .button-container {
   text-align: center;
