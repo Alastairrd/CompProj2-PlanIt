@@ -3,10 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	//dateTimes = document.getElementsByClassName("dateTime");
 	timeSlots = document.getElementsByClassName("timeslot");
 
+	const timeSlotsTouch = document.querySelectorAll(".timeslot");
+
+	console.log(timeSlotsTouch);
+
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < timeSlots.length; i++) {
-
-
 		timeSlots[i].addEventListener(
 			"mousedown",
 			setInitialActiveState,
@@ -16,22 +18,51 @@ document.addEventListener("DOMContentLoaded", function () {
 		timeSlots[i].addEventListener("mousedown", setActive, false);
 		timeSlots[i].setAttribute("data-val", 0);
 
+		//touch functionality
+		// timeSlots[i].addEventListener("touchmove", function (evt) {
+		// 	const touch = evt.touches[0];
+		// 	highlightHoveredObject(touch.clientX, touch.clientY);
+		// });
 	}
 
-	// for (i = 0; i < dateTimes.length; i++) {
-	// 	dateTimes[i].addEventListener(
-	// 		"mousedown",
-	// 		setInitialActiveState,
-	// 		false
-	// 	);
-	// 	dateTimes[i].addEventListener("mouseover", setActive, false);
-	// 	dateTimes[i].addEventListener("mousedown", setActive, false);
-
-	// 	//add data-val attribute
-	// 	dateTimes[i].setAttribute("data-val", 0);
-	// }
-
+	timeSlotsTouch.forEach((catchElement) => {
+		catchElement.addEventListener("touchmove", function (evt) {
+			const touch = evt.touches[0];
+			highlightHoveredObject(touch.clientX, touch.clientY);
+		});
+		catchElement.addEventListener(
+			"touchmove",
+			setInitialActiveState,
+			false
+		);
+	});
 });
+
+function highlightHoveredObject(x, y) {
+	const timeSlots = document.querySelectorAll(".timeslot");
+	timeSlots.forEach((timeslot) => {
+		// Check if cursor is inside boundaries
+		const rect = timeslot.getBoundingClientRect();
+		if (
+			!(
+				x <= rect.left ||
+				x >= rect.left + rect.width ||
+				y <= rect.top ||
+				y >= rect.top + rect.height
+			)
+		) {
+			if (isInitialActive) {
+				// set to deactivate if first element is active
+				this.classList.remove("active");
+				this.setAttribute("data-val", 0);
+			} else {
+				// else set to just activate
+				this.classList.add("active");
+				this.setAttribute("data-val", 1);
+			}	
+		}
+	});
+}
 
 //function to set default value of calendar
 document.addEventListener("DOMContentLoaded", function () {
@@ -53,9 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-
 let isInitialActive = false;
-// checks weather the initial one clicked is active
+// checks whether the initial one clicked is active
 function setInitialActiveState(e) {
 	isInitialActive = this.classList.contains("active");
 }
@@ -384,16 +414,19 @@ async function calToDB() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		let response = await fetch("https://www.doc.gold.ac.uk/usr/717/saveEvent/", {
-			method: "POST",
+		let response = await fetch(
+			"https://www.doc.gold.ac.uk/usr/717/saveEvent/",
+			{
+				method: "POST",
 
-			//tell the api we're using JSON and to parse it as such
-			headers: {
-				"Content-Type": "application/json",
-			},
-			//matrix we just made
-			body: JSON.stringify(postData),
-		});
+				//tell the api we're using JSON and to parse it as such
+				headers: {
+					"Content-Type": "application/json",
+				},
+				//matrix we just made
+				body: JSON.stringify(postData),
+			}
+		);
 
 		//if all went well, say so
 		if (response.ok == true) {
@@ -414,19 +447,21 @@ async function calToDB() {
 		console.error(error);
 	}
 
-
 	//if all went well and we have a url
 	if (eventUrl) {
-
 		//redirect to share page of new event
-		window.location.replace(`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`);
+		window.location.replace(
+			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+		);
 	}
 }
 
 function joinEvent() {
 	let eventCode = document.getElementById("code").value;
 
-	window.location.replace(`http://www.doc.gold.ac.uk/usr/717/join/${eventCode}`);
+	window.location.replace(
+		`http://www.doc.gold.ac.uk/usr/717/join/${eventCode}`
+	);
 }
 
 function homeRedirect() {
@@ -449,16 +484,19 @@ async function addAvailToEvent() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		response = await fetch("https://www.doc.gold.ac.uk/usr/717/addToEvent", {
-			method: "POST",
+		response = await fetch(
+			"https://www.doc.gold.ac.uk/usr/717/addToEvent",
+			{
+				method: "POST",
 
-			//tell the api we're using JSON and to parse it as such
-			headers: {
-				"Content-Type": "application/json",
-			},
-			//matrix we just made
-			body: JSON.stringify(postData),
-		});
+				//tell the api we're using JSON and to parse it as such
+				headers: {
+					"Content-Type": "application/json",
+				},
+				//matrix we just made
+				body: JSON.stringify(postData),
+			}
+		);
 
 		//if all went well, say so
 		if (response.ok == true) {
@@ -474,7 +512,9 @@ async function addAvailToEvent() {
 	}
 
 	if (response.ok) {
-		window.location.replace(`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`);
+		window.location.replace(
+			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+		);
 	}
 }
 
@@ -504,48 +544,52 @@ function generateURL() {
 }
 
 // COPY CODE TO CLIPBOARD FUNCTIOANLITY
-function copyToClipBoard() 
-{
+function copyToClipBoard() {
 	// GET ID OF LINK BUTTON TO COPY VALUE
 	const eventUrl = document.getElementById("link-button").innerText;
-  
+
 	// TUTORIAL CREDIT - https://www.youtube.com/watch?v=6vcCTymhIXY
-	navigator.clipboard.writeText(eventUrl).then(() => {
+	navigator.clipboard
+		.writeText(eventUrl)
+		.then(() => {
 			showCopyBanner();
-		}).catch(err => { console.error("Failed to copy:", err); });
+		})
+		.catch((err) => {
+			console.error("Failed to copy:", err);
+		});
 }
 
 // TUTORIAL CREDIT - https://www.youtube.com/watch?v=1EN8_OxvPuY
 function showCopyBanner() {
-
-    // CREATE BANNER FROM DIV - POSITIONS, ANIMATIONS ETC
-    const banner = document.createElement('div');
-    banner.innerText = 'Code copied!';
-    banner.style.position = 'fixed';
-    banner.style.left = '0';
-    banner.style.right = '0';
-    banner.style.bottom = '-50px'; 
-    banner.style.backgroundColor = '#4CAF50';
-    banner.style.color = 'white';
-    banner.style.textAlign = 'center';
-    banner.style.padding = '10px 0';
-    banner.style.transition = 'bottom 0.5s ease';
+	// CREATE BANNER FROM DIV - POSITIONS, ANIMATIONS ETC
+	const banner = document.createElement("div");
+	banner.innerText = "Code copied!";
+	banner.style.position = "fixed";
+	banner.style.left = "0";
+	banner.style.right = "0";
+	banner.style.bottom = "-50px";
+	banner.style.backgroundColor = "#4CAF50";
+	banner.style.color = "white";
+	banner.style.textAlign = "center";
+	banner.style.padding = "10px 0";
+	banner.style.transition = "bottom 0.5s ease";
 
 	// ADD BANNER TO BODY OF 'share.ejs'
-    document.body.appendChild(banner);
+	document.body.appendChild(banner);
 
-    // SLIDE UP ANIMATION
-    setTimeout(() => { banner.style.bottom = '0'; }, 100);
+	// SLIDE UP ANIMATION
+	setTimeout(() => {
+		banner.style.bottom = "0";
+	}, 100);
 
-    // SLIDE OFF THE PAGE - 3 seconds
-    setTimeout(() => {
-        banner.style.bottom = '-50px'; 
-        setTimeout(() => banner.remove(), 500); 
+	// SLIDE OFF THE PAGE - 3 seconds
+	setTimeout(() => {
+		banner.style.bottom = "-50px";
+		setTimeout(() => banner.remove(), 500);
 	}, 3000);
 }
-  
 
-  module.exports = { isValidUsername, generateURL};
+module.exports = { isValidUsername, generateURL };
 
 // for exiting 404
 function homePage() {

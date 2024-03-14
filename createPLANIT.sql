@@ -33,3 +33,5 @@ CREATE TABLE `users` (
   `signed` TINYINT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+
+  INSERT INTO users ('user_name') VALUES ('DemoUser');
