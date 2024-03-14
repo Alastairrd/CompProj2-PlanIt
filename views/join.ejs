@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Calendar allowing friend of creator of PlanIt event to join and put in their unavailability and save it.">
 		<title>PLANIT Join Event</title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 		<script src="/scripts.js"></script>
@@ -10,20 +11,21 @@
 		</script>
 	</head>
 	<body>
-		<section class="page-top">
-			<!-- Heading-->
-			<h1 class="title-heading">PlanIt MVP</h1>
-
-			<!-- Progress bar -->
-			<div class="progress-grey">
-				<div class="progress-blue-20"></div>
-			</div>
-
-			<!-- Back button -->
-			<button class="back-button" onclick="homePage()">Back</button>
-		</section>
-
 		<main id="nameSection" style="display: block">
+			<!-- Inside the main id so that progress bar can shift properly -->
+			<section class="page-top">
+				<!-- Heading-->
+				<h1 class="title-heading">PlanIt MVP</h1>
+		
+		
+				<!-- Progress bar -->
+				<div class="progress-grey">
+					<div class="progress-blue-20"></div>
+				</div>
+
+				<!-- Back button -->
+				<button class="back-button" onclick="homePage()">Back</button>
+			</section>
 			<!-- Welcome message for join section -->
 			<section class="text">
 				<p class="bold">Welcome to PlanIt</p>
@@ -45,14 +47,38 @@
 						required
 					/>
 				</fieldset>
-				<button type="submit" class="nextother">Next</button>
+				<button type="submit" class="next"><span>Next</span></button>
 			</form>
 		</main>
 
+		<main id="progressSection">
+			<section class="page-top">
+				<!-- Heading-->
+				<h1 class="title-heading">PlanIt MVP</h1>
 		
+		
+				<!-- Progress bar -->
+				<div class="progress-grey">
+					<div class="progress-blue-20"></div>
+				</div>
+			</section>
+		</main>
 
 
 		<main id="Calendar" style="display: none">
+			<section class="page-top">
+				<!-- Heading-->
+				<h1 class="title-heading">PlanIt MVP</h1>
+		
+		
+				<!-- Progress bar -->
+				<div class="progress-grey">
+					<div class="progress-blue-20"></div>
+				</div>
+
+				<!-- Back button -->
+				<button class="back-button" onclick="homePage()">Back</button>
+			</section>
 			<!-- Instruction message -->
 			<section class="text">
 				<p>
@@ -116,7 +142,7 @@
 				</div>
 			</div>
 			<!-- Next button at bottom of page-->
-			<button class="next" onclick="addAvailToEvent()">NEXT</button>
+			<button class="next" onclick="addAvailToEvent()"><span>NEXT</span></button>
 		</main>
 
 		<!--skip button-->
