@@ -1,77 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
 	//get all date time objects
-	dateTimes = document.getElementsByClassName("dateTime");
-	otherDateTimes = document.getElementsByClassName("timeslot");
+	//dateTimes = document.getElementsByClassName("dateTime");
+	timeSlots = document.getElementsByClassName("timeslot");
+
+	const timeSlotsTouch = document.querySelectorAll(".timeslot");
+
+	console.log(timeSlotsTouch);
 
 	//set event listeners for clicks and mousedown
-	for (i = 0; i < otherDateTimes.length; i++) {
-		// IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
-		//if(data[i] != "1")
-		//{
-
-		// dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
-		// dateTimes[i].addEventListener('mouseover', setActive, false);
-		// dateTimes[i].addEventListener('mousedown', setActive, false);
-
-		otherDateTimes[i].addEventListener(
+	for (i = 0; i < timeSlots.length; i++) {
+		timeSlots[i].addEventListener(
 			"mousedown",
 			setInitialActiveState,
 			false
 		);
-		otherDateTimes[i].addEventListener("mouseover", setActive, false);
-		otherDateTimes[i].addEventListener("mousedown", setActive, false);
+		timeSlots[i].addEventListener("mouseover", setActive, false);
+		timeSlots[i].addEventListener("mousedown", setActive, false);
+		timeSlots[i].setAttribute("data-val", 0);
 
-		// dateTimes[i].addEventListener('touchstart', touchTest, false);
-		// dateTimes[i].addEventListener('touchend', touchTest2, false);
-		// dateTimes[i].addEventListener('touchmove', touchMoveTest, false);
-
-		//add data-val attribute
-		// dateTimes[i].setAttribute("data-val", 0)
-		otherDateTimes[i].setAttribute("data-val", 0);
-		//}
 	}
 
-	for (i = 0; i < dateTimes.length; i++) {
-		dateTimes[i].addEventListener(
-			"mousedown",
+	//get all timeslots and add touch event listeners, also disables scrolling of page when dealing with timeslots
+	timeSlotsTouch.forEach((timeslotElement) => {
+		//checking if touch is within a timeslot
+		timeslotElement.addEventListener("touchmove", function (evt) {
+			const touch = evt.touches[0];
+			highlightHoveredObject(touch.clientX, touch.clientY);
+		});
+
+		//this is for setting initial state for setting active or inactive
+		timeslotElement.addEventListener(
+			"touchstart",
 			setInitialActiveState,
 			false
 		);
-		dateTimes[i].addEventListener("mouseover", setActive, false);
-		dateTimes[i].addEventListener("mousedown", setActive, false);
 
-		//add data-val attribute
-		dateTimes[i].setAttribute("data-val", 0);
-	}
-
-	//deprecated, taking from csv, errors cause data is larger or smaller than event size
-	// FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-	// for (let i = 0; i < data.length; i++) {
-	// 	//if (data[i] == "1" && dateTimes[i])
-	// 	if (data[i] == "1")
-	// 		//dateTimes[i].classList.add("already-active");
-
-	// 		otherDateTimes[i].classList.add("active");
-	// 	// console.log(data[i])
-	// 	//dateTimes[i].setAttribute("data-val", 1)
-	// }
-
-	//deprecated, taking from csv, errors cause data is larger or smaller than event size
-	// for (let i = 0; i < data.length; i++) {
-	// 	//if (data[i] == "1" && dateTimes[i])
-	// 	if (data[i] == "1")
-	// 		//dateTimes[i].classList.add("already-active");
-
-	// 		//dateTimes[i].classList.add("active");
-	// 		//console.log(data[i])
-	// 		otherDateTimes[i].setAttribute("data-val", 1);
-	// }
-
-	// grid1elements = document.getElementsByClassName("grid1")
-
-	// nestedDivs = grid1elements[0].children
-	// console.log(nestedDivs)
+		//disables normal scrolling of page behaviour
+		timeslotElement.setAttribute("style", "touch-action: none");
+	});
 });
+
 
 //function to set default value of calendar
 document.addEventListener("DOMContentLoaded", function () {
@@ -93,31 +61,39 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-//
-// function setActive(e) {
-// 	//if left mouse button is being pressed
-//     if(e.buttons == 1){
-
-// 		//if grid-item is active already
-//         if(this.classList.contains("active")){
-
-// 			//remove it
-//             this.classList.remove("active")
-// 			this.setAttribute("data-val", 0)
-
-// 			//otherwise set active
-//         } else {
-//             this.classList.add("active");
-// 			this.setAttribute("data-val", 1)
-//         }
-//     }
-// }
-
 let isInitialActive = false;
-// checks weather the initial one clicked is active
+// checks whether the initial one clicked is active
 function setInitialActiveState(e) {
 	isInitialActive = this.classList.contains("active");
 }
+
+function highlightHoveredObject(x, y) {
+	const timeSlots = document.querySelectorAll(".timeslot");
+	timeSlots.forEach((timeslot) => {
+		//check if the touch was within the boundaries of a timeslot element
+		const rect = timeslot.getBoundingClientRect();
+		if (
+			!(
+				x <= rect.left ||
+				x >= rect.left + rect.width ||
+				y <= rect.top ||
+				y >= rect.top + rect.height
+			)
+		) {
+			//sets active or inactive based on the initial state
+			if (isInitialActive) {
+				// set to deactivate if first element is active
+				timeslot.classList.remove("active");
+				timeslot.setAttribute("data-val", 0);
+			} else {
+				// else set to just activate
+				timeslot.classList.add("active");
+				timeslot.setAttribute("data-val", 1);
+			}	
+		}
+	});
+}
+
 
 function setActive(e) {
 	if (e.buttons === 1) {
@@ -345,27 +321,6 @@ async function calcMatrixData() {
 			}
 		}
 	}
-
-	console.log(dateCoords);
-}
-
-// function touchTest(e){
-
-//     console.log("touch started")
-// }
-
-// function touchTest2(e){
-//     this.classList.add("active");
-//     console.log("touch ended")
-// }
-
-// function touchMoveTest(e){
-//     this.classList.add("active");
-//     console.log("touch moved")
-// }
-
-function joinEvent() {
-	//check
 }
 
 // each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
@@ -464,16 +419,19 @@ async function calToDB() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		let response = await fetch("/saveEvent", {
-			method: "POST",
+		let response = await fetch(
+			"https://www.doc.gold.ac.uk/usr/717/saveEvent/",
+			{
+				method: "POST",
 
-			//tell the api we're using JSON and to parse it as such
-			headers: {
-				"Content-Type": "application/json",
-			},
-			//matrix we just made
-			body: JSON.stringify(postData),
-		});
+				//tell the api we're using JSON and to parse it as such
+				headers: {
+					"Content-Type": "application/json",
+				},
+				//matrix we just made
+				body: JSON.stringify(postData),
+			}
+		);
 
 		//if all went well, say so
 		if (response.ok == true) {
@@ -494,23 +452,25 @@ async function calToDB() {
 		console.error(error);
 	}
 
-
 	//if all went well and we have a url
 	if (eventUrl) {
-
 		//redirect to share page of new event
-		window.location.replace(`/share/${eventUrl}`);
+		window.location.replace(
+			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+		);
 	}
 }
 
 function joinEvent() {
 	let eventCode = document.getElementById("code").value;
 
-	window.location.replace(`/join/${eventCode}`);
+	window.location.replace(
+		`http://www.doc.gold.ac.uk/usr/717/join/${eventCode}`
+	);
 }
 
 function homeRedirect() {
-	window.location.replace("/");
+	window.location.replace("http://www.doc.gold.ac.uk/usr/717/");
 }
 
 async function addAvailToEvent() {
@@ -529,16 +489,19 @@ async function addAvailToEvent() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		response = await fetch("/addToEvent", {
-			method: "POST",
+		response = await fetch(
+			"https://www.doc.gold.ac.uk/usr/717/addToEvent",
+			{
+				method: "POST",
 
-			//tell the api we're using JSON and to parse it as such
-			headers: {
-				"Content-Type": "application/json",
-			},
-			//matrix we just made
-			body: JSON.stringify(postData),
-		});
+				//tell the api we're using JSON and to parse it as such
+				headers: {
+					"Content-Type": "application/json",
+				},
+				//matrix we just made
+				body: JSON.stringify(postData),
+			}
+		);
 
 		//if all went well, say so
 		if (response.ok == true) {
@@ -554,7 +517,9 @@ async function addAvailToEvent() {
 	}
 
 	if (response.ok) {
-		window.location.replace(`/share/${eventUrl}`);
+		window.location.replace(
+			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+		);
 	}
 }
 
@@ -584,50 +549,54 @@ function generateURL() {
 }
 
 // COPY CODE TO CLIPBOARD FUNCTIOANLITY
-function copyToClipBoard() 
-{
+function copyToClipBoard() {
 	// GET ID OF LINK BUTTON TO COPY VALUE
 	const eventUrl = document.getElementById("link-button").innerText;
-  
+
 	// TUTORIAL CREDIT - https://www.youtube.com/watch?v=6vcCTymhIXY
-	navigator.clipboard.writeText(eventUrl).then(() => {
+	navigator.clipboard
+		.writeText(eventUrl)
+		.then(() => {
 			showCopyBanner();
-		}).catch(err => { console.error("Failed to copy:", err); });
+		})
+		.catch((err) => {
+			console.error("Failed to copy:", err);
+		});
 }
 
 // TUTORIAL CREDIT - https://www.youtube.com/watch?v=1EN8_OxvPuY
 function showCopyBanner() {
-
-    // CREATE BANNER FROM DIV - POSITIONS, ANIMATIONS ETC
-    const banner = document.createElement('div');
-    banner.innerText = 'Code copied!';
-    banner.style.position = 'fixed';
-    banner.style.left = '0';
-    banner.style.right = '0';
-    banner.style.bottom = '-50px'; 
-    banner.style.backgroundColor = '#4CAF50';
-    banner.style.color = 'white';
-    banner.style.textAlign = 'center';
-    banner.style.padding = '10px 0';
-    banner.style.transition = 'bottom 0.5s ease';
+	// CREATE BANNER FROM DIV - POSITIONS, ANIMATIONS ETC
+	const banner = document.createElement("div");
+	banner.innerText = "Code copied!";
+	banner.style.position = "fixed";
+	banner.style.left = "0";
+	banner.style.right = "0";
+	banner.style.bottom = "-50px";
+	banner.style.backgroundColor = "#4CAF50";
+	banner.style.color = "white";
+	banner.style.textAlign = "center";
+	banner.style.padding = "10px 0";
+	banner.style.transition = "bottom 0.5s ease";
 
 	// ADD BANNER TO BODY OF 'share.ejs'
-    document.body.appendChild(banner);
+	document.body.appendChild(banner);
 
-    // SLIDE UP ANIMATION
-    setTimeout(() => { banner.style.bottom = '0'; }, 100);
+	// SLIDE UP ANIMATION
+	setTimeout(() => {
+		banner.style.bottom = "0";
+	}, 100);
 
-    // SLIDE OFF THE PAGE - 3 seconds
-    setTimeout(() => {
-        banner.style.bottom = '-50px'; 
-        setTimeout(() => banner.remove(), 500); 
+	// SLIDE OFF THE PAGE - 3 seconds
+	setTimeout(() => {
+		banner.style.bottom = "-50px";
+		setTimeout(() => banner.remove(), 500);
 	}, 3000);
 }
-  
 
-  module.exports = { isValidUsername, generateURL};
+module.exports = { isValidUsername, generateURL };
 
 // for exiting 404
 function homePage() {
-	window.location.href = "/";
+	window.location.href = "http://www.doc.gold.ac.uk/usr/717/";
 }

@@ -6,13 +6,15 @@ const mysql = require("mysql");
 const fs = require('fs');
 const path = require('path');
 const math = require('mathjs');
-//TODO remove?
-//const { log } = require("console");
+const cors = require('cors');
+
 
 // Create the express application object
 const app = express();
 const port = 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors());
 
 //set app to be able to parse json
 app.use(bodyParser.json());
