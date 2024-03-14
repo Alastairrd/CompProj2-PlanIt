@@ -243,18 +243,24 @@ h2.hack {
 /* Button at bottom of screen */
 .next {
   text-align: center;
+  font-size: 16px;
   color: white;
-  text-transform: capitalize;
+  text-transform: uppercase; /* Changed in line with Figma design CM 29/02 */
   letter-spacing: 0.25em;
   background-color: #0003FA;
   border: 1px solid #5456FA;
-  border-radius: 5px;
+  border-radius: 20px; /* 5px too subtle */
+  /*position: absolute; - CHANGED FOR TIME BEING */
   width: 80%;
-  height: 50px;
-  margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-bottom: 50px;
+  height: 62px;
+  margin: 20px 10%;
+  cursor: pointer;
+}
+
+/* next button hover*/
+.next:hover {
+  color: white;
+  border: 10px solid #0003FA;
 }
 
 .button-container {
@@ -366,27 +372,6 @@ input[type="date" i] {
 }
 
 
-/* another next button with varible screen position*/
-.nextother {
-  text-align: center;
-  font-size: 16px;
-  color: white;
-  text-transform: uppercase; /* Changed in line with Figma design CM 29/02 */
-  letter-spacing: 0.25em;
-  background-color: #0003FA;
-  border: 1px solid #5456FA;
-  border-radius: 20px; /* 5px too subtle */
-  /*position: absolute; - CHANGED FOR TIME BEING */
-  width: 80%;
-  height: 62px;
-  margin: 20px 10%;
-  cursor: pointer;
-}
-/* alternitive next button hover*/
-.nextother:hover {
-  color:#0e0e0e;
-  border: 5px solid #090909;
-}
 /* link/code button*/
 .link-button{
   text-transform: capitalize;
