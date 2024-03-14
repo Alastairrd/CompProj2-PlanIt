@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>PLANIT Join Event</title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 		<script src="/scripts.js"></script>
@@ -21,28 +22,8 @@
 			<!-- Back button -->
 			<button class="back-button" onclick="homePage()">Back</button>
 		</section>
-		<main id="landingSection">
-			<!-- Welcome message for landing section -->
-			<section class="text">
-				<p class="bold">Welcome to PlanIt</p>
-				<p>
-					Choose whether you would like to add your availability or
-					see the summary of results:
-				</p>
-			</section>
-			<!-- Buttons to create an event or join an event -->
-			<button class="create" style="left: 60%" onclick="showName()">
-				Join Event
-			</button>
-			<a href="/summary/<%- eventUrl %>">
-				<button class="join" style="left: 20%">
-					Show Results
-				</button>
-			</a>
-			
-		</main>
 
-		<main id="nameSection" style="display: none">
+		<main id="nameSection" style="display: block">
 			<!-- Welcome message for join section -->
 			<section class="text">
 				<p class="bold">Welcome to PlanIt</p>
@@ -63,6 +44,15 @@
 				<button type="submit" class="nextother">Next</button>
 			</form>
 		</main>
+
+		<main id="landingSection">
+			<a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
+				<button class="join" style="left: 20%">
+					Skip to results
+				</button>
+			</a>
+		</main>
+
 
 		<main id="Calendar" style="display: none">
 			<!-- Instruction message -->
@@ -124,14 +114,6 @@
 			</div>
 			<!-- Next button at bottom of page-->
 			<button class="next" onclick="addAvailToEvent()">NEXT</button>
-
-			<button onclick="printData()">CONSOLE DATA TEST</button>
-
-			<button onclick="sendMatrixData()">MATRIX DATA TEST</button>
-
-			<button onclick="getMatrixData()">GET DATA TEST</button>
-
-			<button onclick="calcMatrixData()">CALC DATA TEST</button>
 		</main>
 	</body>
 </html>

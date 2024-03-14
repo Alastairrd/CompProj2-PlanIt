@@ -1,76 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
 	//get all date time objects
-	dateTimes = document.getElementsByClassName("dateTime");
-	otherDateTimes = document.getElementsByClassName("timeslot");
+	//dateTimes = document.getElementsByClassName("dateTime");
+	timeSlots = document.getElementsByClassName("timeslot");
 
 	//set event listeners for clicks and mousedown
-	for (i = 0; i < otherDateTimes.length; i++) {
-		// IF ALREADY SELECTED BY OTHER USERS -> DON'T ALLOW SELECTION
-		//if(data[i] != "1")
-		//{
+	for (i = 0; i < timeSlots.length; i++) {
 
-		// dateTimes[i].addEventListener('mousedown', setInitialActiveState, false);
-		// dateTimes[i].addEventListener('mouseover', setActive, false);
-		// dateTimes[i].addEventListener('mousedown', setActive, false);
 
-		otherDateTimes[i].addEventListener(
+		timeSlots[i].addEventListener(
 			"mousedown",
 			setInitialActiveState,
 			false
 		);
-		otherDateTimes[i].addEventListener("mouseover", setActive, false);
-		otherDateTimes[i].addEventListener("mousedown", setActive, false);
+		timeSlots[i].addEventListener("mouseover", setActive, false);
+		timeSlots[i].addEventListener("mousedown", setActive, false);
+		timeSlots[i].setAttribute("data-val", 0);
 
-		// dateTimes[i].addEventListener('touchstart', touchTest, false);
-		// dateTimes[i].addEventListener('touchend', touchTest2, false);
-		// dateTimes[i].addEventListener('touchmove', touchMoveTest, false);
-
-		//add data-val attribute
-		// dateTimes[i].setAttribute("data-val", 0)
-		otherDateTimes[i].setAttribute("data-val", 0);
-		//}
 	}
 
-	for (i = 0; i < dateTimes.length; i++) {
-		dateTimes[i].addEventListener(
-			"mousedown",
-			setInitialActiveState,
-			false
-		);
-		dateTimes[i].addEventListener("mouseover", setActive, false);
-		dateTimes[i].addEventListener("mousedown", setActive, false);
+	// for (i = 0; i < dateTimes.length; i++) {
+	// 	dateTimes[i].addEventListener(
+	// 		"mousedown",
+	// 		setInitialActiveState,
+	// 		false
+	// 	);
+	// 	dateTimes[i].addEventListener("mouseover", setActive, false);
+	// 	dateTimes[i].addEventListener("mousedown", setActive, false);
 
-		//add data-val attribute
-		dateTimes[i].setAttribute("data-val", 0);
-	}
-
-	//deprecated, taking from csv, errors cause data is larger or smaller than event size
-	// FOR EVERY DATE IN THE DATAFRAME -> IF IT IS 1 SET THAT DATE TO ALREADY-ACTIVE
-	// for (let i = 0; i < data.length; i++) {
-	// 	//if (data[i] == "1" && dateTimes[i])
-	// 	if (data[i] == "1")
-	// 		//dateTimes[i].classList.add("already-active");
-
-	// 		otherDateTimes[i].classList.add("active");
-	// 	// console.log(data[i])
-	// 	//dateTimes[i].setAttribute("data-val", 1)
+	// 	//add data-val attribute
+	// 	dateTimes[i].setAttribute("data-val", 0);
 	// }
 
-	//deprecated, taking from csv, errors cause data is larger or smaller than event size
-	// for (let i = 0; i < data.length; i++) {
-	// 	//if (data[i] == "1" && dateTimes[i])
-	// 	if (data[i] == "1")
-	// 		//dateTimes[i].classList.add("already-active");
-
-	// 		//dateTimes[i].classList.add("active");
-	// 		//console.log(data[i])
-	// 		otherDateTimes[i].setAttribute("data-val", 1);
-	// }
-
-	// grid1elements = document.getElementsByClassName("grid1")
-
-	// nestedDivs = grid1elements[0].children
-	// console.log(nestedDivs)
 });
 
 //function to set default value of calendar
@@ -93,25 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-//
-// function setActive(e) {
-// 	//if left mouse button is being pressed
-//     if(e.buttons == 1){
-
-// 		//if grid-item is active already
-//         if(this.classList.contains("active")){
-
-// 			//remove it
-//             this.classList.remove("active")
-// 			this.setAttribute("data-val", 0)
-
-// 			//otherwise set active
-//         } else {
-//             this.classList.add("active");
-// 			this.setAttribute("data-val", 1)
-//         }
-//     }
-// }
 
 let isInitialActive = false;
 // checks weather the initial one clicked is active
@@ -345,27 +286,6 @@ async function calcMatrixData() {
 			}
 		}
 	}
-
-	console.log(dateCoords);
-}
-
-// function touchTest(e){
-
-//     console.log("touch started")
-// }
-
-// function touchTest2(e){
-//     this.classList.add("active");
-//     console.log("touch ended")
-// }
-
-// function touchMoveTest(e){
-//     this.classList.add("active");
-//     console.log("touch moved")
-// }
-
-function joinEvent() {
-	//check
 }
 
 // each of the functions for changing which html main is showed within the landing page (refrences saved eleswher)
@@ -464,7 +384,7 @@ async function calToDB() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		let response = await fetch("/saveEvent", {
+		let response = await fetch("https://www.doc.gold.ac.uk/usr/717/saveEvent/", {
 			method: "POST",
 
 			//tell the api we're using JSON and to parse it as such
@@ -499,18 +419,18 @@ async function calToDB() {
 	if (eventUrl) {
 
 		//redirect to share page of new event
-		window.location.replace(`/share/${eventUrl}`);
+		window.location.replace(`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`);
 	}
 }
 
 function joinEvent() {
 	let eventCode = document.getElementById("code").value;
 
-	window.location.replace(`/join/${eventCode}`);
+	window.location.replace(`http://www.doc.gold.ac.uk/usr/717/join/${eventCode}`);
 }
 
 function homeRedirect() {
-	window.location.replace("/");
+	window.location.replace("http://www.doc.gold.ac.uk/usr/717/");
 }
 
 async function addAvailToEvent() {
@@ -529,7 +449,7 @@ async function addAvailToEvent() {
 	//try this fetch promise with our api route for sending data to DB
 	try {
 		//reponse is equal to the result of the promise
-		response = await fetch("/addToEvent", {
+		response = await fetch("https://www.doc.gold.ac.uk/usr/717/addToEvent", {
 			method: "POST",
 
 			//tell the api we're using JSON and to parse it as such
@@ -554,7 +474,7 @@ async function addAvailToEvent() {
 	}
 
 	if (response.ok) {
-		window.location.replace(`/share/${eventUrl}`);
+		window.location.replace(`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`);
 	}
 }
 
@@ -629,5 +549,5 @@ function showCopyBanner() {
 
 // for exiting 404
 function homePage() {
-	window.location.href = "/";
+	window.location.href = "http://www.doc.gold.ac.uk/usr/717/";
 }
