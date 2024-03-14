@@ -18,51 +18,28 @@ document.addEventListener("DOMContentLoaded", function () {
 		timeSlots[i].addEventListener("mousedown", setActive, false);
 		timeSlots[i].setAttribute("data-val", 0);
 
-		//touch functionality
-		// timeSlots[i].addEventListener("touchmove", function (evt) {
-		// 	const touch = evt.touches[0];
-		// 	highlightHoveredObject(touch.clientX, touch.clientY);
-		// });
 	}
 
-	timeSlotsTouch.forEach((catchElement) => {
-		catchElement.addEventListener("touchmove", function (evt) {
+	//get all timeslots and add touch event listeners, also disables scrolling of page when dealing with timeslots
+	timeSlotsTouch.forEach((timeslotElement) => {
+		//checking if touch is within a timeslot
+		timeslotElement.addEventListener("touchmove", function (evt) {
 			const touch = evt.touches[0];
 			highlightHoveredObject(touch.clientX, touch.clientY);
 		});
-		catchElement.addEventListener(
-			"touchmove",
+
+		//this is for setting initial state for setting active or inactive
+		timeslotElement.addEventListener(
+			"touchstart",
 			setInitialActiveState,
 			false
 		);
+
+		//disables normal scrolling of page behaviour
+		timeslotElement.setAttribute("style", "touch-action: none");
 	});
 });
 
-function highlightHoveredObject(x, y) {
-	const timeSlots = document.querySelectorAll(".timeslot");
-	timeSlots.forEach((timeslot) => {
-		// Check if cursor is inside boundaries
-		const rect = timeslot.getBoundingClientRect();
-		if (
-			!(
-				x <= rect.left ||
-				x >= rect.left + rect.width ||
-				y <= rect.top ||
-				y >= rect.top + rect.height
-			)
-		) {
-			if (isInitialActive) {
-				// set to deactivate if first element is active
-				this.classList.remove("active");
-				this.setAttribute("data-val", 0);
-			} else {
-				// else set to just activate
-				this.classList.add("active");
-				this.setAttribute("data-val", 1);
-			}	
-		}
-	});
-}
 
 //function to set default value of calendar
 document.addEventListener("DOMContentLoaded", function () {
@@ -89,6 +66,34 @@ let isInitialActive = false;
 function setInitialActiveState(e) {
 	isInitialActive = this.classList.contains("active");
 }
+
+function highlightHoveredObject(x, y) {
+	const timeSlots = document.querySelectorAll(".timeslot");
+	timeSlots.forEach((timeslot) => {
+		//check if the touch was within the boundaries of a timeslot element
+		const rect = timeslot.getBoundingClientRect();
+		if (
+			!(
+				x <= rect.left ||
+				x >= rect.left + rect.width ||
+				y <= rect.top ||
+				y >= rect.top + rect.height
+			)
+		) {
+			//sets active or inactive based on the initial state
+			if (isInitialActive) {
+				// set to deactivate if first element is active
+				timeslot.classList.remove("active");
+				timeslot.setAttribute("data-val", 0);
+			} else {
+				// else set to just activate
+				timeslot.classList.add("active");
+				timeslot.setAttribute("data-val", 1);
+			}	
+		}
+	});
+}
+
 
 function setActive(e) {
 	if (e.buttons === 1) {
