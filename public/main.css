@@ -98,15 +98,14 @@ body {
 /* Calendar */
 /* probably need to make this an icon instead of text */
 .question {
-  float: right;
+  display: inline-block;
   text-align: center;
   line-height: 1.3em;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   border: 0.5px solid #5456FA;
-
-
+  font-size: 16px;
 }
 
 .grid-container {
@@ -156,23 +155,32 @@ h1.date {
   font-weight: normal;
 }
 
+/* For 404 page */
 main.error {
   text-align: center;
+  margin: 100px 10px;
 }
+/* Main message */
 h1.error{
-  font-size: 4em;
+  font-size: 60px;
   text-align: center;
+  text-transform: uppercase;
 }
+/* icon */
+span.error {
+  font-size: 120px;
+}
+
 button.error{
-  font-size: 4em;
+  font-size: 18px;
   text-align: center;
   border: 1px solid #5456FA;
   color: #5456FA;;
   background-color: white;
-}
-
-span.error {
-  font-size: 8em;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 10px 50px;
+  margin-top: 20px;
 }
 
 .monthSpan {
@@ -258,9 +266,9 @@ h2.hack {
   border: 1px solid #5456FA;
   border-radius: 20px; /* 5px too subtle */
   /*position: absolute; - CHANGED FOR TIME BEING */
-  width: 80%;
+  width: 90%;
   height: 62px;
-  margin: 20px 10%;
+  margin: 20px 5%;
   cursor: pointer;
 }
 /* To include an animation on hover 
