@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	//get all date time objects
 	//dateTimes = document.getElementsByClassName("dateTime");
 	timeSlots = document.getElementsByClassName("timeslot");
+	
 
 	const timeSlotsTouch = document.querySelectorAll(".timeslot");
 
@@ -54,10 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				endDate.valueAsDate = startDate.valueAsDate;
 			}
 
-			//set max to 1 month ahead of start date
+			//set max to 3 month ahead of start date
 			let max = new Date(startDate.value);
 			console.log(max);
-			max.setMonth(max.getMonth() + 1);
+			max.setMonth(max.getMonth() + 3);
 			max = max.toISOString().split("T")[0];
 
 			endDate.setAttribute("max", max);
@@ -71,10 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		startDate.setAttribute("min", startDate.value);
 		endDate.setAttribute("min", startDate.value);
 
-		//set max to 1 month from now
+		//set max to 3 month from now
 		let max = new Date(startDate.value);
 		console.log(max);
-		max.setMonth(max.getMonth() + 1);
+		max.setMonth(max.getMonth() + 3);
 		max = max.toISOString().split("T")[0];
 
 		endDate.setAttribute("max", max);
@@ -381,6 +382,7 @@ function showCalendar() {
 	//document.getElementById("landingSection").style.display = "none";
 	document.getElementById("nameSection").style.display = "none";
 	document.getElementById("Calendar").style.display = "block";
+	document.getElementById("greetingNameSpan").innerText = document.getElementById("name").value;
 }
 
 function showName() {

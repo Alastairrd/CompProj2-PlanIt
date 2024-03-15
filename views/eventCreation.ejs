@@ -13,6 +13,8 @@
 			let dateInfo = <%- JSON.stringify(dates) %>;
 			let startDt = <%- JSON.stringify(startDate) %>;
 			let endDt = <%- JSON.stringify(endDate) %>;
+
+			let nameField = document.getElementById("name");
 		</script>
 	</head>
 	<body>
@@ -62,13 +64,13 @@
 			<section class="text">
 				<p>
 					<strong
-						>Hi!<br />You're on the way to creating your
+						>Hi <span id="greetingNameSpan"></span>! <br />You're on the way to creating your
 						event.</strong
 					>
 				</p>
 			</section>
 
-			<!-- Instruction message -->
+			<!--Instruction message-->
 			<section class="text">
 				<p>
 					Swipe the times you <em>can't</em> do. <br />Click 'Next'
