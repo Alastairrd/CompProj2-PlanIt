@@ -110,33 +110,6 @@ body {
   margin-bottom: 5px;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  background-color: white;
-  margin: 40px 0px;
-
-}
-
-/* FIXME: should min-width and min-height be set to 44px as per finger-touch recommednations?*/
-.grid-item {
-  background-color: white;
-  border-right: 1px solid #BBBABA;
-  border-bottom: 1px solid #BBBABA;
-  padding: 0.5em;
-  font-size: 1em;
-  text-align: center;
-  
-}
-
-.nested-grid {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: repeat(9, 1fr);
-  background-color: white;
-
-
-}
 /* Top row (hidden and dates) */
 .hidden {
   border-right: 1px solid #5456FA;
@@ -148,13 +121,6 @@ body {
   border-left: none;
   padding: 0px;
   width: auto;
-}
-
-h1.date {
-  font-size: 18px;
-  text-align: left;
-  margin: 0px 2px;
-  font-weight: normal;
 }
 
 /* For 404 page */
@@ -185,20 +151,6 @@ button.error{
   margin-top: 20px;
 }
 
-.monthSpan {
-  font-size: 12px;
-  text-align: right;
-  margin: 0px;
-  font-weight: normal;
-  text-transform: uppercase;
-}
-
-h2.date {
-  text-align: left;
-  margin: 0px 2px;
-  font-weight: normal;
-  font-size: 20px;
-}
 
 /* times at start of rows */
 h2.time {
@@ -234,8 +186,9 @@ h2.hack {
   text-align: center;
 }
 /* For when items are almost ideal dates */
+/* TODO: if more than one state, need to change this colour */
 .oneCoord{
-  background-color: #BBBABA;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -455,24 +408,51 @@ input[type="date" i] {
   overflow-y: auto; /* Enables vertical scrolling */
   display: block; /* Default block display */
   width: 90vw; /* shows 4 days and a bit */
-  height: 455px;
+  height: 450px;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 65px); /* Create as many 65px columns as can fit */
+  grid-template-columns: repeat(auto-fill, 45px); /* Create as many 65px columns as can fit */
   grid-auto-flow: column; /* Ensures that grid items flow in a column sequence */
   min-width: min-content; /* The grid should be at least as wide as the smallest content */
+}
+
+h1.date {
+  font-size: 12px;
+  text-align: left;
+  margin: 0px 2px;
+  font-weight: normal;
+}
+
+h2.date {
+  text-align: left;
+  margin: 0px 2px;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.monthSpan {
+  font-size: 8px;
+  text-align: right;
+  margin: 0px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+/* For text above calendar */
+.noMargin {
+  margin-bottom: 0px;
 }
 
 .dayslot, .timeslot, .timeOfDay, .summary-timeslot {
   user-select: none;
   text-align: center;
-  padding: 20px 0;
-  font-size: 14px;
+  padding: 5px 0;
+  font-size: 12px;
   border: 1px solid #BBBABA;
-  width: 65px; /* Ensure a fixed width for each grid item */
-  height: 65px; /* ditto */
+  width: 45px; /* Ensure a fixed width for each grid item */
+  height: 45px; /* ditto */
   box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
@@ -511,7 +491,7 @@ input[type="date" i] {
 .key-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto; /* TODO: Need to change if more than two in key!*/
   margin-bottom: 20px;
   grid-gap: 5px;
 }
@@ -542,10 +522,10 @@ input[type="date" i] {
   
 }
 
+/* For list of participants */
 .participants {
   margin: 0px;
 }
-
 
 
 
