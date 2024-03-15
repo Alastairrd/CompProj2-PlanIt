@@ -19,23 +19,26 @@
                 <div class="progress-blue-20"></div>
             </div>
         </section>
-        <!-- Welcome message -->
-    <section class="text" >
-        <p><strong>All ready to go!
-            <br>
-            You can invite others to contribute their availability by sharing the following code: <br></strong></p>
-    <!-- link to copy todo needs to be implemented-->
-    <button id="link-button" class="link-button"><%- eventUrl %></button>
-    <!--todo CM remove css-->
-    <div style="text-align:center" >
-    <p><strong><br><br><br><br><br>Check summary of results here: </strong></p>
-    <a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
-        <button class="next"><span>Summary</span></button>
-    </a>
-    
-    </div>
-</section>
-</main>
+        <section class="content">
+            <!-- Welcome message -->
+            <section class="text" >
+                <p><strong>All ready to go!
+                    <br>
+                    You can invite others to contribute their availability by sharing the following code: <br></strong></p>
+            <!-- link to copy todo needs to be implemented-->
+            <button id="link-button" class="link-button" onclick="copyToClipBoard()"><%- eventUrl %></button>
+            <!--todo CM remove css-->
+            <div style="text-align:center" >
+            <p><strong><br><br><br><br><br>Check summary of results here: </strong></p>
+            <a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
+                <button class="next"><span>Summary</span></button>
+            </a>
+            
+            </div>
+            </section>  
+        </section>
+    </main>
 </body>
+
 </html>
 
