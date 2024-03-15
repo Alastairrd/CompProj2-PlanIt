@@ -151,7 +151,7 @@ body {
 }
 
 h1.date {
-  font-size: 2.5em;
+  font-size: 18px;
   text-align: left;
   margin: 0px 2px;
   font-weight: normal;
@@ -186,17 +186,18 @@ button.error{
 }
 
 .monthSpan {
-  font-size: 0.5em;
+  font-size: 12px;
   text-align: right;
   margin: 0px;
   font-weight: normal;
+  text-transform: uppercase;
 }
 
 h2.date {
   text-align: left;
   margin: 0px 2px;
   font-weight: normal;
-
+  font-size: 20px;
 }
 
 /* times at start of rows */
@@ -451,13 +452,15 @@ input[type="date" i] {
 
 .grid-containment {
   overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: auto; /* Enables vertical scrolling */
   display: block; /* Default block display */
-  width: 100%; /* Take up full width of the parent */
+  width: 90vw; /* shows 4 days and a bit */
+  height: 455px;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px); /* Create as many 100px columns as can fit */
+  grid-template-columns: repeat(auto-fill, 65px); /* Create as many 65px columns as can fit */
   grid-auto-flow: column; /* Ensures that grid items flow in a column sequence */
   min-width: min-content; /* The grid should be at least as wide as the smallest content */
 }
@@ -466,9 +469,10 @@ input[type="date" i] {
   user-select: none;
   text-align: center;
   padding: 20px 0;
-  font-size: 0.8em;
+  font-size: 14px;
   border: 1px solid #BBBABA;
-  width: 100px; /* Ensure a fixed width for each grid item */
+  width: 65px; /* Ensure a fixed width for each grid item */
+  height: 65px; /* ditto */
   box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
