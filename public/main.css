@@ -9,8 +9,11 @@ body {
 }
 /* Heading and progress bar */
 .page-top {
+  position: fixed;
+  background-color: white;
   width: 100%; 
-  margin: 50px 0px 20px 0px;
+  margin: 0px 0px 20px 0px;
+  padding: 50px 0px 5px 0px;
 }
 
 .title-heading {
@@ -76,10 +79,10 @@ body {
 
 }
 
-/* Introduction */
+/* The main block of each page - top margin allows for fixed progress bar at top of page */
 .content {
   width: 90%; 
-  margin: 5px auto;
+  margin: 180px auto;
   
 }
 
