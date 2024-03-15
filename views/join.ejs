@@ -20,6 +20,7 @@
 		
 				<!-- Progress bar -->
 				<div class="progress-grey">
+					<!-- Step 2/5 in progress-->
 					<div class="progress-blue-40"></div>
 				</div>
 
@@ -50,22 +51,24 @@
 					</fieldset>
 					<button type="submit" class="next"><span>Next</span></button>
 				</form>
+
+				<p class="text">Alternatively: 
+					<a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">Skip to results</a>
+				</p>
 			</section>
 		</main>
 
-		<!-- TODO: What is this bit? Why does it have its own main and id? progressSection?-->
-		<main id="progressSection">
+		<!-- TODO: Delete as each section has its own. Need to update js progressSection?-->
+		<!-- <main id="progressSection">
 			<section class="page-top">
-				<!-- Heading-->
 				<h1 class="title-heading">PlanIt MVP</h1>
 		
-		
-				<!-- Progress bar -->
+	
 				<div class="progress-grey">
 					<div class="progress-blue-20"></div>
 				</div>
 			</section>
-		</main>
+		</main> -->
 
 
 		<main id="Calendar" style="display: none">
@@ -75,6 +78,7 @@
 		
 				<!-- Progress bar -->
 				<div class="progress-grey">
+					<!-- Step 4/5 in progress-->
 					<div class="progress-blue-80"></div>
 				</div>
 
@@ -149,13 +153,5 @@
 			</section>
 		</main>
 
-		<!--skip button-->
-		<main id="landingSection">
-			<a href="http://www.doc.gold.ac.uk/usr/717/summary/<%- eventUrl %>">
-				<button class="join" style="left: 20%">
-					Skip to results
-				</button>
-			</a>
-		</main>
 	</body>
 </html>
