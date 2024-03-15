@@ -227,14 +227,14 @@ h2.hack {
 
 /* For when items are ideal dates */
 .zeroCoord{
-  background-color: #94fc77;
+  background-color: white;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
 }
 /* For when items are almost ideal dates */
 .oneCoord{
-  background-color: #f8fc77;
+  background-color: #BBBABA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -242,7 +242,7 @@ h2.hack {
 
 /* For when items are not ideal at all dates */
 .unavailable{
-  background-color: #31312c;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -250,7 +250,7 @@ h2.hack {
 
 /* For when items are already selected by other users */
 .already-active{
-  background-color: #000080;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
