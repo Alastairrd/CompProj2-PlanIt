@@ -22,35 +22,77 @@
             <!-- Heading-->
             <h1 class="title-heading">PlanIt MVP</h1>
 
-            <!-- Back button -->
-            <button class="back-button" onclick="homePage()">Back</button>
+            <!-- Progress bar -->
+            <div class="progress-grey">
+                <!-- End of progress -->
+                <div class="progress-blue-end"></div>
+            </div>
+
+            <!--Back button-->
+            <button class="back-button" onclick="homePage()"> <!-- TODO this needs to go back to the share page-->
+                <!-- Back arrow from https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
+                &#x21E4; Back
+            </button>
         </section>
+        <section class="content">
         <!-- Welcome message -->
         <section class="text">
-            <p><strong>Participants: 
-                <br>
-                The following people have contributed to the event timings:
+            <p class="bold">Participants:</p>
+            <p class="participants">The following people have contributed to the event timings:</p>
                 <!--todo, list participant names-->
-                <br>
-                Event created by: <%- creator %>
-            </strong>
-                <ul>
-                    <% for(i = 0; i < userList.length; i++) { %>
-                        <li> Participant: <%- userList[i] %> </li>
-                    <% } %>
-                </ul>
-                </p>
+            <ul class="participants">
+                <li><strong> <%- creator %></strong></li>
+                <% for(i = 0; i < userList.length; i++) { %>
+                    <li><%- userList[i] %> </li>
+                <% } %>
+            </ul>
         </section>
+
+        <!-- First of all list of times and days -->
+        <div id="ideal-time-section-main">
+            <section  class="text">
+                <p id="ideal-times-display-text">Here are some times people can make for your event. We hope it helps you plan-it!:
+                    
+                </p>
+            </section>
+            <div id="ideal-time-section-parent">
+                <ul id="ideal-time-section-list">
+
+                </ul>
+            </div>
+
+             <!--todo finish do you need a style display on the showMoreTimes?-->
+            <button id="showMoreButton" class="next" onclick="showMoreTimes()">Show more times</button>
+            <button id="showLessButton" class="next" onclick="showLessTimes()" style="display: none">Show less times</button>
+
+        </div>
+
+        <div id="lessIdeal-time-section-main" style="display: none">
+            <section  class="text">
+                <p id="lessIdeal-times-display-text">Here are some times that all but 1 of you are free:
+                    
+                </p>
+            </section>
+            <div id="lessIdeal-time-section-parent">
+                <ul id="lessIdeal-time-section-list">
+
+                </ul>
+            </div>
+        </div>
+
         <!--todo make calendar view-->
         <main id="Calendar">
 			<!-- Instruction message -->
 			<section class="text">
 				<p>
-					Here is a visual representation of your collective availability for your prospective event!
-                    Hopefully this helps you plan-it!
+					Below you can find a visual representation of your collective availability:
 				</p>
-				<!-- Calendar and explanation button -->
-				<div class="question">?</div>
+                <div class="key-grid">
+                    <!-- For now only have available or unavailable-->
+                    <div class="box1">All available.</div>
+                    <div class="box2">No one available</div>
+                    <!-- <div class="box3">Some available</div> -->
+                </div>
 			</section>
 
 			<!-- EXPERIMENTATION -->
@@ -110,38 +152,9 @@
 
 
 
-            <div id="ideal-time-section-main">
-                <section  class="text">
-                    <p id="ideal-times-display-text">Here are some times everyone can make so far are:
-                        
-                    </p>
-                </section>
-                <div id="ideal-time-section-parent">
-                    <ul id="ideal-time-section-list">
-
-                    </ul>
-                </div>
-
-                 <!--todo finish-->
-                <button id="showMoreButton" class="times" onclick="showMoreTimes()">Show more times</button>
-                <button id="showLessButton" class="times" onclick="showLessTimes()" style="display: none">Show less times</button>
-
-            </div>
-
-            <div id="lessIdeal-time-section-main" style="display: none">
-                <section  class="text">
-                    <p id="lessIdeal-times-display-text">Here are some times that all but 1 of you are free:
-                        
-                    </p>
-                </section>
-                <div id="lessIdeal-time-section-parent">
-                    <ul id="lessIdeal-time-section-list">
-
-                    </ul>
-                </div>
-            </div>
-        
+            
+        </section>
        
-</main>
+    </main>
 </body>
 </html>

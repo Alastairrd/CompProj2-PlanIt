@@ -9,8 +9,11 @@ body {
 }
 /* Heading and progress bar */
 .page-top {
+  position: fixed;
+  background-color: white;
   width: 100%; 
-  margin: 50px 0px 20px 0px;
+  margin: 0px 0px 20px 0px;
+  padding: 50px 0px 5px 0px;
 }
 
 .title-heading {
@@ -76,10 +79,11 @@ body {
 
 }
 
-/* Introduction */
+/* The main block of each page - top margin allows for fixed progress bar at top of page */
 .content {
   width: 90%; 
-  margin: 5px auto;
+  margin: 180px auto;
+  max-width: 1200px;
   
 }
 
@@ -98,44 +102,18 @@ body {
 /* Calendar */
 /* probably need to make this an icon instead of text */
 .question {
-  float: right;
+  display: inline-block;
   text-align: center;
   line-height: 1.3em;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   border: 0.5px solid #5456FA;
-
-
+  font-size: 16px;
+  float: inline-end;
+  margin-bottom: 5px;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  background-color: white;
-  margin: 40px 0px;
-
-}
-
-/* FIXME: should min-width and min-height be set to 44px as per finger-touch recommednations?*/
-.grid-item {
-  background-color: white;
-  border-right: 1px solid #BBBABA;
-  border-bottom: 1px solid #BBBABA;
-  padding: 0.5em;
-  font-size: 1em;
-  text-align: center;
-  
-}
-
-.nested-grid {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: repeat(9, 1fr);
-  background-color: white;
-
-
-}
 /* Top row (hidden and dates) */
 .hidden {
   border-right: 1px solid #5456FA;
@@ -149,45 +127,34 @@ body {
   width: auto;
 }
 
-h1.date {
-  font-size: 2.5em;
-  text-align: left;
-  margin: 0px 2px;
-  font-weight: normal;
-}
-
+/* For 404 page */
 main.error {
   text-align: center;
+  margin: 100px 10px;
 }
+/* Main message */
 h1.error{
-  font-size: 4em;
+  font-size: 60px;
   text-align: center;
+  text-transform: uppercase;
 }
+/* icon */
+span.error {
+  font-size: 120px;
+}
+
 button.error{
-  font-size: 4em;
+  font-size: 18px;
   text-align: center;
   border: 1px solid #5456FA;
   color: #5456FA;;
   background-color: white;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 10px 50px;
+  margin-top: 20px;
 }
 
-span.error {
-  font-size: 8em;
-}
-
-.monthSpan {
-  font-size: 0.5em;
-  text-align: right;
-  margin: 0px;
-  font-weight: normal;
-}
-
-h2.date {
-  text-align: left;
-  margin: 0px 2px;
-  font-weight: normal;
-
-}
 
 /* times at start of rows */
 h2.time {
@@ -217,14 +184,15 @@ h2.hack {
 
 /* For when items are ideal dates */
 .zeroCoord{
-  background-color: #94fc77;
+  background-color: white;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
 }
 /* For when items are almost ideal dates */
+/* TODO: if more than one state, need to change this colour */
 .oneCoord{
-  background-color: #f8fc77;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -232,7 +200,7 @@ h2.hack {
 
 /* For when items are not ideal at all dates */
 .unavailable{
-  background-color: #31312c;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -240,7 +208,7 @@ h2.hack {
 
 /* For when items are already selected by other users */
 .already-active{
-  background-color: #000080;
+  background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -258,9 +226,9 @@ h2.hack {
   border: 1px solid #5456FA;
   border-radius: 20px; /* 5px too subtle */
   /*position: absolute; - CHANGED FOR TIME BEING */
-  width: 80%;
+  width: 90%;
   height: 62px;
-  margin: 20px 10%;
+  margin: 20px 5%;
   cursor: pointer;
 }
 /* To include an animation on hover 
@@ -397,13 +365,13 @@ input[type="date" i] {
   border: 1px solid #090909;
   font-size: 20px; 
   text-align: center;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin: 50px 20% 100px 20%;
   bottom: 20px;
-  width: 40%;
+  width: 60%;
   height: 50px;
   cursor: pointer;
-  
+  border-radius: 5px;
+
 }
 /* register button*/
 .register {
@@ -414,7 +382,7 @@ input[type="date" i] {
   font-size: xx-large;
   background-color: #0003FA;
   border: 1px solid #5456FA;
-  border-radius: 20px; /* Doesn't show iup at 5px CM 29/02 */
+  border-radius: 20px; 
   /* position: absolute; */
   width: 70%;
   height: 130px;
@@ -441,24 +409,54 @@ input[type="date" i] {
 
 .grid-containment {
   overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: auto; /* Enables vertical scrolling */
   display: block; /* Default block display */
-  width: 100%; /* Take up full width of the parent */
+  width: 90vw; /* shows 4 days and a bit */
+  height: 450px;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px); /* Create as many 100px columns as can fit */
+  grid-template-columns: repeat(auto-fill, 45px); /* Create as many 65px columns as can fit */
   grid-auto-flow: column; /* Ensures that grid items flow in a column sequence */
   min-width: min-content; /* The grid should be at least as wide as the smallest content */
+}
+
+h1.date {
+  font-size: 12px;
+  text-align: left;
+  margin: 0px 2px;
+  font-weight: normal;
+}
+
+h2.date {
+  text-align: left;
+  margin: 0px 2px;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.monthSpan {
+  font-size: 8px;
+  text-align: right;
+  margin: 0px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+/* For text above calendar */
+.noMargin {
+  margin-bottom: 0px;
 }
 
 .dayslot, .timeslot, .timeOfDay, .summary-timeslot {
   user-select: none;
   text-align: center;
-  padding: 20px 0;
-  font-size: 0.8em;
+  padding: 5px 0;
+  font-size: 12px;
   border: 1px solid #BBBABA;
-  width: 100px; /* Ensure a fixed width for each grid item */
+  width: 45px; /* Ensure a fixed width for each grid item */
+  height: 45px; /* ditto */
   box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
@@ -494,7 +492,44 @@ input[type="date" i] {
 }
 
 
+.key-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto; /* TODO: Need to change if more than two in key!*/
+  margin-bottom: 20px;
+  grid-gap: 5px;
+}
 
+.box1 {
+  background-color: white;
+  border: 1px solid #BBBABA;
+  font-size: 12px;
+  text-align: center;
+  color: #5456FA;
+}
+
+.box2 {
+  background-color: #5456FA;
+  border: 1px solid #BBBABA;;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+
+}
+
+.box3 {
+  background-color: #BBBABA;
+  border: 1px solid #BBBABA;;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+  
+}
+
+/* For list of participants */
+.participants {
+  margin: 0px;
+}
 
 
 
