@@ -35,3 +35,11 @@ CREATE TABLE `users` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
   INSERT INTO users (`user_name`) VALUES ('DemoUser');
+  INSERT INTO users (`user_name`) VALUES ('DemoUserTwo');
+  INSERT INTO users (`user_name`) VALUES ('DemoUserThree');
+
+  INSERT INTO user_events (creator_id, event_url, start_date, end_date) VALUES (1, 'TESTURL123', '2023-07-07', '2023-07-14'); 
+
+  INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (1, 1, '[[0, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 1, 0, 0, 1, 0, 0, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 1, 0]]'); 
+  INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (1, 2, '[[0, 1, 1, 1, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 1, 0]]'); 
+  INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (1, 3, '[[0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]'); 
