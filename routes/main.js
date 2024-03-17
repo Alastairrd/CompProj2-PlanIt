@@ -32,7 +32,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				dates: passDates,
 				startDate: sD,
 				endDate: eD,
-				userName: userName
+				userName: userName,
 			});
 		} else {
 			res.redirect("/");
@@ -46,6 +46,10 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		endDate = new Date(req.body.eD);
 		let userName = req.body.userName;
 
+		let reg = new RegExp("^[A-Za-z]{2,50}$");
+
+		let nameCheck = reg.test(userName);
+
 		//this formats JS Dates into MySQL DATE format
 		const sDChanged = startDate.toJSON().slice(0, 19).replace("T", " ");
 		const eDChanged = endDate.toJSON().slice(0, 19).replace("T", " ");
@@ -55,107 +59,116 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 		//db query, check event table for URL value
 		//variables for checks
-		let urlCheck = 1;
-		let url;
-		while (urlCheck == 1) {
-			url = (function () {
-				// CHARACTER SET TO DRAW FROM
-				const charset =
-					"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-				let urlPassword = "";
+		if (nameCheck == true) {
+			let urlCheck = 1;
+			let url;
+			while (urlCheck == 1) {
+				url = (function () {
+					// CHARACTER SET TO DRAW FROM
+					const charset =
+						"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+					let urlPassword = "";
 
-				// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
-				for (let i = 0; i < 10; i++) {
-					// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
-					const randomIndex = Math.floor(
-						Math.random() * charset.length
+					// FOR EVERY CHARARCTER OF PASSWORD LENGTH 1O
+					for (let i = 0; i < 10; i++) {
+						// GET RANDOM CHARACTER FROM CHARACTER SET (ROUND FLOATING POINT TO NEAREST NUMBER)
+						const randomIndex = Math.floor(
+							Math.random() * charset.length
+						);
+
+						// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
+						urlPassword += charset[randomIndex];
+					}
+					return urlPassword;
+				})();
+
+				//checks if url exists in the DB, sets urlCheck to boolean 1 or 0 (0 means unique and go ahead)
+				urlCheck = await new Promise((resolve, reject) => {
+					db.query(
+						`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+						url,
+						(error, results) => {
+							if (error) {
+								reject(error);
+							} else {
+								resolve(results[0].urlExists);
+							}
+						}
 					);
+				});
+			}
 
-					// INCREMENT PASSWORD STRING WITH NEW INDEXED CHARATCER
-					urlPassword += charset[randomIndex];
-				}
-				return urlPassword;
-			})();
-
-			//checks if url exists in the DB, sets urlCheck to boolean 1 or 0 (0 means unique and go ahead)
-			urlCheck = await new Promise((resolve, reject) => {
+			let user_id = await new Promise((resolve, reject) => {
 				db.query(
-					`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
-					url,
+					`INSERT INTO users (user_name) VALUES (?)`,
+					userName,
 					(error, results) => {
 						if (error) {
 							reject(error);
 						} else {
-							resolve(results[0].urlExists);
+							resolve(results.insertId);
 						}
 					}
 				);
 			});
-		}
 
-		let user_id = await new Promise((resolve, reject) => {
-			db.query(
-				`INSERT INTO users (user_name) VALUES (?)`,
-				userName,
-				(error, results) => {
-					if (error) {
-						reject(error);
-					} else {
-						resolve(results.insertId);
-					}
-				}
-			);
-		});
-
-		//once unique url is found, save event
-		let eventInserted = false;
-		let eventInsertRes = await new Promise((resolve, reject) => {
-			db.query(
-				"INSERT INTO user_events (creator_id, event_url, start_date, end_date) VALUES (?, ?, ?, ?)",
-				[user_id, url, sDChanged, eDChanged],
-				(error, results) => {
-					if (error) {
-						reject(error);
-					} else {
-						resolve(results.insertId);
-						eventInserted = true;
-					}
-				}
-			);
-		});
-
-		//use event id gathered here to insert availiability of event creator into newly created event
-		let availInserted = false;
-		if (eventInserted) {
-			let availInsertRes = await new Promise((resolve, reject) => {
+			//once unique url is found, save event
+			let eventInserted = false;
+			let eventInsertRes = await new Promise((resolve, reject) => {
 				db.query(
-					`INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
-
-					//for some reason we need to stringify it again or else it seperates the array
-					[eventInsertRes, user_id, JSON.stringify(req.body.calData)],
+					"INSERT INTO user_events (creator_id, event_url, start_date, end_date) VALUES (?, ?, ?, ?)",
+					[user_id, url, sDChanged, eDChanged],
 					(error, results) => {
 						if (error) {
 							reject(error);
 						} else {
-							resolve(results);
-							availInserted = true;
+							resolve(results.insertId);
+							eventInserted = true;
 						}
 					}
 				);
 			});
-		}
 
-		//send back unique code for event to display
-		if (availInserted == true) {
-			res.json(url);
+			//use event id gathered here to insert availiability of event creator into newly created event
+			let availInserted = false;
+			if (eventInserted) {
+				let availInsertRes = await new Promise((resolve, reject) => {
+					db.query(
+						`INSERT INTO unavail (event_id, user_id, bit_matrix) VALUES (?, ?, ?)`,
+
+						//for some reason we need to stringify it again or else it seperates the array
+						[
+							eventInsertRes,
+							user_id,
+							JSON.stringify(req.body.calData),
+						],
+						(error, results) => {
+							if (error) {
+								reject(error);
+							} else {
+								resolve(results);
+								availInserted = true;
+							}
+						}
+					);
+				});
+			}
+
+			//send back unique code for event to display
+			if (availInserted == true) {
+				console.log("worked");
+				res.json(url);
+			} else {
+				res.send("500");
+			}
 		} else {
-			res.send("500");
+			console.log("invalid userName");
+			res.send("422");
 		}
 	});
 
 	//ROUTE for sending json array of unavailability to DB
 	app.post("/matrixPost", async function (req, res) {
-
 		//matrix we passed into the request, its already a json string i think
 		const jsonMatrix = req.body;
 

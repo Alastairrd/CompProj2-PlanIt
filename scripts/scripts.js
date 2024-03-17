@@ -429,7 +429,7 @@ async function calToDB() {
 	//fetch request -> generate URL / check DB / save DB
 	let cData = await gatherCalData();
 
-	let name = document.getElementById("name").value;
+	let name = userName;
 
 	//data to send to DB, including matrix of availability and start and end date selected for calendar
 	postData = {
@@ -443,9 +443,10 @@ async function calToDB() {
 	let eventUrl;
 	//try this fetch promise with our api route for sending data to DB
 	try {
+		//https://www.doc.gold.ac.uk/usr/717
 		//reponse is equal to the result of the promise
 		let response = await fetch(
-			"https://www.doc.gold.ac.uk/usr/717/saveEvent/",
+			"/saveEvent/",
 			{
 				method: "POST",
 
