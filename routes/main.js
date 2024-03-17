@@ -13,6 +13,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 		let passDates;
 		let sD;
 		let eD;
+		let userName = req.body.hiddenName;
 
 		if (req.body) {
 			// USER INPUTS FROM CALENDAR
@@ -31,6 +32,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				dates: passDates,
 				startDate: sD,
 				endDate: eD,
+				userName: userName
 			});
 		} else {
 			res.redirect("/");

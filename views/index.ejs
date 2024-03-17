@@ -7,6 +7,7 @@
     <title>Welcome to PLANIT</title>
     <link rel="stylesheet" type="text/css" href="/main.css" />
     <script src="/scripts.js"></script>
+    <script src="/indexScript.js"></script>
 </head>
 <body>
     <main id = "date" style="display:none;">
@@ -25,7 +26,7 @@
             <div class="input-date-container">
             <!-- Welcome message -->
             <section class="text">
-                <p class="bold">Hi Name!</p>
+                <p class="bold">Hi <span id="greetingNameSpan"></span>!</p>
                 <p>You’re on the way to creating your event.</p>
                 <p>First, set the time frame for the event by selecting the earliest and latest dates it could be:</p>
             </section>
@@ -41,6 +42,8 @@
                 <legend>End Date</legend>
                 <input type="date" id="end-date" name="end-date">
                 </fieldset>
+
+                <input type="text" id="hiddenName" name="hiddenName">
             
                 <!-- NEXT BUTTON-->
                 <button type="submit" class="next"><span>Next</span></button>
@@ -68,7 +71,7 @@
                 <p>Choose whether you would like to set up a new event or enter your code for a live event:</p>
             </section>
             <!-- Buttons to create an event or join an event -->
-            <button class="create" onclick="showDate()">Create Event</button>
+            <button class="create" onclick="showIndexName()">Create Event</button>
             <button class="join" onclick="showJoinSection()">Join Event With Code</button>
         </section>
     </main>
@@ -102,6 +105,44 @@
         </section>
     </main>
 
+    <main id="nameSection" style="display: block">
+        <section class="page-top">
+            <!-- Heading-->
+            <h1 class="title-heading">PlanIt MVP</h1>
+
+            <!-- Progress bar -->
+            <div class="progress-grey">
+                <!-- Step 2/5 in progress-->
+                <div class="progress-blue-40"></div>
+            </div>
+        </section>
+        <section class="content">
+            <!-- Welcome message for join section -->
+            <section class="text">
+                <p class="bold">Welcome to PlanIt</p>
+                <p>Enter your name in here:</p>
+                <p></p>
+            </section>
+            <form action="javascript:;" onsubmit="showIndexDate()">
+                <fieldset>
+                    <legend>Name</legend>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        minlength="2"
+                        maxlength="50"
+                        pattern="^[A-Za-z]+$"
+                        oninvalid="setCustomValidity('Min 2 characters, max 50 characters, no special characters, numbers or spaces - only letters.');"
+                        oninput="setCustomValidity('')"
+                        required
+                    />
+                </fieldset>
+                <button type="submit" class="next">Next</button>
+            </form>
+        </section>
+    </main>
+
     <main  id="login" style="display:none;">
         <section class="page-top">
         <!-- Heading-->
@@ -122,7 +163,7 @@
                     <form>
                         <fieldset>
                             <legend>Name</legend>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="loginName" name="name" required>
                         </fieldset>
                     </form>
                     <br>
