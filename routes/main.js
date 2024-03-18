@@ -1,7 +1,7 @@
 // THIS IS USED TO GET THE LOGIC FROM calculateDates.js (UNIT TESTING PURPOSES)
 const { calculateDates } = require("../scripts/calculateDates.js");
 
-module.exports = function (app, csvData, filePath, fs, math) {
+module.exports = function (app, math) {
 	// Handle our routes
 
 	app.get("/", function (req, res) {

@@ -3,8 +3,6 @@ const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
-const fs = require('fs');
-const path = require('path');
 const math = require('mathjs');
 const cors = require('cors');
 
@@ -18,10 +16,6 @@ app.use(cors());
 
 //set app to be able to parse json
 app.use(bodyParser.json());
-
-//csv testing TODO remove
-const filePath = path.join(__dirname, 'test.csv');
-
 
 // Define the database connection
 const db = mysql.createConnection({
@@ -56,11 +50,8 @@ app.set("view engine", "ejs");
 // We want to use EJS's rendering engine
 app.engine("html", ejs.renderFile);
 
-//TODO remove csvData?
-const csvData = null;
-
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  All the routes will go in this file
-require("./routes/main")(app, csvData, filePath, fs, math);
+require("./routes/main")(app, math);
 
 // Start the web app listening
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
