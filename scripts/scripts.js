@@ -443,10 +443,9 @@ async function calToDB() {
 	let eventUrl;
 	//try this fetch promise with our api route for sending data to DB
 	try {
-		//https://www.doc.gold.ac.uk/usr/717
 		//reponse is equal to the result of the promise
 		let response = await fetch(
-			"/saveEvent/",
+			"https://www.doc.gold.ac.uk/usr/717/saveEvent/",
 			{
 				method: "POST",
 
