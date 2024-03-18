@@ -35,7 +35,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 				userName: userName,
 			});
 		} else {
-			res.redirect("/");
+			res.redirect("https://www.doc.gold.ac.uk/usr/717/");
 		}
 	});
 
@@ -156,7 +156,6 @@ module.exports = function (app, csvData, filePath, fs, math) {
 
 			//send back unique code for event to display
 			if (availInserted == true) {
-				console.log("worked");
 				res.json(url);
 			} else {
 				res.send("500");
@@ -415,7 +414,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			res.render("summary.ejs", summaryData);
 		} else {
 			res.status(404);
-			res.redirect("/404");
+			res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
 		}
 	});
 
@@ -448,7 +447,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			res.render("share.ejs", urlData);
 		} else {
 			res.status(404);
-			res.redirect("/404");
+			res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
 		}
 	});
 
@@ -503,7 +502,7 @@ module.exports = function (app, csvData, filePath, fs, math) {
 			}
 		} else {
 			console.log("false");
-			res.redirect("/404");
+			res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
 		}
 	});
 

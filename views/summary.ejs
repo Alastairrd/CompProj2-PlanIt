@@ -42,7 +42,7 @@
                 <!--todo, list participant names-->
             <ul class="participants">
                 <li><strong> <%- creator %></strong></li>
-                <% for(i = 0; i < userList.length; i++) { %>
+                <% for(i = 1; i < userList.length; i++) { %>
                     <li><%- userList[i] %> </li>
                 <% } %>
             </ul>
@@ -90,7 +90,9 @@
                 <div class="key-grid">
                     <!-- For now only have available or unavailable-->
                     <div class="box1">All available.</div>
+                    
                     <div class="box2">No one available</div>
+                    <div class="box3">1 person busy.</div>
                     <!-- <div class="box3">Some available</div> -->
                 </div>
 			</section>

@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	//conditional logic for different situations of time stretches available, sets different sections to visible or not
 	if (zeroStretches.length > 3) {
 		displayTimes(zeroStretches, idealList, timeList);
-	} else if (zeroStretches.length == 3) {
+	} else if (zeroStretches.length == 3 || zeroStretches.length <= 3 && oneStretches == 0) {
 		displayTimes(zeroStretches, idealList, timeList);
 		document
 			.getElementById("showMoreButton")
@@ -203,7 +203,7 @@ function showMoreTimes() {
 		.setAttribute("style", "display: block");
 
 	document.getElementById("ideal-times-display-text").innerText =
-		"All the times everyone can make so far are:";
+		"Here are ALL of the times people can make for your event. We hope it helps you plan-it!:";
 }
 
 //button function that sets the display to a small selection of time stretches
@@ -226,5 +226,5 @@ function showLessTimes() {
 		.setAttribute("style", "display: block");
 
 	document.getElementById("ideal-times-display-text").innerText =
-		"Here are some times everyone can make so far are:";
+		"Here are some times people can make for your event. We hope it helps you plan-it!:";
 }

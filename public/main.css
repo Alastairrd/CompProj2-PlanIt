@@ -192,7 +192,7 @@ h2.hack {
 /* For when items are almost ideal dates */
 /* TODO: if more than one state, need to change this colour */
 .oneCoord{
-  background-color: #5456FA;
+  background-color: #f0dba0;
   border: 1px solid #BBBABA;
   padding: 20px;
   text-align: center;
@@ -373,6 +373,23 @@ input[type="date" i] {
   border-radius: 5px;
 
 }
+
+/* link/code button*/
+.link-button:active {
+  text-transform: capitalize;
+  letter-spacing: 0.25em;
+  background-color: #b8b8ca;
+  border: 1px solid #090909;
+  font-size: 20px; 
+  text-align: center;
+  margin: 50px 20% 100px 20%;
+  bottom: 20px;
+  width: 60%;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 5px;
+
+}
 /* register button*/
 .register {
   /* text-align: center;
@@ -495,7 +512,7 @@ h2.date {
 .key-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: auto auto; /* TODO: Need to change if more than two in key!*/
+  grid-template-columns: auto auto auto; /* TODO: Need to change if more than two in key!*/
   margin-bottom: 20px;
   grid-gap: 5px;
 }
@@ -518,7 +535,7 @@ h2.date {
 }
 
 .box3 {
-  background-color: #BBBABA;
+  background-color: #f0dba0;
   border: 1px solid #BBBABA;;
   font-size: 12px;
   text-align: center;

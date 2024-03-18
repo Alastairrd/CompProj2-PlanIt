@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const timeSlotsTouch = document.querySelectorAll(".timeslot");
 
-	console.log(timeSlotsTouch);
-
 	//set event listeners for clicks and mousedown
 	for (i = 0; i < timeSlots.length; i++) {
 		timeSlots[i].addEventListener(
@@ -57,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 			//set max to 3 month ahead of start date
 			let max = new Date(startDate.value);
-			console.log(max);
 			max.setMonth(max.getMonth() + 3);
 			max = max.toISOString().split("T")[0];
 
@@ -74,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		//set max to 3 month from now
 		let max = new Date(startDate.value);
-		console.log(max);
 		max.setMonth(max.getMonth() + 3);
 		max = max.toISOString().split("T")[0];
 
@@ -481,7 +477,7 @@ async function calToDB() {
 	if (eventUrl) {
 		//redirect to share page of new event
 		window.location.replace(
-			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+			`https://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
 		);
 	}
 }
@@ -490,12 +486,12 @@ function joinEvent() {
 	let eventCode = document.getElementById("code").value;
 
 	window.location.replace(
-		`http://www.doc.gold.ac.uk/usr/717/join/${eventCode}`
+		`https://www.doc.gold.ac.uk/usr/717/join/${eventCode}`
 	);
 }
 
 function homeRedirect() {
-	window.location.replace("http://www.doc.gold.ac.uk/usr/717/");
+	window.location.replace("https://www.doc.gold.ac.uk/usr/717/");
 }
 
 async function addAvailToEvent() {
@@ -543,7 +539,7 @@ async function addAvailToEvent() {
 
 	if (response.ok) {
 		window.location.replace(
-			`http://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
+			`https://www.doc.gold.ac.uk/usr/717/share/${eventUrl}`
 		);
 	}
 }
@@ -621,5 +617,5 @@ function showCopyBanner() {
 
 // for exiting 404
 function homePage() {
-	window.location.href = "http://www.doc.gold.ac.uk/usr/717/";
+	window.location.href = "https://www.doc.gold.ac.uk/usr/717/";
 }
