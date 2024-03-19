@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	//get all date time objects
 	//dateTimes = document.getElementsByClassName("dateTime");
 	timeSlots = document.getElementsByClassName("timeslot");
-	
 
 	const timeSlotsTouch = document.querySelectorAll(".timeslot");
 
@@ -378,7 +377,8 @@ function showCalendar() {
 	//document.getElementById("landingSection").style.display = "none";
 	document.getElementById("nameSection").style.display = "none";
 	document.getElementById("Calendar").style.display = "block";
-	document.getElementById("greetingNameSpan").innerText = document.getElementById("name").value;
+	document.getElementById("greetingNameSpan").innerText =
+		document.getElementById("name").value;
 }
 
 function showName() {
@@ -574,15 +574,13 @@ function changeButton(buttonID) {
 	const button = document.getElementById(buttonID);
 
 	// If function call, change style to 'clicked'
-	button.classList.add('clicked');
-	
-	// Plus change text if it's the copy button
-	if(button.classList.contains('copy-button')) {
-		button.textContent = 'COPIED';
-	}
-	
-}
+	button.classList.add("clicked");
 
+	// Plus change text if it's the copy button
+	if (button.classList.contains("copy-button")) {
+		button.textContent = "COPIED";
+	}
+}
 
 // COPY CODE TO CLIPBOARD FUNCTIOANLITY
 function copyToClipBoard() {
@@ -635,91 +633,100 @@ function homePage() {
 	window.location.href = "https://www.doc.gold.ac.uk/usr/717/";
 }
 
-
 // Show or hide additional text in calendar create when toggled
 function showInfoText() {
-// Show the text
-const additionalText = document.getElementById('additional-text');
-additionalText.classList.toggle('hiddenText');
+	// Show the text
+	const additionalText = document.getElementById("additional-text");
+	additionalText.classList.toggle("hiddenText");
 
-const infoTextToggle = document.getElementById('info-text');
-infoTextToggle.classList.toggle('highlighted');
-
+	const infoTextToggle = document.getElementById("info-text");
+	infoTextToggle.classList.toggle("highlighted");
 }
 
 // Expand calendar to fit the whole page when it is selected
 function expandCalendar() {
-	const calendar = document.getElementById('pureCalendar');
-	const content = document.querySelector('.full-content')
-	const exitButton = document.querySelector('.exitme-button');
+	const calendar = document.getElementById("pureCalendar");
+	const content = document.querySelector(".full-content");
+	const exitButton = document.querySelector(".exitme-button");
 
 	initialiseExitButton();
 
 	// Check if calendar is already expanded
-	const isExpanded = calendar.classList.contains('expanded');
-	const isClicked = exitButton.classList.contains('exit-clicked');
-
-	// If calendar is expanded and exit button is clicked, collapse:
-	if (isExpanded && isClicked) {
-
-			calendar.classList.remove('expanded');
-			exitButton.classList.add('hidden-button');
+	const isExpanded = calendar.classList.contains("expanded");
 
 
-	}
-	
+	// If calendar is expanded 
 	// Check if height of "content" is larger than height of viewport
-	if(content.scrollHeight > window.innerHeight) {
-		calendar.classList.add('expanded');
-		exitButton.classList.remove('hidden-button');
-		exitButton.classList.remove('exit-clicked');
+	if(!isExpanded){
+		if (content.scrollHeight > window.innerHeight) {
+			console.log("expanding");
+			calendar.classList.add("expanded");
+			exitButton.classList.remove("hidden-button");
+		}
 	}
 	
 }
 
+//collapses calendar modal
+function exitModal() {
+	const calendar = document.getElementById("pureCalendar");
+	const exitButton = document.querySelector(".exitme-button");
+	console.log("is Expanded and clicked");
+
+	calendar.classList.remove("expanded");
+	exitButton.classList.add("hidden-button");
+}
+
 function initialiseExitButton() {
 	// Called exitme button in case there is another exit button somewhere
-	const exitButton = document.querySelector('.exitme-button');
+	const exitButton = document.querySelector(".exitme-button");
 
 	// Attach event listener
-	exitButton.addEventListener('click', clickExit);
+	exitButton.addEventListener("click", clickExit);
 
 	function clickExit(event) {
 		event.stopPropagation(); // To stop event propagation
 
 		const exitButton = event.target;
 		console.log("YEYEYSYSYEYE I'm working ffs");
-		exitButton.classList.add('exit-clicked');
+		exitButton.classList.add("exit-clicked");
 	}
 }
-
-
 
 // Info modal - from https://www.w3schools.com/howto/howto_css_modals.asp
 function getModal() {
 	// Get the modal
-var modal = document.getElementById("myModal");
+	var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+	
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
+	// When the user clicks on the button, open the modal
+	btn.onclick = function (event) {
+		modal.style.display = "block";
+		event.stopPropagation();
+	};
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function (event) {
+		modal.style.display = "none";
+		event.stopPropagation();
+	};
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function (event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+		event.stopPropagation();
+	};
 }
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-}
+document.addEventListener("DOMContentLoaded", function () {
+	if(document.getElementById("eventCreationBody") !== null){
+		getModal();
+	}
+ })
