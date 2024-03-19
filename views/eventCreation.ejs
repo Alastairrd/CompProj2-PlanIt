@@ -39,9 +39,11 @@
 				<section class="text">
 					<!-- Welcome message -->
 					<p class="bold">Hi <span id="greetingNameSpan"> <%- userName %> </span>! </p>
-					<p>You're on the way to creating your event.</p>
+					<p>You're on the way to creating your event. After filling this calendar in, you'll be given a link you can share with others.
+						The idea is you each shade out the times you are unavailable. So the final calendar will only show the times you are all free to meet.
+					</p>
 					<!-- Instruction message -->
-					<p class="noMargin">Swipe the times you <em>can't</em> do and click 'Next' when you're done:</p>
+					<p class="noMargin">Swipe the times you <strong>can't</strong> do and click 'save calendar' when you're done:</p>
 					<!-- Calendar and explanation button -->
 					<div class="question">?</div>
 				</section>
@@ -98,7 +100,7 @@
 					</div>
 				</div>
 				<!-- Next button at bottom of page-->
-				<button class="next" onclick="calToDB()"><span>NEXT</span></button>
+				<button class="next" onclick="calToDB()"><span>SAVE CALENDAR</span></button>
 			</section>
 		</main>
 	</body>

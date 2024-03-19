@@ -24,17 +24,16 @@
 					<div class="progress-blue-40"></div>
 				</div>
 
-				<!-- Back button -->
+				<!-- Back button returns to home -->
 				<button class="back-button" onclick="homePage()"> 
-					<!-- Back arrow from https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
-					&#x21E4; Back
+					&#x21E4; Back to home
 				</button>
 			</section>
 			<section class="content">
 				<!-- Welcome message for join section -->
 				<section class="text">
 					<p class="bold">Welcome to PlanIt</p>
-					<p>Enter your name in here:</p>
+					<p>[Your friend] wants to find out when you guys are free to meet. To start, enter your name in here:</p>
 					<p></p>
 				</section>
 				<form action="javascript:;" onsubmit="showCalendar()">
@@ -72,15 +71,18 @@
 					<div class="progress-blue-80"></div>
 				</div>
 
-				<!-- Back button -->
-				<button class="back-button" onclick="homePage()">Back</button> <!-- TODO: this should take them back to the code inputting bit or shouldn't exist-->
+				<!-- Button goes back to home page -->
+				<button class="back-button" onclick="homePage()"> 
+					&#x21E4; Start again
+				</button>
 			</section>
 			<section class="content">
 				<!-- Instruction message -->
 				<section class="text">
 					<p>Hi <span id="greetingNameSpan"></span>, <br />
-						Swipe the times you <em>can't</em> do. <br />Click 'Next'
-						when you're done to share with others:
+						[Your friend] wants to find out when you guys are free to meet. The idea is you each shade out the times you are unavailable. 
+						So the final calendar will only show the times you are all free to meet.</p>
+						<p>Swipe the times you <strong>can't</strong> d and then click 'save calendar' when you're done:
 					</p>
 					<!-- Calendar and explanation button -->
 					<div class="question">?</div>
