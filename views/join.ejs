@@ -83,11 +83,30 @@
 						So the final calendar will only show the times you are all free to meet.</p>
 						<p>Swipe the times you <strong>can't</strong> d and then click 'save calendar' when you're done:
 					</p>
-					<!-- Calendar and explanation button -->
-					<div class="question">?</div>
+					<!-- EXPLANATION MODAL -->
+					<button id="myBtn" class="question" onclick="getModal()">?</button>
 				</section>
+			</section>
+			<section class="calendarContent" onclick="expandCalendar()">
+				<!-- Making info modal-->
+				<div id="myModal" class="modal">
+					<!-- Modal content -->
+					<div class="modal-content">
+						<span class="close">&times</span>
+						<p>Unavailable times are shown shaded blue.</p>
+						<p>Available times remain white.</p>
+						<p>To select a time as unavailable tap or swipe it with your finger or cursor.</p>
+						<p>To deselect a time, tap the blue square and it will go back to white.</p>
+						<p>You can select or deselect multiple times by swiping your finger along the calendar.</p>
+						<p>Once saved, the calendar cannot be edited (unless you are a registered user!)</p>
+					</div>
+				</div>
+				<!-- CALENDAR -->
+				<!-- expansion option for smaller screens -->
+				<div id="pureCalendar" onclick="expandCalendar()">
+					
+					<button class="exitme-button hidden-button" onclick="exitModal()">Exit</button>
 
-				<!-- EXPERIMENTATION -->
 				<div class="grid-containment">
 					<div class="main-grid">
 						<!-- FOR EVERY COLUMN -->

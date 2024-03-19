@@ -132,13 +132,16 @@ body {
   display: inline-block;
   text-align: center;
   line-height: 1.3em;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 0.5px solid #5456FA;
   font-size: 16px;
-  float: inline-end;
   margin-bottom: 5px;
+  background-color: #0003FA;
+  color: white;
+  font-weight: bold;
+  cursor: grab;
 }
 
 /* Top row (hidden and dates) */
@@ -473,7 +476,7 @@ input[type="date" i] {
   transform: translateX(-50%); /* Centre the element */
   width: 100%;
   height: fit-content;
-  z-index: 999; /* ensure it's on top of other content but below active cells*/
+  z-index: 20; /* ensure it's on top of other content but below active cells*/
   background-color: #5456FA50; /* Semi-transparent */
   overflow: auto; /* allows for scrolling */
 }
@@ -593,7 +596,7 @@ h2.date {
   background-color: #5456FA;
   border: 1px solid #BBBABA;
   padding: 20px;
-  z-index: 9999;
+  z-index: 30;
   text-align: center;
 }
 
@@ -659,4 +662,47 @@ h2.date {
 }
 
 
+/* modal - from https://www.w3schools.com/howto/howto_css_modals.asp */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* stays in place */
+  z-index: 40; /* Sits on top of calendar*/
+  top: auto;
+  width: 80%;
+  max-width: 600px;
+  margin: 30px 10% 0px 10%;
+  height: fit-content;
+  overflow: auto;
 
+
+
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border: 5px solid #5456FA;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 20px;
+  color: black;
+  font-size: 14px;
+
+
+}
+
+/* close button */
+.close {
+  color: #bababa;
+  float: right;
+  font-size: 42px;
+  font-weight: bold;
+
+}
+
+.close:hover,
+.close:focus {
+  color: #5456FA;
+  text-decoration: none;
+  cursor: pointer;
+}
