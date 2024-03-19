@@ -90,7 +90,7 @@ body {
 .calendarContent {
   width: 100vw; 
   max-width: 1200px;
-  
+  margin: 0px auto 0px auto;
 }
 
 .bold {
@@ -111,8 +111,10 @@ body {
 
 .info-dots {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
   cursor: help;
+  color: #5456FA;
+
 }
 
 .info-dots::hover {
@@ -120,6 +122,7 @@ body {
 }
 .highlighted {
   color: #5456FA;
+  font-size: 16px;
 
 }
 
@@ -199,13 +202,7 @@ h2.hack {
 
 }
 
-/* For when items are selected */
-.active{
-  background-color: #5456FA;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
+
 
 /* For when items are ideal dates */
 .zeroCoord{
@@ -384,7 +381,6 @@ input[type="date" i] {
 
 /* link/code button*/
 .link-button{
-  text-transform: capitalize;
   letter-spacing: 0.25em;
   background-color: #dbdbe0;
   border: 1px solid #090909;
@@ -434,7 +430,7 @@ input[type="date" i] {
 .clicked {
   background-color: #5456FA;
   color: white;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 /* register button*/
@@ -477,7 +473,7 @@ input[type="date" i] {
   transform: translateX(-50%); /* Centre the element */
   width: 100%;
   height: fit-content;
-  z-index: 9999; /* ensure it's on top of other content */
+  z-index: 999; /* ensure it's on top of other content but below active cells*/
   background-color: #5456FA50; /* Semi-transparent */
   overflow: auto; /* allows for scrolling */
 }
@@ -568,6 +564,7 @@ h2.date {
   margin-bottom: 0px;
 }
 
+/* IMPORTANT: THIS MUST BE BEFORE .ACTIVE!! */
 .dayslot, .timeslot, .timeOfDay, .summary-timeslot {
   user-select: none;
   text-align: center;
@@ -588,6 +585,16 @@ h2.date {
 .timeslot, .summary-timeslot 
 {
   color: transparent; 
+}
+
+/* For when items are selected */
+/* IMPORTANT: THIS MUST BE AFTER TIMESLOT!! */
+.active{
+  background-color: #5456FA;
+  border: 1px solid #BBBABA;
+  padding: 20px;
+  z-index: 9999;
+  text-align: center;
 }
 
 #hidden-corner {
