@@ -476,16 +476,19 @@ input[type="date" i] {
 /* Attempting to prettify scrollbar */
 .grid-containment::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
  
 .grid-containment::-webkit-scrollbar-track {
-  background: #BBBABA;
-  /* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+  background-color: #BBBABA;
+  border-radius: 8px;
+  border: 1px solid #cacaca;
+
 }
  
 .grid-containment::-webkit-scrollbar-thumb {
-  background: #0003FA;
-  border: 1px solid black;
+  background-color: #0003FA;
+  border-radius: 8px;
 }
 
 .main-grid {
