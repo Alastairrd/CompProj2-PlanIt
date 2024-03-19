@@ -569,6 +569,21 @@ function generateURL() {
 	return urlPassword;
 }
 
+// CHANGE APPEARANCE OF LINK BUTTON AND COPY BUTTON WHEN THEY ARE SELECTED
+function changeButton(buttonID) {
+	const button = document.getElementById(buttonID);
+
+	// If function call, change style to 'clicked'
+	button.classList.add('clicked');
+	
+	// Plus change text if it's the copy button
+	if(button.classList.contains('copy-button')) {
+		button.textContent = 'COPIED';
+	}
+	
+}
+
+
 // COPY CODE TO CLIPBOARD FUNCTIOANLITY
 function copyToClipBoard() {
 	// GET ID OF LINK BUTTON TO COPY VALUE

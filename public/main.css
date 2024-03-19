@@ -365,8 +365,7 @@ input[type="date" i] {
   border: 1px solid #090909;
   font-size: 20px; 
   text-align: center;
-  margin: 50px 20% 100px 20%;
-  bottom: 20px;
+  margin: 50px 20% 0px 20%;
   width: 60%;
   height: 50px;
   cursor: pointer;
@@ -374,22 +373,45 @@ input[type="date" i] {
 
 }
 
-/* link/code button*/
-.link-button:active {
+/* link button when selected*/
+.link-button:focus {
+  background-color: #5456FA;
+  color: white;
+  
+}
+
+
+/* copy button */
+.copy-button {
+    text-transform: capitalize;
+    letter-spacing: 0.25em;
+    background-color: #dbdbe0;
+    border: 1px solid #090909;
+    font-size: 10px;
+    text-align: center;
+    margin: 10px 20% 100px;
+    bottom: 20px;
+    width: 62px;
+    height: 62px;
+    cursor: pointer;
+    border-radius: 50px;
+    color: black;
+
+}
+
+/* copy button when selected */
+.copy-button:focus {
+  background-color: #5456FA;
+  color: white;
+}
+
+/* buttons once state changed to clicked*/
+.clicked {
+  background-color: #5456FA;
+  color: white;
   text-transform: capitalize;
-  letter-spacing: 0.25em;
-  background-color: #b8b8ca;
-  border: 1px solid #090909;
-  font-size: 20px; 
-  text-align: center;
-  margin: 50px 20% 100px 20%;
-  bottom: 20px;
-  width: 60%;
-  height: 50px;
-  cursor: pointer;
-  border-radius: 5px;
-
 }
+
 /* register button*/
 .register {
   /* text-align: center;
