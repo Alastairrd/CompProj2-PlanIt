@@ -653,20 +653,20 @@ function expandCalendar() {
 	const content = document.querySelector('.full-content')
 	const exitButton = document.querySelector('.exitme-button');
 
-	// initialiseExitButton();
+	initialiseExitButton();
 
-	// // Check if calendar is already expanded
-	// const isExpanded = calendar.classList.contains('expanded');
-	// const isClicked = exitButton.classList.contains('exit-clicked');
+	// Check if calendar is already expanded
+	const isExpanded = calendar.classList.contains('expanded');
+	const isClicked = exitButton.classList.contains('exit-clicked');
 
-	// // If calendar is expanded and exit button is clicked, collapse:
-	// if (isExpanded && isClicked) {
+	// If calendar is expanded and exit button is clicked, collapse:
+	if (isExpanded && isClicked) {
 
-	// 		calendar.classList.remove('expanded');
-	// 		exitButton.classList.add('hidden-button');
+			calendar.classList.remove('expanded');
+			exitButton.classList.add('hidden-button');
 
 
-	// }
+	}
 	
 	// Check if height of "content" is larger than height of viewport
 	if(content.scrollHeight > window.innerHeight) {
@@ -677,39 +677,22 @@ function expandCalendar() {
 	
 }
 
-// function initialiseExitButton() {
-// 	// Called exitme button in case there is another exit button somewhere
-// 	const exitButton = document.querySelector('.exitme-button');
+function initialiseExitButton() {
+	// Called exitme button in case there is another exit button somewhere
+	const exitButton = document.querySelector('.exitme-button');
 
-// 	// Attach event listener
-// 	exitButton.addEventListener('click', clickExit);
+	// Attach event listener
+	exitButton.addEventListener('click', clickExit);
 
-// 	function clickExit(event) {
-// 		event.stopPropagation(); // To stop event propagation
+	function clickExit(event) {
+		event.stopPropagation(); // To stop event propagation
 
-// 		const exitButton = event.target;
-// 		console.log("YEYEYSYSYEYE I'm working ffs");
-// 		exitButton.classList.add('exit-clicked');
-// 	}
-// }
+		const exitButton = event.target;
+		console.log("YEYEYSYSYEYE I'm working ffs");
+		exitButton.classList.add('exit-clicked');
+	}
+}
 
-// function collapseCalendar() {
-// 	const calendar = document.getElementById('pureCalendar');
-// 	const exitButton = document.querySelector('.exitme-button');
-
-// 		// Check if calendar is already expanded
-// 	const isExpanded = calendar.classList.contains('expanded');
-// 	const isClicked = exitButton.classList.contains('exit-clicked');
-
-// 	// If calendar is expanded and exit button is clicked, collapse:
-// 	if (isExpanded && isClicked) {
-
-// 			calendar.classList.remove('expanded');
-// 			exitButton.classList.add('hidden-button');
-
-
-// 	}
-// }
 
 
 // Info modal - from https://www.w3schools.com/howto/howto_css_modals.asp
