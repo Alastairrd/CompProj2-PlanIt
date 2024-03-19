@@ -35,7 +35,7 @@ module.exports = function (app, math) {
 				userName: userName,
 			});
 		} else {
-			res.redirect("https://www.doc.gold.ac.uk/usr/717/");
+			res.send('<script>alert("Incorrect date data, could not build calendar."); window.location.href = "/"; </script>');
 		}
 	});
 
@@ -85,7 +85,7 @@ module.exports = function (app, math) {
 				//checks if url exists in the DB, sets urlCheck to boolean 1 or 0 (0 means unique and go ahead)
 				urlCheck = await new Promise((resolve, reject) => {
 					db.query(
-						`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+						`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = convert(? using utf8mb4) collate utf8mb4_bin) as urlExists`,
 						url,
 						(error, results) => {
 							if (error) {
@@ -158,11 +158,11 @@ module.exports = function (app, math) {
 			if (availInserted == true) {
 				res.json(url);
 			} else {
-				res.send("500");
+				res.send('<script>alert("Failure processing data to database, could not create event.");</script>');
 			}
 		} else {
 			console.log("invalid userName");
-			res.send("422");
+			res.send('<script>alert("Username entered was invalid, could not proceed to database entry.");</script>');
 		}
 	});
 
@@ -264,7 +264,7 @@ module.exports = function (app, math) {
 		//check url exists
 		let urlCheck = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = convert(? using utf8mb4) collate utf8mb4_bin) as urlExists`,
 				url,
 				(error, results) => {
 					if (error) {
@@ -425,7 +425,7 @@ module.exports = function (app, math) {
 		//checks event exists with that url
 		let urlCheck = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = convert(? using utf8mb4) collate utf8mb4_bin) as urlExists`,
 				url,
 				(error, results) => {
 					if (error) {
@@ -447,7 +447,8 @@ module.exports = function (app, math) {
 			res.render("share.ejs", urlData);
 		} else {
 			res.status(404);
-			res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
+			res.send("<script>alert('URL not found! Please check your code and try again.'); window.location.href = 'https://www.doc.gold.ac.uk/usr/717/404'; </script>")
+			//res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
 		}
 	});
 
@@ -458,7 +459,7 @@ module.exports = function (app, math) {
 		//gets the data from DB
 		let urlCheck = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = convert(? using utf8mb4) collate utf8mb4_bin) as urlExists`,
 				url,
 				(error, results) => {
 					if (error) {
@@ -502,7 +503,8 @@ module.exports = function (app, math) {
 			}
 		} else {
 			console.log("false");
-			res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
+			//res.redirect("https://www.doc.gold.ac.uk/usr/717/404");
+			res.send('<script>alert("URL not found! Please check your code and try again."); window.location.href = "https://www.doc.gold.ac.uk/usr/717/404"; </script>')
 		}
 	});
 
@@ -516,7 +518,7 @@ module.exports = function (app, math) {
 		//gets the data from DB
 		let urlCheck = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = ?) as urlExists`,
+				`SELECT EXISTS(SELECT * FROM user_events WHERE event_url = convert(? using utf8mb4) collate utf8mb4_bin) as urlExists`,
 				url,
 				(error, results) => {
 					if (error) {
@@ -600,11 +602,11 @@ module.exports = function (app, math) {
 					}
 				);
 			} else {
-				res.status(409).send("error: user availability already exists");
+				res.status(409).send('<script>alert("User availability data already exists, error on database entry!");</script>');
 			}
 		} else {
 			console.log("requested url not found");
-			res.status(404).send("url not found");
+			res.status(404).send('<script>alert("URL not found! Please check your code and try again.");</script>');
 		}
 	});
 

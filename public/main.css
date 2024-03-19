@@ -407,7 +407,7 @@ input[type="date" i] {
 
 /* copy button */
 .copy-button {
-    text-transform: capitalize;
+    text-transform: none;
     letter-spacing: 0.25em;
     background-color: #dbdbe0;
     border: 1px solid #090909;

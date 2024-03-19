@@ -466,6 +466,9 @@ async function calToDB() {
 					", text: " +
 					response.statusText
 			);
+			window.location.replace(
+				`https://www.doc.gold.ac.uk/usr/717/`
+			);
 		}
 
 		//else oh no, tell us what went wrong
