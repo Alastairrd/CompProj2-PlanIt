@@ -82,7 +82,13 @@ body {
 /* The main block of each page - top margin allows for fixed progress bar at top of page */
 .content {
   width: 90%; 
-  margin: 180px auto;
+  margin: 180px auto 0px auto;
+  max-width: 1200px;
+  
+}
+
+.calendarContent {
+  width: 100vw; 
   max-width: 1200px;
   
 }
@@ -136,6 +142,7 @@ body {
 .hidden {
   border-right: 1px solid #5456FA;
   border-bottom: 1px solid #5456FA;
+  background-color: none;
 }
 
 .datebox {
@@ -463,7 +470,42 @@ input[type="date" i] {
 }
 
 /* Experimenting ---------------------------- */
+#pureCalendar.expanded {
+  position: fixed;
+  bottom: 0; /* Position at bottom of viewport */
+  left: 50%; /* centre position */
+  transform: translateX(-50%); /* Centre the element */
+  width: 100%;
+  height: fit-content;
+  z-index: 9999; /* ensure it's on top of other content */
+  background-color: #5456FA50; /* Semi-transparent */
+  overflow: auto; /* allows for scrolling */
+}
 
+/* To exit expanded calendar */
+.exitme-button {
+  text-align: center;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase; /* Changed in line with Figma design CM 29/02 */
+  letter-spacing: 0.25em;
+  background-color: #0003FA;
+  border: 1px solid #5456FA;
+  border-radius: 20px; /* 5px too subtle */
+  /*position: absolute; - CHANGED FOR TIME BEING */
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  margin: 10px 10% 5px 85%;
+}
+
+.hidden-button {
+  display: none;
+}
+
+
+
+/* Calendar as is*/
 .grid-containment {
   overflow-x: auto; /* Enables horizontal scrolling */
   overflow-y: auto; /* Enables vertical scrolling */
@@ -471,6 +513,7 @@ input[type="date" i] {
   width: 90vw; 
   height: 450px;
   max-width: 1200px; /* as per 'content' */
+  margin: 0px auto;
 }
 
 /* Attempting to prettify scrollbar */
@@ -534,6 +577,7 @@ h2.date {
   width: 12vw; /* *B* If change this, must change *A* main grid repeat */
   height: 45px; /* ditto */
   box-sizing: border-box; /* Include padding and border in the element's total width */
+  background-color: white;
 }
 
 .dayslot, .timeOfDay
