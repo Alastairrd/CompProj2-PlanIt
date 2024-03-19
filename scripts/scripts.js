@@ -634,3 +634,15 @@ function showCopyBanner() {
 function homePage() {
 	window.location.href = "https://www.doc.gold.ac.uk/usr/717/";
 }
+
+
+// Show or hide additional text in calendar create when toggled
+function showInfoText() {
+// Show the text
+const additionalText = document.getElementById('additional-text');
+additionalText.classList.toggle('hiddenText');
+
+const infoTextToggle = document.getElementById('info-text');
+infoTextToggle.classList.toggle('highlighted');
+
+}

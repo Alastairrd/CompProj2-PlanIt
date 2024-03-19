@@ -99,6 +99,24 @@ body {
   line-height: 1.6;
 }
 
+.hiddenText {
+  display: none;
+}
+
+.info-dots {
+  font-weight: bold;
+  font-size: 18px;
+  cursor: help;
+}
+
+.info-dots::hover {
+  color: red;
+}
+.highlighted {
+  color: #5456FA;
+
+}
+
 /* Calendar */
 /* probably need to make this an icon instead of text */
 .question {
@@ -450,13 +468,29 @@ input[type="date" i] {
   overflow-x: auto; /* Enables horizontal scrolling */
   overflow-y: auto; /* Enables vertical scrolling */
   display: block; /* Default block display */
-  width: 90vw; /* shows 4 days and a bit */
+  width: 90vw; 
   height: 450px;
+  max-width: 1200px; /* as per 'content' */
+}
+
+/* Attempting to prettify scrollbar */
+.grid-containment::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+.grid-containment::-webkit-scrollbar-track {
+  background: #BBBABA;
+  /* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+}
+ 
+.grid-containment::-webkit-scrollbar-thumb {
+  background: #0003FA;
+  border: 1px solid black;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 45px); /* Create as many 65px columns as can fit */
+  grid-template-columns: repeat(auto-fill, 12vw); /* *A* If you change second parameter, must change *B* width*/
   grid-auto-flow: column; /* Ensures that grid items flow in a column sequence */
   min-width: min-content; /* The grid should be at least as wide as the smallest content */
 }
@@ -494,7 +528,7 @@ h2.date {
   padding: 5px 0;
   font-size: 12px;
   border: 1px solid #BBBABA;
-  width: 45px; /* Ensure a fixed width for each grid item */
+  width: 12vw; /* *B* If change this, must change *A* main grid repeat */
   height: 45px; /* ditto */
   box-sizing: border-box; /* Include padding and border in the element's total width */
 }
@@ -569,7 +603,6 @@ h2.date {
 .participants {
   margin: 0px;
 }
-
 
 
 
