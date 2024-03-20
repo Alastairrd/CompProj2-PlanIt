@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("hiddenName").value = document.getElementById("name").value;
     })
 
+	//function to deal with code submit form
+document.getElementById("codeForm").addEventListener("submit", function(event){
+	event.preventDefault();
+  });
+
 })
 
 function showIndexName() {
@@ -31,3 +36,4 @@ function showName() {
 //add name section
 //relink button to show name not date
 //make name button show date instead
+

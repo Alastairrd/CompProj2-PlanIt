@@ -103,13 +103,14 @@
                 <p>You should have been sent a code or url by [your friend]. Paste or enter it in here:</p>
             </section>
             <!-- Form for entering event code -->
-            <form>
+            <!--todo fix this-->
+            <form id="codeForm" onsubmit="joinEvent()">
                 <fieldset>
                     <legend>Event Code</legend>
                     <input type="text" id="code" name="code">
                 </fieldset>
+                <button type="submit" class="next"><span>Next</span></button>
             </form>
-            <button class="next" onclick="joinEvent()"><span>Next</span></button>
         </section>
     </div>
 

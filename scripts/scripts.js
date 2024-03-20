@@ -728,7 +728,8 @@ function getModal() {
 	};
 }
 document.addEventListener("DOMContentLoaded", function () {
-	if(document.getElementById("eventCreationBody") !== null){
+	if(document.getElementById("myBtn") !== null){
+		console.log("getting Modal");
 		getModal();
 	}
  })
