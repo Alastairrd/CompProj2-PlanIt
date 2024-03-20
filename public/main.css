@@ -207,37 +207,7 @@ h2.hack {
 
 
 
-/* For when items are ideal dates */
-.zeroCoord{
-  background-color: white;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
-/* For when items are almost ideal dates */
-/* TODO: if more than one state, need to change this colour */
-.oneCoord{
-  background-color: #f0dba0;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
 
-/* For when items are not ideal at all dates */
-.unavailable{
-  background-color: #5456FA;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
-
-/* For when items are already selected by other users */
-.already-active{
-  background-color: #5456FA;
-  border: 1px solid #BBBABA;
-  padding: 20px;
-  text-align: center;
-}
 
 
 /* Button at bottom of screen */
@@ -567,7 +537,7 @@ h2.date {
   margin-bottom: 0px;
 }
 
-/* IMPORTANT: THIS MUST BE BEFORE .ACTIVE!! */
+/* IMPORTANT: THIS MUST BE BEFORE .ACTIVE, .ZEROCOORDS ETC */
 .dayslot, .timeslot, .timeOfDay, .summary-timeslot {
   user-select: none;
   text-align: center;
@@ -597,6 +567,42 @@ h2.date {
   border: 1px solid #BBBABA;
   padding: 20px;
   z-index: 30;
+  text-align: center;
+}
+
+/* IMPORTANT: THIS MUST BE AFTER TIMESLOT!! */
+/* For when items are ideal dates */
+.zeroCoord{
+  background-color: white;
+  border: 1px solid #BBBABA;
+  padding: 20px;
+  text-align: center;
+}
+/* IMPORTANT: THIS MUST BE AFTER TIMESLOT!! */
+/* For when items are almost ideal dates */
+/* TODO: if more than one state, need to change this colour */
+.oneCoord{
+  background-color: #f0dba0;
+  border: 1px solid #BBBABA;
+  padding: 20px;
+  text-align: center;
+}
+
+/* IMPORTANT: THIS MUST BE AFTER TIMESLOT!! */
+/* For when items are not ideal at all dates */
+.unavailable{
+  background-color: #5456FA;
+  border: 1px solid #BBBABA;
+  padding: 20px;
+  text-align: center;
+}
+
+/* IMPORTANT: THIS MUST BE AFTER TIMESLOT!! */
+/* For when items are already selected by other users */
+.already-active{
+  background-color: #5456FA;
+  border: 1px solid #BBBABA;
+  padding: 20px;
   text-align: center;
 }
 
