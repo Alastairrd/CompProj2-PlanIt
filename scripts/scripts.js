@@ -691,7 +691,6 @@ function initialiseExitButton() {
 		event.stopPropagation(); // To stop event propagation
 
 		const exitButton = event.target;
-		console.log("YEYEYSYSYEYE I'm working ffs");
 		exitButton.classList.add("exit-clicked");
 	}
 }
